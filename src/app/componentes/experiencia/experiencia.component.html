@@ -1,0 +1,26 @@
+<div class="card mat-card">
+  <h2>Experiencia</h2>
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" *ngFor="let experiencia of experienciaList">
+      <div class="data-container row align-items-center">
+          <div class="logo-image-container col-1">
+            <img
+              [src]="experiencia.logoEmpresa"
+              class="logo-image img-fluid" [alt]="experiencia.descripcionLogoEmpresa" />
+
+          </div>
+          <div class="list-info col-8">
+            <h4>{{experiencia.tituloRol}}</h4>
+            <h5>{{experiencia.empresa}}</h5>
+            <h6>{{experiencia.inicio}} - {{experiencia.fin}}</h6>
+            <p>
+              {{experiencia.descripcionRol}}
+            </p>
+          </div>
+      </div>
+    </li>
+    
+   </ul>
+
+</div>

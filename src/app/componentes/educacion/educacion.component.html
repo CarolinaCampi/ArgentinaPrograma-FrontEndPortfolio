@@ -1,0 +1,63 @@
+<div class = "card mat-card">
+    <h2>Educacion</h2>
+
+    <ul class="list-group list-group-flush">
+    <li class="list-group-item" *ngFor="let educacionFormal of educacionFormalList">
+      <div class="data-container row align-items-center">
+          <div class="logo-image-container col-1">
+            <img
+              [src]="educacionFormal.logoInstitucion"
+              class="logo-image img-fluid" [alt]="educacionFormal.descripcionLogoInstitucion" />
+
+          </div>
+          <div class="list-info col-8">
+            <h4>{{educacionFormal.titulo}}</h4>
+            <h5>{{educacionFormal.institucion}}</h5>
+            <h6>{{educacionFormal.inicio}} - {{educacionFormal.fin}}</h6>
+            <p>
+              {{educacionFormal.observaciones}}
+            </p>
+          </div>
+      </div>
+    </li>
+    
+   </ul>
+
+   <h3>Cursos</h3>
+
+   <ul class="list-group list-group-flush">
+    <li class="list-group-item" *ngFor="let cursos of cursosList">
+      <div class="data-container row align-items-center">
+          <div class="logo-image-container col-1">
+            <img
+              [src]="cursos.logoInstitucion"
+              class="logo-image img-fluid" [alt]="cursos.descripcionLogoInstitucion" />
+
+          </div>
+          <div class="list-info col-8">
+            <h5>{{cursos.titulo}}</h5>
+            <h6>{{cursos.institucion}}</h6>
+            <p>{{cursos.fin}}</p>
+
+          </div>
+      </div>
+    </li>
+    
+   </ul>
+
+    <!--<div class="row align-items-center">
+      <div class="col-2">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Logo-fcenuba.png/1200px-Logo-fcenuba.png" class="img-fluid" alt="Logo de la Facultad de Ciencias Exactas y Naturales de la Universidad de Buenos Aires">
+      </div>
+      <div class="col-8">
+        <h4>Licenciatura en Ciencias Químicas</h4>
+        <h5>Facultad de Ciencias Exactas y Naturales de la UBA | Noviembre 2019 - Presente</h5>
+        <h5>2013 - 2018</h5>
+        <ul>
+          <li>Promedio: 8,7 sin aplazos.</li>
+          <li>Plan de estudio incluyó química industrial, operaciones unitarias de preservación de alimentos, sintésis orgánica y análisis funcional orgánico.</li>
+        </ul>
+      </div>
+    </div>-->
+    
+  </div>

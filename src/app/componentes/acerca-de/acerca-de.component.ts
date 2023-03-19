@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  selector: 'app-acerca-de',
+  templateUrl: './acerca-de.component.html',
+  styleUrls: ['./acerca-de.component.css']
 })
-export class HeaderComponent implements OnInit {
-
+export class AcercaDeComponent implements OnInit {
+  
   miPortfolio:any;
   
   constructor(private datosPortfolio:PortfolioService){  }

@@ -1,0 +1,41 @@
+<div class = "card mat-card" id = "first card">
+  <div id = "profile-background">
+      <img [src] = "miPortfolio.backImage">
+
+  </div>
+
+  <div id = "info" style = "padding: 16px">
+
+      <div id = "info-img">
+          <img class = "profile-image" [src] = "miPortfolio.image">
+          <div class = "btn-edit"> <!--Ver porque no funciona-->
+              <a href="#" class = "btn-right">
+                <i class="bi bi-pencil"></i>
+              </a>
+          </div>
+
+      </div>
+
+      <div id = "info-data">
+
+          <h1>{{miPortfolio.name}}</h1>
+          <h2>{{miPortfolio.posicion}}</h2>
+          <h3>{{miPortfolio.ubicacion}}</h3>
+
+      </div>
+
+      <p>{{miPortfolio.descripcion}}</p>
+
+      <div id = "info-actions">
+          <button class = "btn btn-outline-dark" type = "button"> Experiencia</button>
+          <button class = "btn btn-outline-dark" type = "button"> Educacion</button>
+          <button class = "btn btn-outline-dark" type = "button"> Skills</button>
+          <button class = "btn btn-outline-dark" type = "button"> Proyectos</button>
+      </div>
+
+  </div>
+</div>
+
+
+
+

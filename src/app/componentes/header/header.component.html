@@ -1,34 +1,24 @@
-<div class = "card mat-card" id = "first card">
-    <div id = "profile-background">
-        <img src = "https://wallpaperaccess.com/full/1261770.jpg">
-  
-    </div>
-  
-    <div id = "info" style = "padding: 16px">
-  
-        <div id = "info-img">
-            <img class = "profile-image" src = "https://media.licdn.com/dms/image/C4D03AQESEUOmsJeVVg/profile-displayphoto-shrink_800_800/0/1648591103321?e=2147483647&v=beta&t=M5VVwQTo5GTm45UvOLLZIumgibmBnKk3eUUv-c83xzQ">
-            <div class = "btn-edit"> <!--Ver porque no funciona-->
-                <a href="#" class = "btn-right">
-                    <i class = "fa fa-pen"></i>
-                </a>
-            </div>
-  
+<div class = "card mat-card">
+    <div class="row align-items-center">
+        <div class="col-2">
+          <img [src]="miPortfolio.logoTitulo" class="img-fluid">
         </div>
-  
-        <div id = "info-data">
-  
-            <h1>Carolina Lucia Campi</h1>
-            <h2>Programadora y química</h2>
-            <h3>Buenos Aires, Argentina</h3>
-  
+        
+        <div class="col-2">
+          <h4>{{miPortfolio.titulo}}</h4>
         </div>
-  
-        <div id = "info-actions">
-            <button class = "btn btn-outline-dark" type = "button"> About</button>
-            <button class = "btn btn-outline-dark" type = "button"> Work</button>
-            <button class = "btn btn-outline-dark" type = "button"> Contact</button>
+        
+        <div class="col-5">
         </div>
-  
-    </div>
-  </div>
+        
+        <div class="col-1">
+          <a [href]="miPortfolio.linkRedSocial1"><img [src]="miPortfolio.logoRedSocial1"  class="img-fluid"></a>
+        </div>
+        <div class="col-1">
+          <a [href]="miPortfolio.linkRedSocial2"><img [src]="miPortfolio.logoRedSocial2"  class="img-fluid"></a>
+        </div>
+        <div class="col-1">
+            <button class = "btn btn-outline-info" type = "button">Login</button>
+        </div>
+      </div>
+</div>
