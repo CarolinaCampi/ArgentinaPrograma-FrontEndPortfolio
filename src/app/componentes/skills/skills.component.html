@@ -1,34 +1,19 @@
-
-
-
 <div class="card mat-card">
-    <h2>Skills</h2>
+    <h2>Hard Skills</h2>
+    <div class="chart-container">
+        <canvas  id="MyChart" >{{ chart }}</canvas>
+     </div>
+
 
     <!--Ver de poner algunos de los Skills como graficos tipo Doughnut, cer Chart.js tal vez para la implementación
     Y algunos otros ocn otra herramienta de visualización-->
-    <p>Manejo de equipos de laboratorio:
-        experiencia en uso de HPLC, NIR,
-        titulador automático, medidor de
-        tamaño de partículas, densímetro
-        automático, refractómetro.
-        SAP: transacciones de control de
-        calidad, stock, creación de ordenes de
-        compras.
-        Asuntos regulatorios: conocimientos
-        sobre regulación de alérgenos, partidas
-        arancelarias, subsanaciones INAL.
-        
-        Conocimientos de GMP y GLP. 65%
-        Conocimientos básicos de 5S. 50%
-        
-        Microsoft Office.
-        Nociones de programación en Java, HTML, CSS, JavaScript.
-        Nociones de Bootstrap, Angular, 
-        
-        Español nativo. 100%
-        Inglés: oral y escrito fluido. 80%
-        Francés: lectura básica 15%.
-        Italiano: lectura básica 15%.
-    </p>
+
+    <h2>Soft Skills</h2>
+    <div class="row">
+        <div class="col-2" *ngFor="let softSkill of softSkillsList">
+            <button type="button" class="btn btn-outline-secondary">{{softSkill}}</button>
+        </div>
+    </div>
+
 
 </div>

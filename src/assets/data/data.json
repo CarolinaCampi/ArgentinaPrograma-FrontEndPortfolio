@@ -89,7 +89,60 @@
                 }
             ]
         
-    }
+    }, 
+    "skills": {
+        "hardSkills":[
+            {"skill": "Español",
+            "nivel": "100"
+            },
+            {"skill": "Inglés",
+            "nivel": "80"
+            },
+            {"skill": "Francés",
+            "nivel": "15"
+            },
+            {"skill": "Italiano",
+            "nivel": "15"
+            },
+            {"skill": "MS Office",
+            "nivel": "70"
+            },
+            {"skill": "Java",
+            "nivel": "30"
+            },
+            {"skill": "HTML",
+            "nivel": "40"
+            },
+            {"skill": "CSS",
+            "nivel": "35"
+            },
+            {"skill": "JavaScript",
+            "nivel": "30"
+            },
+            {"skill": "BootStrap",
+            "nivel": "40"
+            },
+            {"skill": "Angular",
+            "nivel": "30"
+            }
+        ],
+        "softSkills":
+            ["Trabajo en equipo", "Proactividad", "Pensamiento analítico", "Liderazgo"]
+    },
 
-
+    "proyectos": 
+        [{
+            "tituloProyecto": "Wordle para línea de comando",
+            "linkProyecto": "https://github.com/CarolinaCampi/Wordle"
+        }, 
+        {
+            "tituloProyecto": "Proyectos de CodeCademy",
+            "linkProyecto": "https://github.com/CarolinaCampi/Codecademy"
+        },
+        {
+            "tituloProyecto": "Portfolio Personal",
+            "linkProyecto": "https://github.com/CarolinaCampi/ArgentinaPrograma-FrontEndPortfolio"
+        }]
 }
+
+

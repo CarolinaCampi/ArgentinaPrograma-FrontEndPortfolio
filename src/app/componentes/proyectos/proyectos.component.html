@@ -1,7 +1,16 @@
 <div class = "card mat-card">
     <h2>Proyectos</h2>
+
+    <div class="row">
+      <div class="col-sm-4" *ngFor="let proyecto of proyectosList">
+        <div class="card text-center">
+          <div class="card-body">
+            <h5 class="card-title">{{proyecto.tituloProyecto}}</h5>
+            <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+            <a [href]="proyecto.linkProyecto" class="btn btn-outline-success">GitHub</a>
+          </div>
+        </div>
+      </div>
+    </div>
   
-    <p>Como parte de mi experiencia aprendiendo Java, desarrollé varios pequeños proyectos disponibles en el <a href="https://github.com/CarolinaCampi/Codecademy/tree/main/Java">repo</a> de GitHub asociado.
-    <p>Acompañando mi aprendizaje de Java, me dediqué a mi primer projecto: una versión para la línea de comando del popular juego de palabras, Wordle.</p>
-    <p>Hoy en día, a la par de la creación de este portfolio, estoy explorando el desarrollo web. Como con Java, desarrollé varios pequeños proyectos disponibles en <a href="https://github.com/CarolinaCampi/Codecademy">GitHub</a> enfocados en HTML, CSS, JavaScript y Bootstrap.</p>
-  </div>
+ </div>
