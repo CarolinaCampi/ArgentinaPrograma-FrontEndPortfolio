@@ -1,8 +1,14 @@
 <div class="card mat-card">
     <h2>Hard Skills</h2>
-    <div class="chart-container">
-        <canvas  id="MyChart" >{{ chart }}</canvas>
-     </div>
+    <div class="row">
+        <div class="col-6" *ngFor="let chart of chartList; let i = index">
+            <div class="chart-container">
+                <canvas id="MyChart-{{i}}">{{ chart }}</canvas>
+            </div>
+        </div>
+    </div>
+
+
 
 
     <!--Ver de poner algunos de los Skills como graficos tipo Doughnut, cer Chart.js tal vez para la implementación
