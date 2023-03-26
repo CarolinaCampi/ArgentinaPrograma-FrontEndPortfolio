@@ -14,33 +14,46 @@ export class SkillsComponent implements OnInit{
   
   constructor(private datosPortfolio:PortfolioService){ }
   
+  
+
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos().subscribe(data => {
       console.log(data);
-      this.hardSkillsList = data.skills.hardSkills;
+      
       this.softSkillsList = data.skills.softSkills;
-      for (let i = 0; i < data.skills.hardSkills.length; i++) {
-        const chart: any = this.createChart(i, data.skills.hardSkills[i].skill, data.skills.hardSkills[i].nivel);
-        chart.titulo = data.skills.hardSkills[i].skill;
 
-        console.log(chart);
-
-        this.chartList.push(chart);
+      for(let i = 0; i < data.skills.hardSkills.length; i++){
+        this.inicializarHTML(i);
       }
 
-      
+      let self = this;
+
+      setTimeout(function() {
+        for (let i = 0; i < data.skills.hardSkills.length; i++) {
+          self.createChart(i, data.skills.hardSkills[i].skill, data.skills.hardSkills[i].nivel);
+        }
+       }, 100);
+     
     });
   }
 
+  inicializarHTML(index:number){
+    let col2 = document.createElement("div");
+    col2.classList.add("col-2");
+    
+    let canvas = document.createElement("canvas");
+    canvas.id = "chart-" + index;
+
+    col2.appendChild(canvas);
+    document.getElementById("fila-hard-skills")!.appendChild(col2);
+  }
+
   createChart(index:number, titulo: string, porcentaje: number){
-    console.log("MyChart-" + index)
   
-    return new Chart("MyChart-" + index, {
+    return new Chart("chart-" + index, {
       type: 'doughnut', //this denotes the type of chart
 
-      data: {// values on X-Axis
-        /*labels: ['2022-05-10', '2022-05-11', '2022-05-12','2022-05-13',
-								 '2022-05-14', '2022-05-15', '2022-05-16','2022-05-17', ], */
+      data: {
 	       datasets: [
           {
             label: "Skill",
@@ -49,12 +62,6 @@ export class SkillsComponent implements OnInit{
             borderColor: 'green',
             borderWidth: 1,
           },
-          /*{
-            label: "Profit",
-            data: ['542', '542', '536', '327', '17',
-									 '0.00', '538', '541'],
-            backgroundColor: 'limegreen'
-          }*/  
         ]
       },
       options: {
