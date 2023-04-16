@@ -13,9 +13,9 @@ export class AcercaDeComponent implements OnInit {
   constructor(private datosPortfolio:PortfolioService){  }
 
   ngOnInit(): void {
-    this.datosPortfolio.obtenerDatos().subscribe(data => {
+    this.datosPortfolio.obtenerDatos("persona").subscribe(data => {
       console.log(data);
-      this.miPortfolio = data;
+      this.miPortfolio = data[0];
     });
   }
 

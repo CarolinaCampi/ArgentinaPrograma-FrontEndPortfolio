@@ -1,13 +1,13 @@
 <div class = "card mat-card" id = "first card">
   <div id = "profile-background">
-      <img [src] = "miPortfolio.backImage">
+      <img [src] = "miPortfolio.url_banner">
 
   </div>
 
   <div id = "info" style = "padding: 16px">
 
       <div id = "info-img">
-          <img class = "profile-image" [src] = "miPortfolio.image">
+          <img class = "profile-image" [src] = "miPortfolio.url_foto">
           <div class = "btn-edit"> <!--Ver porque no funciona-->
               <a href="#" class = "btn-right">
                 <i class="bi bi-pencil"></i>
@@ -18,13 +18,13 @@
 
       <div id = "info-data">
 
-          <h1>{{miPortfolio.name}}</h1>
+          <h1>{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
           <h2>{{miPortfolio.posicion}}</h2>
-          <h3>{{miPortfolio.ubicacion}}</h3>
+          <h3>{{miPortfolio.domicilio}}</h3>
 
       </div>
 
-      <p>{{miPortfolio.descripcion}}</p>
+      <p>{{miPortfolio.sobre_mi}}</p>
 
       <div id = "info-actions">
           <button class = "btn btn-outline-primary" type = "button"> Experiencia</button>
