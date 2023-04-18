@@ -34,7 +34,9 @@ import { PortfolioService } from './servicios/portfolio.service';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [PortfolioService, {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}], 
+  providers: [PortfolioService, 
+    {provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true}
+  ], 
   bootstrap: [AppComponent]
 })
 export class AppModule { }
