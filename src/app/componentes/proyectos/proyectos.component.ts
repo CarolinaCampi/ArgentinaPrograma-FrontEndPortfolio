@@ -13,7 +13,12 @@ export class ProyectosComponent implements OnInit{
   
 
   ngOnInit(): void {
-    this.datosPortfolio.obtenerDatos("proyectos").subscribe(data => {
+    // this.datosPortfolio.obtenerDatos("proyectos").subscribe(data => {
+    //   console.log(data);
+    //   this.proyectosList = data.proyectos;
+    // });
+
+    this.datosPortfolio.obtenerDatosJSON().subscribe(data => {
       console.log(data);
       this.proyectosList = data.proyectos;
     });
