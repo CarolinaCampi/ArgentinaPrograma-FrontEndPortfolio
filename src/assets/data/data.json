@@ -46,7 +46,7 @@
             ],
             "cursos": [
                 {
-                    "logoInstitucion": "https://media.licdn.com/dms/image/C560BAQGv-Dd7A2pQ0g/company-logo_200_200/0/1646458288684?e=2147483647&v=beta&t=2bEkW38L80hsKUeV4gucwORSlBcJNmYd5H6CBz_Z00E",
+                    "logoInstitucion": "./assets/images/logo_titulo.png",
                     "descripcionLogoInstitucion": "Logo de ArgentinaPrograma",
                     "titulo": "#SéProgramar",
                     "institucion": "Argentina Programa",
