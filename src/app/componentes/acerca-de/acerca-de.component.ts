@@ -8,7 +8,7 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 })
 export class AcercaDeComponent implements OnInit {
   
-  miPortfolio:any;
+  miPortfolio:any ={};
   
   constructor(private datosPortfolio:PortfolioService){  }
 
