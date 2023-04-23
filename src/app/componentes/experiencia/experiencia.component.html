@@ -6,16 +6,18 @@
       <div class="data-container row align-items-center">
           <div class="logo-image-container col-1">
             <img
-              [src]="experiencia.logoEmpresa"
-              class="logo-image img-fluid" [alt]="experiencia.descripcionLogoEmpresa" />
+              [src]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].url_logo"
+              class="logo-image img-fluid" [alt]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].alt_text_logo" />
 
           </div>
           <div class="list-info col-8">
-            <h4>{{experiencia.tituloRol}}</h4>
-            <h5>{{experiencia.empresa}}</h5>
-            <h6>{{experiencia.inicio}} - {{experiencia.fin}}</h6>
+            <h4>{{experiencia.rol}}</h4>
+            <h5>{{empresaInstitucionList[experiencia.empresa_institucion_id - 1].nombre}}</h5>
+            <h6>{{experiencia.fecha_inicio}}<div style="display: inline" *ngIf="experiencia.es_trabajo_actual ; else elseBlock"> - presente</div>
+              <ng-template #elseBlock> - {{experiencia.fecha_fin}}</ng-template>
+            </h6>
             <p>
-              {{experiencia.descripcionRol}}
+              {{experiencia.descripcion}}
             </p>
           </div>
       </div>
