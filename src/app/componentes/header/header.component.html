@@ -12,8 +12,10 @@
         </div>
         
         <div class="col-2 justify-content-end">
-          <!-- <a [href]="header.linkRedSocial1"><img [src]="header.logoRedSocial1"  class="img-fluid red-social"></a>
-          <a [href]="header.linkRedSocial2"><img [src]="header.logoRedSocial2"  class="img-fluid red-social"></a> -->
+          <div class="logo-container" *ngFor="let redSocial of redSocialList">
+            <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social" alt={{redSocial.alt_text_logo}} ></a>
+          </div>
+          
         </div>
 
         <div class="col-1">

@@ -13,29 +13,9 @@ export class SkillsComponent implements OnInit{
   chartList: any[] = [];
   
   constructor(private datosPortfolio:PortfolioService){ }
-  
-  
+   
 
   ngOnInit(): void {
-    // this.datosPortfolio.obtenerDatos("skills").subscribe(data => {
-    //   console.log(data);
-      
-    //   this.softSkillsList = data.skills.softSkills;
-
-    //   for(let i = 0; i < data.skills.hardSkills.length; i++){
-    //     this.inicializarHTML(i);
-    //   }
-
-    //   let self = this;
-
-    //   setTimeout(function() {
-    //     for (let i = 0; i < data.skills.hardSkills.length; i++) {
-    //       self.createChart(i, data.skills.hardSkills[i].skill, data.skills.hardSkills[i].nivel);
-    //     }
-    //    }, 100);
-     
-    // });
-
     this.datosPortfolio.obtenerDatosJSON().subscribe(data => {
       console.log(data);
       

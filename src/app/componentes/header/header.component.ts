@@ -10,7 +10,7 @@ export class HeaderComponent implements OnInit {
 
   header:any = {};
 
-  red_social: any = {};
+  redSocialList: any;
   
   constructor(private datosPortfolio:PortfolioService){  }
 
@@ -22,7 +22,7 @@ export class HeaderComponent implements OnInit {
 
     this.datosPortfolio.obtenerDatos("red_social").subscribe(data => {
       console.log(data);
-      this.header = data;
+      this.redSocialList = data;
     });
   }
 
