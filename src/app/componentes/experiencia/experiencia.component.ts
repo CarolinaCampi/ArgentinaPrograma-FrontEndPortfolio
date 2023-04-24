@@ -9,7 +9,6 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 })
 export class ExperienciaComponent implements OnInit{
   experienciaList:any;
-
   empresaInstitucionList: any;
   
   constructor(private datosPortfolio:PortfolioService){ }

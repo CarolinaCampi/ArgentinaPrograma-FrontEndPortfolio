@@ -4,9 +4,9 @@
   <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let experiencia of experienciaList">
       <div class="data-container row align-items-center">
-          <div class="logo-image-container col-1">
+          <div class="logo-image-container col-1"> <!--Ver si se puede hacer mas robusto la busqueda en el array porque los ids de la BD pueden no matchear con los indices del array si se empiezan a ingresar y borrar filas-->
             <img
-              [src]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].url_logo"
+              [src]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].url_logo" 
               class="logo-image img-fluid" [alt]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].alt_text_logo" />
 
           </div>

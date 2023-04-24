@@ -6,16 +6,16 @@
       <div class="data-container row align-items-center">
           <div class="logo-image-container col-1">
             <img
-              [src]="educacionFormal.logoInstitucion"
-              class="logo-image img-fluid" [alt]="educacionFormal.descripcionLogoInstitucion" />
+              [src]="empresaInstitucionList[educacionFormal.empresa_institucion_id - 1].url_logo"
+              class="logo-image img-fluid" [alt]="empresaInstitucionList[educacionFormal.empresa_institucion_id - 1].alt_text_logo" />
 
           </div>
           <div class="list-info col-8">
             <h4>{{educacionFormal.titulo}}</h4>
-            <h5>{{educacionFormal.institucion}}</h5>
-            <h6>{{educacionFormal.inicio}} - {{educacionFormal.fin}}</h6>
+            <h5>{{empresaInstitucionList[educacionFormal.empresa_institucion_id - 1].nombre}}</h5>
+            <h6>{{educacionFormal.fecha_inicio}} - {{educacionFormal.fecha_fin}}</h6>
             <p>
-              {{educacionFormal.observaciones}}
+              {{educacionFormal.descripcion}}
             </p>
           </div>
       </div>
@@ -37,7 +37,7 @@
           <div class="list-info col-8">
             <h5>{{cursos.titulo}}</h5>
             <h6>{{cursos.institucion}}</h6>
-            <p>{{cursos.fin}}</p>
+            <p>Finalización: {{cursos.fin}}</p>
 
           </div>
       </div>

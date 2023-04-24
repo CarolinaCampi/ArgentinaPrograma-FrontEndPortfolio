@@ -8,38 +8,49 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-educacion',
   templateUrl: './educacion.component.html',
-  styleUrls: ['./educacion.component.css'],
-  encapsulation: ViewEncapsulation.None
+  styleUrls: ['./educacion.component.css']
 })
 export class EducacionComponent implements OnInit {
   educacionFormalList: any;
   cursosList: any;
+  empresaInstitucionList:any;
 
-  //Para prueba
-  @Input() hola: string = "prueba";
-
-  constructor(private datosPortfolio: PortfolioService, private ruta: Router, private http:HttpClient) { }
-
-  obtenerDatosJSON():Observable<any>{
-    return this.http.get('./assets/data/data.json');
-  }
+  constructor(private datosPortfolio: PortfolioService) { }
 
   ngOnInit(): void {
-    console.log("Entramos a OnInit de educacion");
 
     this.datosPortfolio.obtenerDatosJSON().subscribe(data => {
-      //console.log("Esta es la data dentro del educacion: " + data);
-      //console.log(data);
-      this.educacionFormalList = data.educacion.educacionFormal;
+      //  this.educacionFormalList = data.educacion.educacionFormal;
       this.cursosList = data.educacion.cursos;
     })
 
-      // this.datosPortfolio.obtenerDatos("educacion").subscribe(data => {
+      this.datosPortfolio.obtenerDatos("educacion_formal").subscribe(data => {
+        console.log(data);
+        for (let educacionFormal of data){
+          educacionFormal.fecha_inicio = this.convertirFechaAMesAno(educacionFormal.fecha_inicio);
+          educacionFormal.fecha_fin = this.convertirFechaAMesAno(educacionFormal.fecha_fin);
+        }
+        this.educacionFormalList = data;
+       });
+
+      // this.datosPortfolio.obtenerDatos("curso").subscribe(data => {
       //   console.log(data);
-      //   this.educacionFormalList = data.educacion.educacionFormal;
-      //   this.cursosList = data.educacion.cursos;
+      //   this.cursosList = data;
       // });
 
+      this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(data => {
+        console.log(data);
+        this.empresaInstitucionList = data;
+      });
+
+  }
+
+  convertirFechaAMesAno(fecha:string): string {
+    const date = new Date(fecha); // create a new Date object with fecha
+    const options: any = { year: 'numeric', month: 'long' }; // options for formatting the date
+    const formattedDate = date.toLocaleDateString('es-ES', options); // format the date to "Month Year" format
+
+    return formattedDate;// output format: "novembre de 2023"
   }
 
 }
