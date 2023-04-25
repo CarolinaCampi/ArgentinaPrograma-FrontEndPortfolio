@@ -26,18 +26,18 @@
    <h3>Cursos</h3>
 
    <ul class="list-group list-group-flush">
-    <li class="list-group-item" *ngFor="let cursos of cursosList">
+    <li class="list-group-item" *ngFor="let curso of cursosList">
       <div class="data-container row align-items-center">
           <div class="logo-image-container col-1">
             <img
-              [src]="cursos.logoInstitucion"
-              class="logo-image img-fluid" [alt]="cursos.descripcionLogoInstitucion" />
+            [src]="empresaInstitucionList(curso.empresa_institucion_id).url_logo"
+            class="logo-image img-fluid" [alt]="empresaInstitucionList[curso.empresa_institucion_id - 1].alt_text_logo" />
 
           </div>
           <div class="list-info col-8">
-            <h5>{{cursos.titulo}}</h5>
-            <h6>{{cursos.institucion}}</h6>
-            <p>Finalización: {{cursos.fin}}</p>
+            <h5>{{curso.titulo}}</h5>
+            <h6>{{empresaInstitucionList[curso.empresa_institucion_id - 1].nombre}}</h6>
+            <p>Finalización: {{curso.fecha_fin}}</p>
 
           </div>
       </div>

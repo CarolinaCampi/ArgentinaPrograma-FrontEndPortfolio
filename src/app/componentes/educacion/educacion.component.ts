@@ -33,10 +33,13 @@ export class EducacionComponent implements OnInit {
         this.educacionFormalList = data;
        });
 
-      // this.datosPortfolio.obtenerDatos("curso").subscribe(data => {
-      //   console.log(data);
-      //   this.cursosList = data;
-      // });
+      this.datosPortfolio.obtenerDatos("curso").subscribe(data => {
+        console.log(data);
+        for (let curso of data){
+          curso.fecha_fin = this.convertirFechaAMesAno(curso.fecha_fin);
+        }
+        this.cursosList = data;
+      });
 
       this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(data => {
         console.log(data);
