@@ -6,16 +6,14 @@
       <div class="data-container row align-items-center">
           <div class="logo-image-container col-1"> <!--Ver si se puede hacer mas robusto la busqueda en el array porque los ids de la BD pueden no matchear con los indices del array si se empiezan a ingresar y borrar filas-->
             <img
-              [src]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].url_logo" 
-              class="logo-image img-fluid" [alt]="empresaInstitucionList[experiencia.empresa_institucion_id - 1].alt_text_logo" />
+              [src]="experiencia.empresa_institucion_url_logo" 
+              class="logo-image img-fluid" [alt]="experiencia.empresa_institucion_alt_text_logo" />
 
           </div>
           <div class="list-info col-8">
             <h4>{{experiencia.rol}}</h4>
-            <h5>{{empresaInstitucionList[experiencia.empresa_institucion_id - 1].nombre}}</h5>
-            <h6>{{experiencia.fecha_inicio}}<div style="display: inline" *ngIf="experiencia.es_trabajo_actual ; else elseBlock"> - presente</div>
-              <ng-template #elseBlock> - {{experiencia.fecha_fin}}</ng-template>
-            </h6>
+            <h5>{{experiencia.empresa_institucion_nombre}}</h5>
+            <h6>{{experiencia.fecha_inicio}} - {{experiencia.fecha_fin}}</h6>
             <p>
               {{experiencia.descripcion}}
             </p>

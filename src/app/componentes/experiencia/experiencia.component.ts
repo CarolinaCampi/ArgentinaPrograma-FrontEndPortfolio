@@ -7,40 +7,50 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
   templateUrl: './experiencia.component.html',
   styleUrls: ['./experiencia.component.css']
 })
-export class ExperienciaComponent implements OnInit{
-  experienciaList:any;
+export class ExperienciaComponent implements OnInit {
+  experienciaList: any;
   empresaInstitucionList: any;
-  
-  constructor(private datosPortfolio:PortfolioService){ }
-  
-  convertirFechaAMesAno(fecha:string): string {
+
+  constructor(private datosPortfolio: PortfolioService) { }
+
+  ngOnInit(): void {
+
+    this.datosPortfolio.obtenerDatos("experiencia").subscribe(data => {
+      console.log(JSON.stringify(data));
+      for (let experiencia of data) {
+        experiencia.fecha_inicio = this.convertirFechaAMesAno(experiencia.fecha_inicio);
+        experiencia.fecha_fin = this.convertirFechaAMesAno(experiencia.fecha_fin);
+      }
+      console.log(JSON.stringify(data));
+      this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(dataEmpInst => {
+        console.log(JSON.stringify(dataEmpInst));
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < dataEmpInst.length; j++) {
+            console.log(JSON.stringify(data));
+            if (data[i].empresa_institucion_id == dataEmpInst[j].id) {
+              console.log("Iteracion: " + i + j + JSON.stringify(data));
+              data[i]["empresa_institucion_nombre"] = dataEmpInst[j].nombre;
+              data[i]["empresa_institucion_url_logo"] = dataEmpInst[j].url_logo;
+              data[i]["empresa_institucion_alt_text_logo"] = dataEmpInst[j].alt_text_logo;
+            }
+          }
+        }
+        this.experienciaList = data;
+        console.log(this.experienciaList);
+      });
+
+    });
+
+  }
+
+  convertirFechaAMesAno(fecha: string): string {
+    if (!fecha){
+      return "presente";
+    }
     const date = new Date(fecha); // create a new Date object with fecha
     const options: any = { year: 'numeric', month: 'long' }; // options for formatting the date
     const formattedDate = date.toLocaleDateString('es-ES', options); // format the date to "Month Year" format
 
     return formattedDate;// output format: "novembre de 2023"
-  }
-
-  ngOnInit(): void {
-    this.datosPortfolio.obtenerDatos("experiencia").subscribe(data => {
-      console.log(data);
-      for (let experiencia of data){
-        experiencia.fecha_inicio = this.convertirFechaAMesAno(experiencia.fecha_inicio);
-        experiencia.fecha_fin = this.convertirFechaAMesAno(experiencia.fecha_fin);
-      }
-      this.experienciaList = data;
-    });
-
-    this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(data => {
-      console.log(data);
-      this.empresaInstitucionList = data;
-    });
-
-    
-
-    // this.datosPortfolio.obtenerDatosJSON().subscribe(data => {
-    //   console.log(data);
-    //   this.experienciaList = data.experiencia;
-    // });
   }
 }
