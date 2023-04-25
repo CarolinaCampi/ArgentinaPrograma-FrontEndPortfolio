@@ -1,9 +1,6 @@
-import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { NavigationEnd, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
-import { Event } from '@angular/router';
-import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+
 
 @Component({
   selector: 'app-educacion',
@@ -12,39 +9,54 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EducacionComponent implements OnInit {
   educacionFormalList: any;
-  cursosList: any;
+  cursoList: any;
   empresaInstitucionList:any;
 
   constructor(private datosPortfolio: PortfolioService) { }
 
   ngOnInit(): void {
 
-    this.datosPortfolio.obtenerDatosJSON().subscribe(data => {
-      //  this.educacionFormalList = data.educacion.educacionFormal;
-      this.cursosList = data.educacion.cursos;
-    })
-
-      this.datosPortfolio.obtenerDatos("educacion_formal").subscribe(data => {
-        console.log(data);
-        for (let educacionFormal of data){
-          educacionFormal.fecha_inicio = this.convertirFechaAMesAno(educacionFormal.fecha_inicio);
-          educacionFormal.fecha_fin = this.convertirFechaAMesAno(educacionFormal.fecha_fin);
+    this.datosPortfolio.obtenerDatos("educacion_formal").subscribe(data => {
+      for (let educacion of data) {
+        educacion.fecha_inicio = this.convertirFechaAMesAno(educacion.fecha_inicio);
+        educacion.fecha_fin = this.convertirFechaAMesAno(educacion.fecha_fin);
+      }
+      this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(dataEmpInst => {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < dataEmpInst.length; j++) {
+            if (data[i].empresa_institucion_id == dataEmpInst[j].id) {
+              data[i]["empresa_institucion_nombre"] = dataEmpInst[j].nombre;
+              data[i]["empresa_institucion_url_logo"] = dataEmpInst[j].url_logo;
+              data[i]["empresa_institucion_alt_text_logo"] = dataEmpInst[j].alt_text_logo;
+            }
+          }
         }
         this.educacionFormalList = data;
-       });
+        //console.log(this.educacionFormalList);
+      });
 
-      this.datosPortfolio.obtenerDatos("curso").subscribe(data => {
-        console.log(data);
-        for (let curso of data){
-          curso.fecha_fin = this.convertirFechaAMesAno(curso.fecha_fin);
+    });
+
+    this.datosPortfolio.obtenerDatos("curso").subscribe(data => {
+      for (let curso of data) {
+        curso.fecha_inicio = this.convertirFechaAMesAno(curso.fecha_inicio);
+        curso.fecha_fin = this.convertirFechaAMesAno(curso.fecha_fin);
+      }
+      this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(dataEmpInst => {
+        for (let i = 0; i < data.length; i++) {
+          for (let j = 0; j < dataEmpInst.length; j++) {
+            if (data[i].empresa_institucion_id == dataEmpInst[j].id) {
+              data[i]["empresa_institucion_nombre"] = dataEmpInst[j].nombre;
+              data[i]["empresa_institucion_url_logo"] = dataEmpInst[j].url_logo;
+              data[i]["empresa_institucion_alt_text_logo"] = dataEmpInst[j].alt_text_logo;
+            }
+          }
         }
-        this.cursosList = data;
+        this.cursoList = data;
+        // console.log(this.cursoList);
       });
 
-      this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(data => {
-        console.log(data);
-        this.empresaInstitucionList = data;
-      });
+    });
 
   }
 

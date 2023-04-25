@@ -9,26 +9,20 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 })
 export class ExperienciaComponent implements OnInit {
   experienciaList: any;
-  empresaInstitucionList: any;
 
   constructor(private datosPortfolio: PortfolioService) { }
 
   ngOnInit(): void {
 
     this.datosPortfolio.obtenerDatos("experiencia").subscribe(data => {
-      console.log(JSON.stringify(data));
       for (let experiencia of data) {
         experiencia.fecha_inicio = this.convertirFechaAMesAno(experiencia.fecha_inicio);
         experiencia.fecha_fin = this.convertirFechaAMesAno(experiencia.fecha_fin);
       }
-      console.log(JSON.stringify(data));
       this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(dataEmpInst => {
-        console.log(JSON.stringify(dataEmpInst));
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < dataEmpInst.length; j++) {
-            console.log(JSON.stringify(data));
             if (data[i].empresa_institucion_id == dataEmpInst[j].id) {
-              console.log("Iteracion: " + i + j + JSON.stringify(data));
               data[i]["empresa_institucion_nombre"] = dataEmpInst[j].nombre;
               data[i]["empresa_institucion_url_logo"] = dataEmpInst[j].url_logo;
               data[i]["empresa_institucion_alt_text_logo"] = dataEmpInst[j].alt_text_logo;
@@ -36,7 +30,7 @@ export class ExperienciaComponent implements OnInit {
           }
         }
         this.experienciaList = data;
-        console.log(this.experienciaList);
+        //console.log(this.experienciaList);
       });
 
     });

@@ -1,18 +1,18 @@
 <div class = "card mat-card">
     <h2>Educacion</h2>
-<!-- 
+
     <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let educacionFormal of educacionFormalList">
       <div class="data-container row align-items-center">
           <div class="logo-image-container col-1">
             <img
-              [src]="empresaInstitucionList[educacionFormal.empresa_institucion_id - 1].url_logo"
-              class="logo-image img-fluid" [alt]="empresaInstitucionList[educacionFormal.empresa_institucion_id - 1].alt_text_logo" />
+              [src]="educacionFormal.empresa_institucion_url_logo"
+              class="logo-image img-fluid" [alt]="educacionFormal.empresa_institucion_alt_text_logo" />
 
           </div>
           <div class="list-info col-8">
             <h4>{{educacionFormal.titulo}}</h4>
-            <h5>{{empresaInstitucionList[educacionFormal.empresa_institucion_id - 1].nombre}}</h5>
+            <h5>{{educacionFormal.empresa_institucion_nombre}}</h5>
             <h6>{{educacionFormal.fecha_inicio}} - {{educacionFormal.fecha_fin}}</h6>
             <p>
               {{educacionFormal.descripcion}}
@@ -26,23 +26,23 @@
    <h3>Cursos</h3>
 
    <ul class="list-group list-group-flush">
-    <li class="list-group-item" *ngFor="let curso of cursosList">
+    <li class="list-group-item" *ngFor="let curso of cursoList">
       <div class="data-container row align-items-center">
           <div class="logo-image-container col-1">
             <img
-            [src]="empresaInstitucionList(curso.empresa_institucion_id).url_logo"
-            class="logo-image img-fluid" [alt]="empresaInstitucionList[curso.empresa_institucion_id - 1].alt_text_logo" />
+            [src]="curso.empresa_institucion_url_logo"
+            class="logo-image img-fluid" [alt]="curso.empresa_institucion_alt_text_logo" />
 
           </div>
           <div class="list-info col-8">
             <h5>{{curso.titulo}}</h5>
-            <h6>{{empresaInstitucionList[curso.empresa_institucion_id - 1].nombre}}</h6>
+            <h6>{{curso.empresa_institucion_nombre}}</h6>
             <p>Finalización: {{curso.fecha_fin}}</p>
 
           </div>
       </div>
     </li>
     
-   </ul> -->
+   </ul>
     
   </div>
