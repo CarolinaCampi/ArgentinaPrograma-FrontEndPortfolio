@@ -1,13 +1,14 @@
 <div class = "card mat-card">
-    <h2>Proyectos</h2>
+    <h2 id = "proyectos" class="mb-2">Proyectos</h2>
 
     <div class="row">
       <div class="col-sm-4" *ngFor="let proyecto of proyectosList">
         <div class="card text-center">
           <div class="card-body">
-            <h5 class="card-title">{{proyecto.tituloProyecto}}</h5>
-            <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
-            <a [href]="proyecto.linkProyecto" class="btn btn-outline-success">GitHub</a>
+            <h5 class="card-title mb-3">{{proyecto.titulo}}</h5>
+            <h6>Finalización: {{proyecto.fecha_fin}}</h6>
+            <p class="card-text">{{proyecto.descripcion}}</p>
+            <a [href]="proyecto.url_proyecto" class="btn btn-outline-success">GitHub</a>
           </div>
         </div>
       </div>
