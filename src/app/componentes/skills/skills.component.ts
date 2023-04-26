@@ -33,6 +33,11 @@ export class SkillsComponent implements OnInit{
        }, 100);
      
     });
+
+    this.datosPortfolio.obtenerDatos("soft_skill").subscribe(data => {
+      console.log(data);
+      this.softSkillsList = data;     
+    });
   }
 
   inicializarHTML(index:number){
