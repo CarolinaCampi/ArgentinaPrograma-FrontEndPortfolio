@@ -16,20 +16,19 @@ export class SkillsComponent implements OnInit{
    
 
   ngOnInit(): void {
-    this.datosPortfolio.obtenerDatosJSON().subscribe(data => {
+    this.datosPortfolio.obtenerDatos("hard_skill").subscribe(data => {
       console.log(data);
       
-      this.softSkillsList = data.skills.softSkills;
-
-      for(let i = 0; i < data.skills.hardSkills.length; i++){
+      //this.softSkillsList = data.skills.softSkills;
+      for(let i = 0; i < data.length; i++){
         this.inicializarHTML(i);
       }
 
       let self = this;
 
       setTimeout(function() {
-        for (let i = 0; i < data.skills.hardSkills.length; i++) {
-          self.createChart(i, data.skills.hardSkills[i].skill, data.skills.hardSkills[i].nivel);
+        for (let i = 0; i < data.length; i++) {
+          self.createChart(i, data[i].skill, data[i].nivel);
         }
        }, 100);
      
