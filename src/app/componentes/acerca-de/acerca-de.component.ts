@@ -19,4 +19,12 @@ export class AcercaDeComponent implements OnInit {
     });
   }
 
+  mostrar_edit(){
+    document.getElementById("edit_nombre_persona")!.style.display="inline";
+  }
+
+  edit(nuevo_nombre:string){
+    document.getElementById("nombre_persona")!.innerText = nuevo_nombre;
+  }
+
 }

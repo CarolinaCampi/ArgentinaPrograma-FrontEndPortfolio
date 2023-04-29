@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
 
   redSocialList: any;
   
-  constructor(private datosPortfolio:PortfolioService){  }
+  constructor(private datosPortfolio:PortfolioService, private ruta:Router){  }
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos("header").subscribe(data => {
@@ -24,6 +25,10 @@ export class HeaderComponent implements OnInit {
       console.log(data);
       this.redSocialList = data;
     });
+  }
+
+  loginClick(){
+    this.ruta.navigateByUrl('/iniciar-sesion');
   }
 
 }

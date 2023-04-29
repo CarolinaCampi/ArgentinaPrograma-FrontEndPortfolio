@@ -21,6 +21,7 @@
     "@popperjs/core": "^2.11.6",
     "@types/chart.js": "^2.9.37",
     "bootstrap": "^5.2.3",
+    "bootstrap-icons": "^1.10.5",
     "chart.js": "^4.2.1",
     "jquery": "^3.6.4",
     "rxjs": "~7.8.0",

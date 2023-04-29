@@ -1,41 +1,43 @@
-<div class = "card mat-card" id = "first card">
-  <div id = "profile-background">
-      <img [src] = "miPortfolio.url_banner">
+<div class="card mat-card" id="first card">
+    <div id="profile-background">
+        <img [src]="miPortfolio.url_banner">
 
-  </div>
+    </div>
 
-  <div id = "info" style = "padding: 16px">
+    <div id="info" style="padding: 16px">
 
-      <div id = "info-img">
-          <img class = "profile-image img-fluid img-thumbnail" [src] = "miPortfolio.url_foto">
-          <div class = "btn-edit"> <!--Ver porque no funciona-->
-              <a href="#" class = "btn-right">
-                <i class="bi bi-pencil"></i>
-              </a>
-          </div>
+        <div id="info-img">
+            <img class="profile-image img-fluid img-thumbnail d-inline" [src]="miPortfolio.url_foto">
+            <!-- <div class="btn-edit d-inline">
+                <a href="#" class="btn-right d-inline" onclick="edit()">
+                    <i class="bi bi-pencil"></i>
+                </a>
+            </div> -->
 
-      </div>
+        </div>
 
-      <div id = "info-data">
+        <div id="info-data">
 
-          <h1>{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
-          <h2>{{miPortfolio.posicion}}</h2>
-          <h3>{{miPortfolio.domicilio}}</h3>
+            <h1 id = "nombre_persona" class="d-inline">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
+            <div class="btn-edit d-inline" onclick="mostrar_edit()">
+                <a href="#" class="btn-right">
+                    <i class="bi bi-pencil"></i>
+                </a>
+            </div>
+            <input id="edit_nombre_persona" type="text" oninput="edit(this.value)" style="display: none">
+            <h2>{{miPortfolio.posicion}}</h2>
+            <h3>{{miPortfolio.domicilio}}</h3>
 
-      </div>
+        </div>
 
-      <p>{{miPortfolio.sobre_mi}}</p>
+        <p>{{miPortfolio.sobre_mi}}</p>
 
-      <div id = "info-actions">
-          <button class = "btn btn-outline-primary" type = "button"> Experiencia</button>
-          <button class = "btn btn-outline-primary" type = "button"> Educacion</button>
-          <button class = "btn btn-outline-primary" type = "button"> Skills</button>
-          <button class = "btn btn-outline-primary" type = "button"> Proyectos</button>
-      </div>
+        <div id="info-actions">
+            <button class="btn btn-outline-primary" type="button"> Experiencia</button>
+            <button class="btn btn-outline-primary" type="button"> Educacion</button>
+            <button class="btn btn-outline-primary" type="button"> Skills</button>
+            <button class="btn btn-outline-primary" type="button"> Proyectos</button>
+        </div>
 
-  </div>
+    </div>
 </div>
-
-
-
-
