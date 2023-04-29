@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class AcercaDeComponent implements OnInit {
   
   miPortfolio:any ={};
   
-  constructor(private datosPortfolio:PortfolioService){  }
+  constructor(private datosPortfolio:PortfolioService, public autenticacionServicio:AutenticacionService){  }
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos("persona").subscribe(data => {
@@ -19,12 +20,23 @@ export class AcercaDeComponent implements OnInit {
     });
   }
 
-  mostrar_edit(){
-    document.getElementById("edit_nombre_persona")!.style.display="inline";
+  mostrarEdit(key:string){
+    document.getElementById("edit_" + key + "_persona")!.classList.remove('invisible');
+    document.getElementById("edit_" + key + "_persona")!.classList.add('visible');
   }
 
-  edit(nuevo_nombre:string){
-    document.getElementById("nombre_persona")!.innerText = nuevo_nombre;
+  editMiPortfolio(key:string, value: string, id:string){
+    this.miPortfolio[key] = value;
+    document.getElementById("edit_" + key + "_persona")!.classList.remove('visible');
+    document.getElementById("edit_" + key + "_persona")!.classList.add('invisible');
+    this.updatePersona();
   }
+
+  updatePersona(){
+    this.datosPortfolio.modificarDatos("persona", this.miPortfolio).subscribe(data => {
+      console.log(data);
+    });
+  }
+  
 
 }

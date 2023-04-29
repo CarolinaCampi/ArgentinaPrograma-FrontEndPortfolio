@@ -11,13 +11,18 @@ export class PortfolioService {
 
   constructor(private http:HttpClient) {  }
   
-  obtenerDatosJSON():Observable<any>{
-    return this.http.get('./assets/data/data.json');
-  }
+
   
   obtenerDatos(sector: string):Observable<any>{
     return this.http.get(this.url + sector);
   }
 
+  postearDatos(sector: string, body:any):Observable<any>{
+    return this.http.post(this.url + sector, body);
+  }
+
+  modificarDatos(sector:string, body:any):Observable<any>{
+    return this.http.put(this.url + sector, body);
+  }
 
 }

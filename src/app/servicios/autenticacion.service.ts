@@ -27,4 +27,13 @@ export class AutenticacionService {
    get UsuarioAutenticado(){
     return this.currentUserSubject.value;
    }
+   
+   isLoggedIn() {
+    if (sessionStorage.getItem('currentUser')) {
+      return true;
+    }
+    else {
+      return false;
+    }
+  }
 }

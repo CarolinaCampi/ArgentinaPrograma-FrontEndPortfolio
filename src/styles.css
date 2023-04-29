@@ -12,7 +12,7 @@
 
 div#profile-background{
     display: flex;
-    z-index:1;
+    z-index: 1;
 }
 
 div#profile-background img{
@@ -31,7 +31,6 @@ div#profile-background img{
 div#info-actions{
     display: flex;
     box-sizing: border-box;
-
 }
 
 .iniciar-sesion{

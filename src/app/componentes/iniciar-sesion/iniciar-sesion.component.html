@@ -4,7 +4,7 @@
   <form [formGroup]="form" class="m-5" (ngSubmit)="onEnviar($event)">
     <div class="mb-3">
       <label for="exampleInputEmail1" class="form-label">Email</label>
-      <input type="email" formControlName="username"
+      <input type="email" formControlName="username" placeholder="Email"
         [ngClass]="{'is-invalid': Email?.errors && Email?.touched, 'is-valid': !Email?.errors && Email?.touched}"
         class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
       <div *ngIf="Email?.errors && Email?.touched">
@@ -19,7 +19,7 @@
 
     <div class="mb-3">
       <label for="exampleInputPassword1" class="form-label">Contraseña</label>
-      <input type="password" formControlName="password"
+      <input type="password" formControlName="password" placeholder="Contraseña"
         [ngClass]="{'is-invalid': Password?.errors && Password?.touched, 'is-valid': !Password?.errors && Password?.touched}"
         class="form-control" id="exampleInputPassword1">
     </div>

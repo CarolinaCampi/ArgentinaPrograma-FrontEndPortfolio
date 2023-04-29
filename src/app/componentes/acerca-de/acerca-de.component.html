@@ -1,6 +1,19 @@
 <div class="card mat-card" id="first card">
-    <div id="profile-background">
+    <div id="profile-background" class="position-relative">
         <img [src]="miPortfolio.url_banner">
+        <div class="position-absolute bottom-0 end-0">
+            <div id="edit_url_banner_persona" class="invisible d-inline">
+                <p class="d-inline">URL banner para perfil: <input type="text" class="mx-2" #nueva_url_banner
+                        (keyup.enter)="editMiPortfolio('url_banner', nueva_url_banner.value, 'edit_url_banner_persona')">
+                </p>
+
+            </div>
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarEdit('url_banner')">
+                <i class="bi bi-pencil"></i>
+            </button>
+        </div>
+
 
     </div>
 
@@ -8,35 +21,80 @@
 
         <div id="info-img">
             <img class="profile-image img-fluid img-thumbnail d-inline" [src]="miPortfolio.url_foto">
-            <!-- <div class="btn-edit d-inline">
-                <a href="#" class="btn-right d-inline" onclick="edit()">
-                    <i class="bi bi-pencil"></i>
-                </a>
-            </div> -->
-
-        </div>
-
-        <div id="info-data">
-
-            <h1 id = "nombre_persona" class="d-inline">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
-            <div class="btn-edit d-inline" onclick="mostrar_edit()">
-                <a href="#" class="btn-right">
-                    <i class="bi bi-pencil"></i>
-                </a>
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarEdit('url_foto')">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <div id="edit_url_foto_persona" class="invisible d-inline">
+                <p class="d-inline">URL foto de perfil: <input type="text" class="mx-2" #nueva_url_foto
+                        (keyup.enter)="editMiPortfolio('url_foto', nueva_url_foto.value, 'edit_url_foto_persona')">
+                </p>
             </div>
-            <input id="edit_nombre_persona" type="text" oninput="edit(this.value)" style="display: none">
-            <h2>{{miPortfolio.posicion}}</h2>
-            <h3>{{miPortfolio.domicilio}}</h3>
+        </div>
+
+        <div id="info-data" class="align-items-center">
+
+            <h1 id="nombre_persona" class="d-inline">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarEdit('nombre_completo')">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <div id="edit_nombre_completo_persona" class="invisible d-inline">
+                <p class="d-inline">Nombre: <input id="edit_nombre_persona" type="text" class="mx-2" #nuevo_nombre
+                        (keyup.enter)="editMiPortfolio('nombre', nuevo_nombre.value, 'edit_nombre_completo_persona')">
+                </p>
+                <p class="d-inline">Apellido: <input id="edit_apellido_persona" type="text" class="mx-2" #nuevo_apellido
+                        (keyup.enter)="editMiPortfolio('apellido', nuevo_apellido.value, 'edit_nombre_completo_persona')">
+                </p>
+            </div>
+
+            <div>
+                <h2 class="d-inline">{{miPortfolio.posicion}}</h2>
+                <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                    (click)="mostrarEdit('posicion')">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <div id="edit_posicion_persona" class="invisible d-inline">
+                    <p class="d-inline">Posición: <input type="text" class="mx-2" #nueva_posicion
+                            (keyup.enter)="editMiPortfolio('posicion', nueva_posicion.value, 'edit_posicion_persona')">
+                    </p>
+
+                </div>
+            </div>
+
+            <div>
+                <h3 class="d-inline">{{miPortfolio.domicilio}}</h3>
+                <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                    (click)="mostrarEdit('domicilio')">
+                    <i class="bi bi-pencil"></i>
+                </button>
+                <div id="edit_domicilio_persona" class="invisible d-inline">
+                    <p class="d-inline">Ubicación: <input type="text" class="mx-2" #nuevo_domicilio
+                            (keyup.enter)="editMiPortfolio('domicilio', nuevo_domicilio.value, 'edit_domicilio_persona')">
+                    </p>
+                </div>
+            </div>
+
+            <p class="d-inline">{{miPortfolio.sobre_mi}}</p>
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarEdit('sobre_mi')">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <div id="edit_sobre_mi_persona" class="invisible d-inline">
+                <p>Sobre mi: <input type="text" class="mx-2 d-inline" #nuevo_sobre_mi
+                        (keyup.enter)="editMiPortfolio('sobre_mi', nuevo_sobre_mi.value, 'edit_sobre_mi_persona')">
+                </p>
+            </div>
 
         </div>
 
-        <p>{{miPortfolio.sobre_mi}}</p>
+
 
         <div id="info-actions">
-            <button class="btn btn-outline-primary" type="button"> Experiencia</button>
-            <button class="btn btn-outline-primary" type="button"> Educacion</button>
-            <button class="btn btn-outline-primary" type="button"> Skills</button>
-            <button class="btn btn-outline-primary" type="button"> Proyectos</button>
+            <button class="btn btn-outline-primary btn-actions" type="button">Experiencia</button>
+            <button class="btn btn-outline-primary btn-actions" type="button">Educacion</button>
+            <button class="btn btn-outline-primary btn-actions" type="button">Skills</button>
+            <button class="btn btn-outline-primary btn-actions" type="button">Proyectos</button>
         </div>
 
     </div>
