@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 
 @Component({
@@ -13,7 +14,7 @@ export class HeaderComponent implements OnInit {
 
   redSocialList: any;
   
-  constructor(private datosPortfolio:PortfolioService, private ruta:Router){  }
+  constructor(private datosPortfolio:PortfolioService, private ruta:Router, public autenticacionServicio:AutenticacionService){  }
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos("header").subscribe(data => {
@@ -24,6 +25,24 @@ export class HeaderComponent implements OnInit {
     this.datosPortfolio.obtenerDatos("red_social").subscribe(data => {
       console.log(data);
       this.redSocialList = data;
+    });
+  }
+
+  mostrarEdit(key:string){
+    document.getElementById("edit_" + key)!.classList.remove('invisible');
+    document.getElementById("edit_" + key)!.classList.add('visible');
+  }
+
+  editData(entity: string, dataToUpdate:any,key:string, value: string, id:string){
+    dataToUpdate[key] = value;
+    document.getElementById("edit_" + key)!.classList.remove('visible');
+    document.getElementById("edit_" + key)!.classList.add('invisible');
+    this.updateEntity(entity, dataToUpdate);
+  }
+
+  updateEntity(entity: string, dataToUpdate:any){
+    dataToUpdate.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
+      console.log(data);
     });
   }
 

@@ -6,7 +6,6 @@
                 <p class="d-inline">URL banner para perfil: <input type="text" class="mx-2" #nueva_url_banner
                         (keyup.enter)="editMiPortfolio('url_banner', nueva_url_banner.value, 'edit_url_banner_persona')">
                 </p>
-
             </div>
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                 (click)="mostrarEdit('url_banner')">

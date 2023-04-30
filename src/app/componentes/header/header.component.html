@@ -1,25 +1,55 @@
-<div class = "card mat-card">
-    <div class="row align-items-center">
-        <div class="col-2">
-          <img [src]="header.url_logo_pagina" class="img-fluid">
-        </div>
-        
-        <div class="col-2">
-          <h4>{{header.titulo_pagina}}</h4>
-        </div>
-        
-        <div class="col-5">
-        </div>
-        
-        <div class="col-2 justify-content-end">
-          <div class="logo-container" *ngFor="let redSocial of redSocialList">
-            <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social" alt={{redSocial.alt_text_logo}} ></a>
-          </div>
-          
-        </div>
+<div class="card mat-card">
+  <div class="row align-items-center">
+    <div class="col-3">
+      <img [src]="header.url_logo_pagina" class="logo-pagina img-fluid m-2">
+      <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+        (click)="mostrarEdit('url_logo_pagina')">
+        <i class="bi bi-pencil light"></i>
+      </button>
+    </div>
 
-        <div class="col-1">
-            <button class = "btn btn-outline-info login align-self-center" type = "button" (click)="loginClick();">Login</button>
-        </div>
+    <div class="col-2">
+      <h2 class="d-inline">{{header.titulo_pagina}}</h2>
+      <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+        (click)="mostrarEdit('titulo_pagina')">
+        <i class="bi bi-pencil light"></i>
+      </button>
+
+    </div>
+
+    <div class="col-4">
+    </div>
+
+    <div class="col-2">
+      <div class="logo-container" *ngFor="let redSocial of redSocialList">
+        <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social"
+            alt={{redSocial.alt_text_logo}}></a>
+
       </div>
+
+    </div>
+
+    <div class="col-1">
+      <button class="btn btn-outline-info login align-self-center" type="button" (click)="loginClick();">Login</button>
+    </div>
+  </div>
+
+  <div class="row align-items-center">
+    <div class="col-3">
+      <div id="edit_url_logo_pagina" class="invisible d-inline">
+        <p class="d-inline">URL logo página: <input type="text" class="mx-2" #nueva_url_logo_pagina
+            (keyup.enter)="editData('header', header ,'url_logo_pagina', nueva_url_logo_pagina.value, 'edit_url_logo_pagina')">
+        </p>
+      </div>
+    </div>
+
+    <div class="col-3">
+      <div id="edit_titulo_pagina" class="invisible d-inline">
+        <p class="d-inline">URL logo página: <input type="text" class="mx-2" #nuevo_titulo_pagina
+            (keyup.enter)="editData('header', header ,'titulo_pagina', nuevo_titulo_pagina.value, 'edit_titulo_pagina')">
+        </p>
+      </div>
+    </div>
+
+  </div>
 </div>
