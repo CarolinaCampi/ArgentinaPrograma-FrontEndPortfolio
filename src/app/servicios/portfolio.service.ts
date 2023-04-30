@@ -11,16 +11,16 @@ export class PortfolioService {
 
   constructor(private http:HttpClient) {  }
     
-  obtenerDatos(sector: string):Observable<any>{
-    return this.http.get(this.url + sector);
+  obtenerDatos(entity: string):Observable<any>{
+    return this.http.get(this.url + entity);
   }
 
-  postearDatos(sector: string, body:any):Observable<any>{
-    return this.http.post(this.url + sector, body);
+  postearDatos(entity: string, body:any):Observable<any>{
+    return this.http.post(this.url + entity, body);
   }
 
-  modificarDatos(sector:string, body:any):Observable<any>{
-    return this.http.put(this.url + sector, body);
+  modificarDatos(entity:string, body:any):Observable<any>{
+    return this.http.put(this.url + entity, body);
   }
 
 }

@@ -18,13 +18,27 @@
     </div>
 
     <div class="col-4">
+      <div id="edit_url_red_social" class="d-none" *ngFor="let redSocial of redSocialList">
+        <p class="d-inline">URL red social {{redSocialList.indexOf(redSocial) + 1}}: <input type="text" class="mx-2" #nueva_url_red_social
+            (keyup.enter)="editData('red_social', redSocialList ,'url_red_social', nueva_url_red_social.value, 'edit_url_red_social')">
+        </p>
+        <p class="d-inline">URL logo red social {{redSocialList.indexOf(redSocial)+1}}: <input type="text" class="mx-2" #nueva_url_logo_red_social
+          (keyup.enter)="editData('red_social', redSocialList ,'url_logo_red_social', nueva_url_logo_red_social.value, 'edit_url_logo_red_social')">
+      </p>
+      <p class="d-inline">Alt text logo {{redSocialList.indexOf(redSocial)+1}}: <input type="text" class="mx-2" #nuevo_alt_text_logo
+        (keyup.enter)="editData('red_social', redSocialList ,'alt_text_logo', nuevo_alt_text_logo.value, 'edit_alt_text_logo')">
+    </p>
+      </div>
     </div>
 
     <div class="col-2">
-      <div class="logo-container" *ngFor="let redSocial of redSocialList">
+      <div class="d-inline" *ngFor="let redSocial of redSocialList">
         <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social"
             alt={{redSocial.alt_text_logo}}></a>
-
+        <button class="btn btn-edit d-inline" *ngIf="autenticacionServicio.isLoggedIn()"
+          (click)="mostrarEdit('url_red_social')">
+          <i class="bi bi-pencil light"></i>
+        </button>
       </div>
 
     </div>
@@ -36,7 +50,7 @@
 
   <div class="row align-items-center">
     <div class="col-3">
-      <div id="edit_url_logo_pagina" class="invisible d-inline">
+      <div id="edit_url_logo_pagina" class="d-none">
         <p class="d-inline">URL logo página: <input type="text" class="mx-2" #nueva_url_logo_pagina
             (keyup.enter)="editData('header', header ,'url_logo_pagina', nueva_url_logo_pagina.value, 'edit_url_logo_pagina')">
         </p>
@@ -44,11 +58,20 @@
     </div>
 
     <div class="col-3">
-      <div id="edit_titulo_pagina" class="invisible d-inline">
+      <div id="edit_titulo_pagina" class="d-none">
         <p class="d-inline">URL logo página: <input type="text" class="mx-2" #nuevo_titulo_pagina
             (keyup.enter)="editData('header', header ,'titulo_pagina', nuevo_titulo_pagina.value, 'edit_titulo_pagina')">
         </p>
       </div>
+    </div>
+
+    <div class="col-4">
+      
+    </div>
+
+    <div class="col-3">
+
+
     </div>
 
   </div>

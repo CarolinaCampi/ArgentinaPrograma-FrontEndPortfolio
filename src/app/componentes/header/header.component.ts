@@ -29,19 +29,19 @@ export class HeaderComponent implements OnInit {
   }
 
   mostrarEdit(key:string){
-    document.getElementById("edit_" + key)!.classList.remove('invisible');
-    document.getElementById("edit_" + key)!.classList.add('visible');
+    document.getElementById("edit_" + key)!.classList.remove('d-none');
+    document.getElementById("edit_" + key)!.classList.add('d-inline');
   }
 
   editData(entity: string, dataToUpdate:any,key:string, value: string, id:string){
     dataToUpdate[key] = value;
-    document.getElementById("edit_" + key)!.classList.remove('visible');
-    document.getElementById("edit_" + key)!.classList.add('invisible');
+    document.getElementById("edit_" + key)!.classList.remove('d-inline');
+    document.getElementById("edit_" + key)!.classList.add('d-none');
     this.updateEntity(entity, dataToUpdate);
   }
 
   updateEntity(entity: string, dataToUpdate:any){
-    dataToUpdate.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
+    this.datosPortfolio.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
       console.log(data);
     });
   }
