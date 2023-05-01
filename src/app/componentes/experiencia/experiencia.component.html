@@ -1,9 +1,10 @@
 <div class="card mat-card">
-  <h2 class="d-inline">Experiencia</h2>
-  <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-    (click)="mostrarEdit('nueva_experiencia')">
-    <i class="bi bi-plus-square"></i>
-  </button>
+  <h2 class="d-inline">Experiencia
+    <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+      (click)="mostrarById('nueva_experiencia')">
+      <i class="bi bi-plus-lg bi-dark"></i>
+    </button>
+  </h2>
 
   <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let experiencia of experienciaList">
@@ -14,99 +15,117 @@
         </div>
 
         <div class="list-info col-8">
-          <h4 class="d-inline">{{experiencia.rol}}</h4>
-          <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarEdit('rol_' + experiencia.id)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <div [id]="'edit_rol_' + experiencia.id" class="d-none">
+          <h4 class="d-inline">{{experiencia.rol}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('rol_' + experiencia.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h4>
+          <div [id]="'rol_' + experiencia.id" class="d-none">
             <p class="d-inline">Rol: <input type="text" class="mx-2" #nuevo_rol
-                (keyup.enter)="editData('experiencia', experiencia, 'rol', nuevo_rol.value, 'edit_rol_' + experiencia.id)">
+                (keyup.enter)="editData('experiencia', experiencia, 'rol', nuevo_rol.value, 'rol_' + experiencia.id)">
             </p>
           </div>
 
 
-          <h5>{{experiencia.empresa_institucion_nombre}}</h5>
-          <!-- <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarEdit('rol')">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <div id="edit_rol" class="d-none">
-            <p class="d-inline">Empresa: <input type="text" class="mx-2" #nuevo_rol
-                (keyup.enter)="editData('experiencia', experiencia, 'rol', nuevo_rol.value, 'edit_rol')">
+          <h5>{{experiencia.empresa_institucion_nombre}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('empresa_' + experiencia.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h5>
+          <div [id]="'empresa_' + experiencia.id" class="d-none">
+            <p class="d-inline">Empresa:
+              <select required #empresa (change)="editData('experiencia', experiencia, 'empresa_institucion_id', empresa.value, 'empresa_' + experiencia.id)">
+                <option value="" disabled selected>Seleccione la empresa</option>
+                <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
+              </select>
             </p>
-          </div> -->
+          </div>
 
           <h6>{{experiencia.fecha_inicio}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarEdit('fecha_inicio_'  + experiencia.id)">
+              (click)="mostrarById('fecha_inicio_'  + experiencia.id)">
               <i class="bi bi-pencil"></i>
             </button>
             - {{experiencia.fecha_fin}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarEdit('fecha_fin_' + experiencia.id)">
+              (click)="mostrarById('fecha_fin_' + experiencia.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h6>
-          <div [id]="'edit_fecha_inicio_' + experiencia.id" class="d-none">
+          <div [id]="'fecha_inicio_' + experiencia.id" class="d-none">
             <p class="d-inline">Fecha inicio: <input type="text" placeholder="YYYY-MM-DD" #nueva_fecha_inicio
-                (keyup.enter)="editData('experiencia', experiencia, 'fecha_inicio', nueva_fecha_inicio.value, 'edit_fecha_inicio_' + experiencia.id)">
+                (keyup.enter)="editData('experiencia', experiencia, 'fecha_inicio', nueva_fecha_inicio.value, 'fecha_inicio_' + experiencia.id)">
             </p>
           </div>
-          <div [id]="'edit_fecha_fin_' + experiencia.id" class="d-none">
+          <div [id]="'fecha_fin_' + experiencia.id" class="d-none">
             <p class="d-inline">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #nueva_fecha_fin
-                (keyup.enter)="editData('experiencia', experiencia, 'fecha_fin', nueva_fecha_fin.value, 'edit_fecha_fin_' + experiencia.id)">
+                (keyup.enter)="editData('experiencia', experiencia, 'fecha_fin', nueva_fecha_fin.value, 'fecha_fin_' + experiencia.id)">
             </p>
           </div>
 
           <p>
             {{experiencia.descripcion}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('descripcion_' + experiencia.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
           </p>
-
-          <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarEdit('descripcion_' + experiencia.id)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <div [id]="'edit_descripcion_' + experiencia.id" class="d-none">
+          <div [id]="'descripcion_' + experiencia.id" class="d-none">
             <p class="d-inline">Descripción: <input type="text" class="mx-2" #nueva_descripcion
-                (keyup.enter)="editData('experiencia', experiencia, 'descripcion', nueva_descripcion.value, 'edit_descripcion_' + experiencia.id)">
+                (keyup.enter)="editData('experiencia', experiencia, 'descripcion', nueva_descripcion.value, 'descripcion_' + experiencia.id)">
             </p>
           </div>
 
-          <div class="col-3">
-          </div>
+        </div>
 
+        <div class="col-2">
+        </div>
+
+        <div class="col-1">
+          <button class="btn" (click)="borrarExperiencia(experiencia.id)">
+            <i class="bi bi-trash m-3"></i>
+          </button>
         </div>
       </div>
     </li>
 
-    <li id="edit_nueva_experiencia" class="d-none">
+    <li id="nueva_experiencia" class="d-none">
       <h4>Nueva experiencia</h4>
       <div>
-        <p class="d-inline">Rol: <input type="text" class="m-2" #rol_nueva_experiencia (blur)="crearObjetoExperiencia('rol', rol_nueva_experiencia.value)" >
+        <p class="d-inline">Rol: <input type="text" class="m-2" #rol_nueva_experiencia
+            (blur)="crearObjetoExperiencia('rol', rol_nueva_experiencia.value)">
         </p>
       </div>
       <div>
         <p class="d-inline">Empresa:
-        <select required #empresa (change)="crearObjetoExperiencia('empresa_institucion_id', empresa.value)">
-          <option value="" disabled selected>Seleccione la empresa</option>
-          <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
-        </select></p>
-      </div>
-      <div>
-        <p class="d-inline">Fecha de inicio: <input type="text" class="m-2" placeholder="YYYY-MM-DD" #fecha_inicio_nueva_experiencia (blur)="crearObjetoExperiencia('fecha_inicio', fecha_inicio_nueva_experiencia.value)">
+          <select required #empresa (change)="crearObjetoExperiencia('empresa_institucion_id', empresa.value)">
+            <option value="" disabled selected>Seleccione la empresa</option>
+            <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
+          </select>
         </p>
       </div>
       <div>
-        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD" #fecha_fin_nueva_experiencia (blur)="crearObjetoExperiencia('fecha_fin', fecha_fin_nueva_experiencia.value)">
+        <p class="d-inline">Fecha de inicio: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+            #fecha_inicio_nueva_experiencia
+            (blur)="crearObjetoExperiencia('fecha_inicio', fecha_inicio_nueva_experiencia.value)">
         </p>
       </div>
       <div>
-        <p class="d-inline">Es empleo actual? <input type="checkbox" class="m-2" #empleo_actual_nueva_experiencia (change)="crearObjetoExperiencia('es_trabajo_actual', empleo_actual_nueva_experiencia.checked + '')">
+        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+            #fecha_fin_nueva_experiencia
+            (blur)="crearObjetoExperiencia('fecha_fin', fecha_fin_nueva_experiencia.value)">
         </p>
       </div>
       <div>
-        <p class="d-inline">Descripción: <input type="text" class="m-2" #descripcion_nueva_experiencia (blur)="crearObjetoExperiencia('descripcion', descripcion_nueva_experiencia.value)">
+        <p class="d-inline">Es empleo actual? <input type="checkbox" class="m-2" #empleo_actual_nueva_experiencia
+            (change)="crearObjetoExperiencia('es_trabajo_actual', empleo_actual_nueva_experiencia.checked + '')">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Descripción: <input type="text" class="m-2" #descripcion_nueva_experiencia
+            (blur)="crearObjetoExperiencia('descripcion', descripcion_nueva_experiencia.value)">
         </p>
       </div>
       <button (click)="crearExperiencia()">Submit</button>

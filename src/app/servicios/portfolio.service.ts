@@ -23,4 +23,8 @@ export class PortfolioService {
     return this.http.put(this.url + entity, body);
   }
 
+  borrarDatos(entity:string, id:number):Observable<any>{
+    return this.http.delete(this.url + entity + '/' + id);
+  }
+
 }

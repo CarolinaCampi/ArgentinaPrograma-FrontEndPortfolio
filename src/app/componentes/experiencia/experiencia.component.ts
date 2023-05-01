@@ -55,18 +55,27 @@ export class ExperienciaComponent implements OnInit {
   
   // Edition methods: 
 
-  mostrarEdit(key:string){
-    console.log(key);
-    document.getElementById("edit_" + key)!.classList.remove('d-none');
-    document.getElementById("edit_" + key)!.classList.add('d-inline');
+  mostrarById(id:string){
+    console.log(id);
+    document.getElementById(id)!.classList.remove('d-none');
+    document.getElementById(id)!.classList.add('d-inline');
   }
 
   editData(entity: string, dataToUpdate:any, key:string, value: string, id:string){
-    if (key.includes("fecha")){
-      let stringDate = this.convertirFechaAMesAno(value);
-      dataToUpdate[key] = stringDate; //actualiza la UI
-    } else {
-      dataToUpdate[key] = value; //actualiza la UI
+    if (key.includes("fecha")){ //actualiza la UI para fechas
+      dataToUpdate[key] = this.convertirFechaAMesAno(value)
+    } else if (key == "empresa_institucion_id"){ //actualiza la UI para empresa
+      dataToUpdate[key] = value;
+        for (let j = 0; j < this.empInstList.length; j++){
+          if (dataToUpdate.empresa_institucion_id == this.empInstList[j].id){
+            dataToUpdate['empresa_institucion_nombre'] = this.empInstList[j].nombre;
+            dataToUpdate['empresa_institucion_url_logo'] = this.empInstList[j].url_logo;
+            dataToUpdate['empresa_institucion_alt_text_logo'] = this.empInstList[j].alt_text_logo;
+            console.log(dataToUpdate);
+          }
+        }
+      } else { //actualiza la UI 
+      dataToUpdate[key] = value; 
     }
     document.getElementById(id)!.classList.remove('d-inline');
     document.getElementById(id)!.classList.add('d-none');
@@ -98,6 +107,15 @@ export class ExperienciaComponent implements OnInit {
   // Post the new experiencia object created
   crearExperiencia(){
         this.datosPortfolio.postearDatos('experiencia', this.objetoExperiencia).subscribe(data =>{
+      console.log(data);
+    });
+    window.location.reload();
+  }
+
+  // Delete methods
+
+  borrarExperiencia(id:number){
+    this.datosPortfolio.borrarDatos('experiencia', id).subscribe(data => {
       console.log(data);
     });
     window.location.reload();
