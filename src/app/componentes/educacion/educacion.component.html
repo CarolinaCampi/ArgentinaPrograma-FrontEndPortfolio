@@ -198,9 +198,18 @@
                 (keyup.enter)="editData('educacion_formal', curso, rawDataCurso, 'fecha_fin', edit_fecha_fin_curso.value, 'fecha_fin_curso_' + curso.id)">
             </p>
           </div>
-
-
         </div>
+
+
+        <div class="col-1">
+        </div>
+
+        <div class="col-1">
+          <button class="btn" *ngIf="autenticacionServicio.isLoggedIn()" (click)="borrarEducacion('curso', curso.id)">
+            <i class="bi bi-trash m-3"></i>
+          </button>
+        </div>
+
       </div>
     </li>
 
