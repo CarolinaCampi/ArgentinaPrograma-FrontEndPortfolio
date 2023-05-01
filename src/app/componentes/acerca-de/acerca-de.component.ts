@@ -20,15 +20,15 @@ export class AcercaDeComponent implements OnInit {
     });
   }
 
-  mostrarEdit(key:string){
-    document.getElementById("edit_" + key + "_persona")!.classList.remove('invisible');
-    document.getElementById("edit_" + key + "_persona")!.classList.add('visible');
+  mostrarById(id:string){
+    document.getElementById(id)!.classList.remove('invisible');
+    document.getElementById(id)!.classList.add('visible');
   }
 
   editMiPortfolio(key:string, value: string, id:string){
     this.miPortfolio[key] = value;
-    document.getElementById("edit_" + key + "_persona")!.classList.remove('visible');
-    document.getElementById("edit_" + key + "_persona")!.classList.add('invisible');
+    document.getElementById(id)!.classList.remove('visible');
+    document.getElementById(id)!.classList.add('invisible');
     this.updatePersona();
   }
 

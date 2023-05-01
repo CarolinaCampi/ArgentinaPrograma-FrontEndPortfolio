@@ -2,15 +2,11 @@
     <div id="profile-background" class="position-relative">
         <img [src]="miPortfolio.url_banner">
         <div class="position-absolute bottom-0 end-0">
-            <div id="edit_url_banner_persona" class="invisible d-inline">
-                <p class="d-inline">URL banner para perfil: <input type="text" class="mx-2" #nueva_url_banner
-                        (keyup.enter)="editMiPortfolio('url_banner', nueva_url_banner.value, 'edit_url_banner_persona')">
-                </p>
+            <div class="input-group p-3">
+                <input type="text" class="form-control invisible d-inline" id="edit_url_banner_persona" placeholder="URL banner" #nueva_url_banner
+                (keyup.enter)="editMiPortfolio('url_banner', nueva_url_banner.value, 'edit_url_banner_persona')">
+                <div class="input-group-text" *ngIf="autenticacionServicio.isLoggedIn()" (click)="mostrarById('edit_url_banner_persona')"><i class="bi bi-pencil"></i></div>
             </div>
-            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarEdit('url_banner')">
-                <i class="bi bi-pencil"></i>
-            </button>
         </div>
 
 
@@ -21,11 +17,11 @@
         <div id="info-img">
             <img class="profile-image img-fluid img-thumbnail d-inline" [src]="miPortfolio.url_foto">
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarEdit('url_foto')">
+                (click)="mostrarById('edit_url_foto_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_url_foto_persona" class="invisible d-inline">
-                <p class="d-inline">URL foto de perfil: <input type="text" class="mx-2" #nueva_url_foto
+                <p class="d-inline">URL foto de perfil: <input type="text" maxlength="1000" class="mx-2" #nueva_url_foto
                         (keyup.enter)="editMiPortfolio('url_foto', nueva_url_foto.value, 'edit_url_foto_persona')">
                 </p>
             </div>
@@ -35,7 +31,7 @@
 
             <h1 id="nombre_persona" class="d-inline">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarEdit('nombre_completo')">
+                (click)="mostrarById('edit_nombre_completo_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_nombre_completo_persona" class="invisible d-inline">
@@ -50,7 +46,7 @@
             <div>
                 <h2 class="d-inline">{{miPortfolio.posicion}}</h2>
                 <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                    (click)="mostrarEdit('posicion')">
+                    (click)="mostrarById('edit_posicion_persona')">
                     <i class="bi bi-pencil"></i>
                 </button>
                 <div id="edit_posicion_persona" class="invisible d-inline">
@@ -64,7 +60,7 @@
             <div>
                 <h3 class="d-inline">{{miPortfolio.domicilio}}</h3>
                 <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                    (click)="mostrarEdit('domicilio')">
+                    (click)="mostrarById('edit_domicilio_persona')">
                     <i class="bi bi-pencil"></i>
                 </button>
                 <div id="edit_domicilio_persona" class="invisible d-inline">
@@ -76,7 +72,7 @@
 
             <p class="d-inline">{{miPortfolio.sobre_mi}}</p>
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarEdit('sobre_mi')">
+                (click)="mostrarById('edit_sobre_mi_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_sobre_mi_persona" class="invisible d-inline">
