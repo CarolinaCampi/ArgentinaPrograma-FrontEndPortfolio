@@ -50,4 +50,8 @@ export class HeaderComponent implements OnInit {
     this.ruta.navigateByUrl('/iniciar-sesion');
   }
 
+  logoutClick(){
+    this.autenticacionServicio.logout();
+  }
+
 }

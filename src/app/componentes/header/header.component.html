@@ -44,7 +44,8 @@
     </div>
 
     <div class="col-1">
-      <button class="btn btn-outline-info login align-self-center" type="button" (click)="loginClick();">Login</button>
+      <button class="btn btn-outline-info login align-self-center" type="button" *ngIf="!autenticacionServicio.isLoggedIn()" (click)="loginClick();">Login</button>
+      <button class="btn btn-outline-info login align-self-center" type="button" *ngIf="autenticacionServicio.isLoggedIn()" (click)="logoutClick();">Logout</button>
     </div>
   </div>
 

@@ -27,6 +27,11 @@ export class AutenticacionService {
    get UsuarioAutenticado(){
     return this.currentUserSubject.value;
    }
+
+   logout() {
+    // remove user from local storage to log user out
+    sessionStorage.removeItem('currentUser');
+  }
    
    isLoggedIn() {
     if (sessionStorage.getItem('currentUser')) {
