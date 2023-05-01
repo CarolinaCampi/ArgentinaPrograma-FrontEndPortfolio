@@ -1,14 +1,65 @@
 <div class="card mat-card">
-    <h2 class="mb-2">Hard Skills</h2>
+    <h2 class="mb-2">Hard Skills
+        <button class="btn btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+            (click)="mostrarById('nuevo_hard_skill')">
+            <i class="bi bi-plus-circle"></i>
+        </button>
+    </h2>
+
+
     <div id="fila-hard-skills" class="row">
 
     </div>
 
-    <h2 class="my-4">Soft Skills</h2>
-    <div>
-        <button type="button" class="btn btn-outline-secondary d-inline mx-3" *ngFor="let softSkill of softSkillsList">
-            {{softSkill.skill}}
+
+    <div id="nuevo_hard_skill" class="d-none">
+        <h4>Nuevo hard skill</h4>
+        <div>
+            <p class="d-inline">Hard skill: <input type="text" class="m-2" #nuevo_hard_skill
+                    (blur)="crearObjetoSkill('skill', nuevo_hard_skill.value)">
+            </p>
+        </div>
+        <div>
+            <p class="d-inline">Nivel: <input type="number" min="1" max="100" class="m-2" placeholder="1 - 100"
+                    #nivel_nuevo_hard_skill (blur)="crearObjetoSkill('nivel', nivel_nuevo_hard_skill.value)">
+            </p>
+        </div>
+        <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearSkill('hard_skill')">Submit</button>
+
+    </div>
+
+    <h2 class="my-4">Soft Skills
+        <button class="btn btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+            (click)="mostrarById('nuevo_soft_skill')">
+            <i class="bi bi-plus-circle"></i>
         </button>
+    </h2>
+
+    <div class="d-flex">
+        <div *ngFor="let softSkill of softSkillsList">
+            <button type="button" class="btn btn-outline-secondary">
+                {{softSkill.skill}}
+            </button>
+            <button type="button" class="btn me-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="borrarSkill('soft_skill', softSkill.id)">
+                <i class="bi bi-trash"></i>
+            </button>
+        </div>
+    </div>
+
+
+
+
+    <div id="nuevo_soft_skill" class="d-none mt-3">
+        <h4>Nuevo soft skill</h4>
+        <div>
+            <p class="d-inline">Soft skill: <input type="text" class="m-2" #nuevo_soft_skill
+                    (blur)="crearObjetoSkill('skill', nuevo_soft_skill.value)">
+            </p>
+            <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearSkill('soft_skill')">Submit</button>
+        </div>
+        
+
     </div>
 
 </div>

@@ -122,12 +122,12 @@ export class EducacionComponent implements OnInit {
 
   objetoEducacion: any = {};
 
-  // Create the experiencia object that will be sent to the DB later
+  // Create the educacion object that will be sent to the DB later
   crearObjetoEducacion(key:string, value:string){
     this.objetoEducacion[key] = value;
     console.log(this.objetoEducacion);
   }
-  // Post the new experiencia object created
+  // Post the new educacion object created
   crearEducacion(entity:string){
         this.datosPortfolio.postearDatos(entity, this.objetoEducacion).subscribe(data =>{
       console.log(data);

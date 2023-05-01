@@ -1,66 +1,98 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 import { Chart } from 'chart.js/auto'
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 
 @Component({
   selector: 'app-skills',
   templateUrl: './skills.component.html',
   styleUrls: ['./skills.component.css']
 })
-export class SkillsComponent implements OnInit{
-  hardSkillsList:any;
-  softSkillsList:any;
+export class SkillsComponent implements OnInit {
+  hardSkillsList: any;
+  softSkillsList: any;
   chartList: any[] = [];
-  
-  constructor(private datosPortfolio:PortfolioService){ }
-   
+
+  constructor(private datosPortfolio: PortfolioService, public autenticacionServicio: AutenticacionService) { }
+
 
   ngOnInit(): void {
+
     this.datosPortfolio.obtenerDatos("hard_skill").subscribe(data => {
       console.log(data);
-      
-      //this.softSkillsList = data.skills.softSkills;
-      for(let i = 0; i < data.length; i++){
-        this.inicializarHTML(i);
+
+      for (let i = 0; i < data.length; i++) {
+        this.inicializarHTML(i, data[i].id);
       }
 
       let self = this;
-
-      setTimeout(function() {
+      setTimeout(function () {
         for (let i = 0; i < data.length; i++) {
           self.createChart(i, data[i].skill, data[i].nivel);
         }
-       }, 100);
-     
+      }, 100);
+
     });
 
     this.datosPortfolio.obtenerDatos("soft_skill").subscribe(data => {
       console.log(data);
-      this.softSkillsList = data;     
+      this.softSkillsList = data;
     });
   }
 
-  inicializarHTML(index:number){
+  inicializarHTML(index: number, id: number) {
     let col2 = document.createElement("div");
-    col2.classList.add("col-2");
-    
+    col2.classList.add("col-2", "border", "m-1");
+
     let canvas = document.createElement("canvas");
     canvas.id = "chart-" + index;
+    canvas.classList.add("d-inline", "p-0");
 
-    col2.appendChild(canvas);
+    if (this.autenticacionServicio.isLoggedIn()) {
+      // let button_lapiz = document.createElement("button");
+      // button_lapiz.classList.add("btn", "d-inline");
+
+      // let lapiz = document.createElement("i");
+      // lapiz.classList.add("bi", "bi-pencil");
+      
+      let button_tachito = document.createElement("button");
+      button_tachito.classList.add("btn", "d-inline");
+
+      let tachito = document.createElement("i");
+      tachito.classList.add("bi", "bi-trash");
+
+      //button_lapiz.appendChild(lapiz);
+      
+      button_tachito.appendChild(tachito);
+      
+      col2.appendChild(canvas);
+      //col2.appendChild(button_lapiz);
+      col2.appendChild(button_tachito);
+
+      let self = this;
+      button_tachito.addEventListener("click", function () {
+        self.borrarSkill('hard_skill', id);
+      });
+
+    } else {
+      col2.appendChild(canvas);
+    }
+
     document.getElementById("fila-hard-skills")!.appendChild(col2);
+
+
   }
 
-  createChart(index:number, titulo: string, porcentaje: number){
-  
+  createChart(index: number, titulo: string, porcentaje: number) {
+
     return new Chart("chart-" + index, {
       type: 'doughnut', //this denotes the type of chart
 
       data: {
-	       datasets: [
+        datasets: [
           {
             label: "Skill",
-            data: [100-porcentaje, porcentaje],
+            data: [100 - porcentaje, porcentaje],
             backgroundColor: ['white', 'green'],
             borderColor: 'green',
             borderWidth: 1,
@@ -69,7 +101,7 @@ export class SkillsComponent implements OnInit{
       },
       options: {
         responsive: true,
-        aspectRatio:2.5,
+        aspectRatio: 2.5,
         plugins: {
           title: {
             display: true,
@@ -78,7 +110,7 @@ export class SkillsComponent implements OnInit{
             color: 'black',
             padding: 5,
             fullSize: true,
-            font: {family: 'system-ui', size: 16}
+            font: { family: 'system-ui', size: 16 }
           },
 
         }
@@ -86,4 +118,38 @@ export class SkillsComponent implements OnInit{
 
     });
   }
+
+  // Changes the display class of an element with a specific id
+  mostrarById(id: string) {
+    console.log(id);
+    document.getElementById(id)!.classList.remove('d-none');
+    document.getElementById(id)!.classList.add('d-inline');
+  }
+
+  // Creation methods
+
+  objetoSkill: any = {};
+
+  // Create the skill object that will be sent to the DB later
+  crearObjetoSkill(key: string, value: string) {
+    this.objetoSkill[key] = value;
+    console.log(this.objetoSkill);
+  }
+  // Post the new skill object created
+  crearSkill(entity: string) {
+    this.datosPortfolio.postearDatos(entity, this.objetoSkill).subscribe(data => {
+      console.log(data);
+    });
+    window.location.reload();
+  }
+
+  // Delete methods
+
+  borrarSkill(entity: string, id: number) {
+    this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
+      console.log(data);
+    });
+    window.location.reload();
+  }
+
 }

@@ -16,7 +16,7 @@
 
         <div id="info-img">
             <img class="profile-image img-fluid img-thumbnail d-inline" [src]="miPortfolio.url_foto">
-            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+            <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                 (click)="mostrarById('edit_url_foto_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
@@ -30,7 +30,7 @@
         <div id="info-data" class="align-items-center">
 
             <h1 id="nombre_persona" class="d-inline">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
-            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+            <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                 (click)="mostrarById('edit_nombre_completo_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
@@ -45,7 +45,7 @@
 
             <div>
                 <h2 class="d-inline">{{miPortfolio.posicion}}</h2>
-                <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                     (click)="mostrarById('edit_posicion_persona')">
                     <i class="bi bi-pencil"></i>
                 </button>
@@ -59,7 +59,7 @@
 
             <div>
                 <h3 class="d-inline">{{miPortfolio.domicilio}}</h3>
-                <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                     (click)="mostrarById('edit_domicilio_persona')">
                     <i class="bi bi-pencil"></i>
                 </button>
@@ -71,7 +71,7 @@
             </div>
 
             <p class="d-inline">{{miPortfolio.sobre_mi}}
-            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+            <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                 (click)="mostrarById('edit_sobre_mi_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
@@ -80,11 +80,8 @@
                 <input id="nuevo_sobre_mi" type="text" class="mx-2 d-inline" #nuevo_sobre_mi
                         (keyup.enter)="editMiPortfolio('sobre_mi', nuevo_sobre_mi.value, 'edit_sobre_mi_persona')">
             </div>
-        
-
+    
         </div>
-
-
 
         <div id="info-actions">
             <button class="btn btn-outline-primary btn-actions" type="button">Experiencia</button>
