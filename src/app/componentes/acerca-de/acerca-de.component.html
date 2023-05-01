@@ -70,16 +70,18 @@
                 </div>
             </div>
 
-            <p class="d-inline">{{miPortfolio.sobre_mi}}</p>
+            <p class="d-inline">{{miPortfolio.sobre_mi}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                 (click)="mostrarById('edit_sobre_mi_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_sobre_mi_persona" class="invisible d-inline">
-                <p>Sobre mi: <input type="text" class="mx-2 d-inline" #nuevo_sobre_mi
+                <label for="nuevo_sobre_mi">Sobre mi:</label> 
+                <input id="nuevo_sobre_mi" type="text" class="mx-2 d-inline" #nuevo_sobre_mi
                         (keyup.enter)="editMiPortfolio('sobre_mi', nuevo_sobre_mi.value, 'edit_sobre_mi_persona')">
-                </p>
+                
             </div>
+        
 
         </div>
 

@@ -53,13 +53,15 @@ export class ExperienciaComponent implements OnInit {
     return formattedDate;// output format: "novembre de 2023"
   }
   
-  // Edition methods: 
+  // Changes the display class of an element with a specific id
 
   mostrarById(id:string){
     console.log(id);
     document.getElementById(id)!.classList.remove('d-none');
     document.getElementById(id)!.classList.add('d-inline');
   }
+    
+  // Edition methods 
 
   editData(entity: string, dataToUpdate:any, key:string, value: string, id:string){
     if (key.includes("fecha")){ //actualiza la UI para fechas
@@ -74,12 +76,12 @@ export class ExperienciaComponent implements OnInit {
             console.log(dataToUpdate);
           }
         }
-      } else { //actualiza la UI 
+      } else { //updates UI 
       dataToUpdate[key] = value; 
     }
     document.getElementById(id)!.classList.remove('d-inline');
     document.getElementById(id)!.classList.add('d-none');
-    // actualiza el objeto que mandamos a la BD
+    // update the object that will be sent to the DB
     for (let i = 0; i < this.rawDataExperiencia.length; i++){
       if (this.rawDataExperiencia[i].id == dataToUpdate.id){
         this.rawDataExperiencia[i][key] = value;

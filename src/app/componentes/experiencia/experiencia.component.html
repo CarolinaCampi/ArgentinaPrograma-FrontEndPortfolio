@@ -2,7 +2,7 @@
   <h2 class="d-inline">Experiencia
     <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
       (click)="mostrarById('nueva_experiencia')">
-      <i class="bi bi-plus-lg bi-dark"></i>
+      <i class="bi bi-plus-circle bi-dark"></i>
     </button>
   </h2>
 
@@ -127,7 +127,7 @@
             (blur)="crearObjetoExperiencia('descripcion', descripcion_nueva_experiencia.value)">
         </p>
       </div>
-      <button (click)="crearExperiencia()">Submit</button>
+      <button class="btn btn-outline-primary btn-sm" (click)="crearExperiencia()">Submit</button>
     </li>
 
   </ul>
