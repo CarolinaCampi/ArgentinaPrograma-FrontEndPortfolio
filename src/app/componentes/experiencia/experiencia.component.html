@@ -14,7 +14,7 @@
             [alt]="experiencia.empresa_institucion_alt_text_logo" />
         </div>
 
-        <div class="list-info col-8">
+        <div class="list-info col-9">
           <h4 class="d-inline">{{experiencia.rol}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
               (click)="mostrarById('rol_' + experiencia.id)">
@@ -40,6 +40,7 @@
                 <option value="" disabled selected>Seleccione la empresa</option>
                 <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
               </select>
+              Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
             </p>
           </div>
 
@@ -60,7 +61,7 @@
             </p>
           </div>
           <div [id]="'fecha_fin_' + experiencia.id" class="d-none">
-            <p class="d-inline">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #nueva_fecha_fin
+            <p class="d-inline mx-2">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #nueva_fecha_fin
                 (keyup.enter)="editData('experiencia', experiencia, 'fecha_fin', nueva_fecha_fin.value, 'fecha_fin_' + experiencia.id)">
             </p>
           </div>
@@ -79,7 +80,7 @@
           </div>
         </div>
 
-        <div class="col-2">
+        <div class="col-1">
         </div>
 
         <div class="col-1">
@@ -103,6 +104,7 @@
             <option value="" disabled selected>Seleccione la empresa</option>
             <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
           </select>
+          Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
         </p>
       </div>
       <div>

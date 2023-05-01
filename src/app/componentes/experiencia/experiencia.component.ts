@@ -54,7 +54,6 @@ export class ExperienciaComponent implements OnInit {
   }
   
   // Changes the display class of an element with a specific id
-
   mostrarById(id:string){
     console.log(id);
     document.getElementById(id)!.classList.remove('d-none');

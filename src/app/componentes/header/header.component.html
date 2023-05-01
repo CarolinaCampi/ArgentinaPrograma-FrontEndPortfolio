@@ -19,13 +19,13 @@
 
     <div class="col-3">
       <div [id]="'edit_red_social_' + redSocial.id" class="d-none mb-1" *ngFor="let redSocial of redSocialList">
-        <p>URL red social {{redSocialList.indexOf(redSocial) + 1}}: <input type="text" #nueva_url_red_social
+        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="text" #nueva_url_red_social
             (keyup.enter)="editData('red_social', redSocial,'url_red_social', nueva_url_red_social.value, 'edit_red_social_' + redSocial.id)">
         </p>
-        <p>URL logo red social {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nueva_url_logo_red_social
+        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nueva_url_logo_red_social
             (keyup.enter)="editData('red_social', redSocial ,'url_logo_red_social', nueva_url_logo_red_social.value, 'edit_red_social_' + redSocial.id)">
         </p>
-        <p>Alt text logo {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nuevo_alt_text_logo
+        <p>Alt text logo: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nuevo_alt_text_logo
             (keyup.enter)="editData('red_social', redSocial ,'alt_text_logo', nuevo_alt_text_logo.value, 'edit_red_social_' + redSocial.id)">
         </p>
       </div>

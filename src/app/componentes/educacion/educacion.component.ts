@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AutenticacionService } from 'src/app/servicios/autenticacion.service';
 import { PortfolioService } from 'src/app/servicios/portfolio.service';
 
 
@@ -9,19 +10,24 @@ import { PortfolioService } from 'src/app/servicios/portfolio.service';
 })
 export class EducacionComponent implements OnInit {
   educacionFormalList: any;
+  rawDataEducacionFormal: any;
   cursoList: any;
-  empresaInstitucionList:any;
+  rawDataCurso: any;
+  empInstList: any;
 
-  constructor(private datosPortfolio: PortfolioService) { }
+  constructor(private datosPortfolio: PortfolioService, public autenticacionServicio:AutenticacionService) { }
 
   ngOnInit(): void {
 
     this.datosPortfolio.obtenerDatos("educacion_formal").subscribe(data => {
+      this.rawDataEducacionFormal = JSON.parse(JSON.stringify(data));
+
       for (let educacion of data) {
         educacion.fecha_inicio = this.convertirFechaAMesAno(educacion.fecha_inicio);
         educacion.fecha_fin = this.convertirFechaAMesAno(educacion.fecha_fin);
       }
       this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(dataEmpInst => {
+        this.empInstList = dataEmpInst;
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < dataEmpInst.length; j++) {
             if (data[i].empresa_institucion_id == dataEmpInst[j].id) {
@@ -32,12 +38,13 @@ export class EducacionComponent implements OnInit {
           }
         }
         this.educacionFormalList = data;
-        //console.log(this.educacionFormalList);
       });
 
     });
 
     this.datosPortfolio.obtenerDatos("curso").subscribe(data => {
+      this.rawDataCurso = JSON.parse(JSON.stringify(data));
+
       for (let curso of data) {
         curso.fecha_inicio = this.convertirFechaAMesAno(curso.fecha_inicio);
         curso.fecha_fin = this.convertirFechaAMesAno(curso.fecha_fin);
@@ -53,7 +60,6 @@ export class EducacionComponent implements OnInit {
           }
         }
         this.cursoList = data;
-        // console.log(this.cursoList);
       });
 
     });
@@ -66,6 +72,76 @@ export class EducacionComponent implements OnInit {
     const formattedDate = date.toLocaleDateString('es-ES', options); // format the date to "Month Year" format
 
     return formattedDate;// output format: "novembre de 2023"
+  }
+
+  // Changes the display class of an element with a specific id
+  mostrarById(id:string){
+    console.log(id);
+    document.getElementById(id)!.classList.remove('d-none');
+    document.getElementById(id)!.classList.add('d-inline');
+  }
+    
+  // Edition methods 
+
+  editData(entity: string, dataToUpdate:any, rawData:any, key:string, value: string, id:string){
+    if (key.includes("fecha")){ //actualiza la UI para fechas
+      dataToUpdate[key] = this.convertirFechaAMesAno(value)
+    } else if (key == "empresa_institucion_id"){ //actualiza la UI para empresa
+      dataToUpdate[key] = value;
+        for (let j = 0; j < this.empInstList.length; j++){
+          if (dataToUpdate.empresa_institucion_id == this.empInstList[j].id){
+            dataToUpdate['empresa_institucion_nombre'] = this.empInstList[j].nombre;
+            dataToUpdate['empresa_institucion_url_logo'] = this.empInstList[j].url_logo;
+            dataToUpdate['empresa_institucion_alt_text_logo'] = this.empInstList[j].alt_text_logo;
+            console.log(dataToUpdate);
+          }
+        }
+      } else { //updates UI for the rest of the keys
+      dataToUpdate[key] = value; 
+    }
+    document.getElementById(id)!.classList.remove('d-inline');
+    document.getElementById(id)!.classList.add('d-none');
+    // update the object that will be sent to the DB
+    for (let i = 0; i < rawData.length; i++){
+      if (rawData[i].id == dataToUpdate.id){
+        rawData[i][key] = value;
+        this.updateEntity(entity, rawData[i]);
+        break;
+      }
+    }
+    console.log('Este es el archivo raw data: ' + JSON.stringify(rawData));
+  }
+
+  updateEntity(entity: string, dataToUpdate:any){
+    this.datosPortfolio.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+
+  // Creation methods
+
+  objetoEducacion: any = {};
+
+  // Create the experiencia object that will be sent to the DB later
+  crearObjetoEducacion(key:string, value:string){
+    this.objetoEducacion[key] = value;
+    console.log(this.objetoEducacion);
+  }
+  // Post the new experiencia object created
+  crearEducacion(entity:string){
+        this.datosPortfolio.postearDatos(entity, this.objetoEducacion).subscribe(data =>{
+      console.log(data);
+    });
+    window.location.reload();
+  }
+
+  // Delete methods
+
+  borrarEducacion(entity:string, id:number){
+    this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
+      console.log(data);
+    });
+    window.location.reload();
   }
 
 }

@@ -1,48 +1,234 @@
-<div class = "card mat-card">
-    <h2>Educacion</h2>
+<div class="card mat-card">
+  <h2>Educacion <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+      (click)="mostrarById('nueva_educacion')">
+      <i class="bi bi-plus-circle bi-dark"></i>
+    </button></h2>
 
-    <ul class="list-group list-group-flush">
+  <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let educacionFormal of educacionFormalList">
       <div class="data-container row align-items-center">
-          <div class="logo-image-container col-1">
-            <img
-              [src]="educacionFormal.empresa_institucion_url_logo"
-              class="logo-image img-fluid" [alt]="educacionFormal.empresa_institucion_alt_text_logo" />
+        <div class="logo-image-container col-1">
+          <img [src]="educacionFormal.empresa_institucion_url_logo" class="logo-image img-fluid"
+            [alt]="educacionFormal.empresa_institucion_alt_text_logo" />
 
-          </div>
-          <div class="list-info col-8">
-            <h4>{{educacionFormal.titulo}}</h4>
-            <h5>{{educacionFormal.empresa_institucion_nombre}}</h5>
-            <h6>{{educacionFormal.fecha_inicio}} - {{educacionFormal.fecha_fin}}</h6>
-            <p>
-              {{educacionFormal.descripcion}}
+        </div>
+        <div class="list-info col-9">
+          <h4 class="d-inline">{{educacionFormal.titulo}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('titulo_' + educacionFormal.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h4>
+          <div [id]="'titulo_' + educacionFormal.id" class="d-none">
+            <p class="d-inline">Título: <input type="text" class="mx-2" #edit_titulo
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'titulo', edit_titulo.value, 'titulo_' + educacionFormal.id)">
             </p>
           </div>
+
+
+          <h5>{{educacionFormal.empresa_institucion_nombre}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('empresa_' + educacionFormal.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h5>
+          <div [id]="'empresa_' + educacionFormal.id" class="d-none">
+            <p class="d-inline">Empresa o institución:
+              <select required #edit_empresa
+                (change)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal,'empresa_institucion_id', edit_empresa.value, 'empresa_' + educacionFormal.id)">
+                <option value="" disabled selected>Seleccione la empresa o institución</option>
+                <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
+              </select>
+              Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+            </p>
+          </div>
+
+
+
+          <h6>{{educacionFormal.fecha_inicio}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('fecha_inicio_'  + educacionFormal.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            - {{educacionFormal.fecha_fin}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('fecha_fin_' + educacionFormal.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h6>
+          <div [id]="'fecha_inicio_' + educacionFormal.id" class="d-none">
+            <p class="d-inline">Fecha inicio: <input type="text" placeholder="YYYY-MM-DD" #edit_fecha_inicio
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal,  'fecha_inicio', edit_fecha_inicio.value, 'fecha_inicio_' + educacionFormal.id)">
+            </p>
+          </div>
+          <div [id]="'fecha_fin_' + educacionFormal.id" class="d-none">
+            <p class="d-inline mx-2">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #edit_fecha_fin
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'fecha_fin', edit_fecha_fin.value, 'fecha_fin_' + educacionFormal.id)">
+            </p>
+          </div>
+
+
+
+          <p>
+            {{educacionFormal.descripcion}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('descripcion_' + educacionFormal.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </p>
+          <div [id]="'descripcion_' + educacionFormal.id" class="d-none">
+            <p class="d-inline">Descripción: <input type="text" class="mx-2" #edit_descripcion
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal ,'descripcion', edit_descripcion.value, 'descripcion_' + educacionFormal.id)">
+            </p>
+          </div>
+
+
+
+        </div>
+
+
+        <div class="col-1">
+        </div>
+
+        <div class="col-1">
+          <button class="btn" *ngIf="autenticacionServicio.isLoggedIn()"
+            (click)="borrarEducacion('educacion_formal', educacionFormal.id)">
+            <i class="bi bi-trash m-3"></i>
+          </button>
+        </div>
       </div>
     </li>
-    
-   </ul>
 
-   <h3>Cursos</h3>
+    <!--NUEVA EDUCACIÓN FORMAL-->
 
-   <ul class="list-group list-group-flush">
+    <li id="nueva_educacion" class="d-none">
+      <h4>Nueva educación</h4>
+      <div>
+        <p class="d-inline">Título: <input type="text" class="m-2" #titulo_nueva_educacion
+            (blur)="crearObjetoEducacion('titulo', titulo_nueva_educacion.value)">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Empresa o institución:
+          <select required #new_empresa (change)="crearObjetoEducacion('empresa_institucion_id', new_empresa.value)">
+            <option value="" disabled selected>Seleccione la empresa</option>
+            <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
+          </select>
+          Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Fecha de inicio: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+            #fecha_inicio_nueva_educacion
+            (blur)="crearObjetoEducacion('fecha_inicio', fecha_inicio_nueva_educacion.value)">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+            #fecha_fin_nueva_educacion (blur)="crearObjetoEducacion('fecha_fin', fecha_fin_nueva_educacion.value)">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Descripción: <input type="text" class="m-2" #descripcion_nueva_educacion
+            (blur)="crearObjetoEducacion('descripcion', descripcion_nueva_educacion.value)">
+        </p>
+      </div>
+      <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearEducacion('educacion_formal')">Submit</button>
+    </li>
+
+  </ul>
+
+  <!--CURSOS-->
+
+  <h3 class="mt-3">Cursos <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+      (click)="mostrarById('nuevo_curso')">
+      <i class="bi bi-plus-circle bi-dark"></i>
+    </button></h3>
+
+  <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let curso of cursoList">
       <div class="data-container row align-items-center">
-          <div class="logo-image-container col-1">
-            <img
-            [src]="curso.empresa_institucion_url_logo"
-            class="logo-image img-fluid" [alt]="curso.empresa_institucion_alt_text_logo" />
+        <div class="logo-image-container col-1">
+          <img [src]="curso.empresa_institucion_url_logo" class="logo-image img-fluid"
+            [alt]="curso.empresa_institucion_alt_text_logo" />
+        </div>
 
-          </div>
-          <div class="list-info col-8">
-            <h5>{{curso.titulo}}</h5>
-            <h6>{{curso.empresa_institucion_nombre}}</h6>
-            <p>Finalización: {{curso.fecha_fin}}</p>
 
+        <div class="list-info col-9">
+          <h5 class="d-inline">{{curso.titulo}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('titulo_curso_' + curso.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h5>
+          <div [id]="'titulo_curso_' + curso.id" class="d-none">
+            <p class="d-inline">Título: <input type="text" class="mx-2" #nuevo_titulo_curso
+                (keyup.enter)="editData('curso', curso, rawDataCurso, 'titulo', nuevo_titulo_curso.value, 'titulo_curso_' + curso.id)">
+            </p>
           </div>
+
+
+          <h6>{{curso.empresa_institucion_nombre}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('empresa_institucion_' + curso.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h6>
+          <div [id]="'empresa_institucion_' + curso.id" class="d-none">
+            <p class="d-inline">Empresa o institución:
+              <select required #edit_empresa_institucion
+                (change)="editData('curso', curso, rawDataCurso,'empresa_institucion_id', edit_empresa_institucion.value, 'empresa_institucion_' + curso.id)">
+                <option value="" disabled selected>Seleccione la empresa o institución</option>
+                <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
+              </select>
+              Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+            </p>
+          </div>
+
+
+
+          <p class="d-inline">Finalización: {{curso.fecha_fin}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('fecha_fin_curso_' + curso.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </p>
+          <div [id]="'fecha_fin_curso_' + curso.id" class="d-none">
+            <p class="d-inline mx-2">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #edit_fecha_fin_curso
+                (keyup.enter)="editData('educacion_formal', curso, rawDataCurso, 'fecha_fin', edit_fecha_fin_curso.value, 'fecha_fin_curso_' + curso.id)">
+            </p>
+          </div>
+
+
+        </div>
       </div>
     </li>
-    
-   </ul>
-    
-  </div>
+
+    <li id="nuevo_curso" class="d-none">
+      <h4>Nuevo curso</h4>
+      <div>
+        <p class="d-inline">Título: <input type="text" class="m-2" #titulo_nuevo_curso
+            (blur)="crearObjetoEducacion('titulo', titulo_nuevo_curso.value)">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Empresa o institución:
+          <select required #new_empresa_institucion
+            (change)="crearObjetoEducacion('empresa_institucion_id', new_empresa_institucion.value)">
+            <option value="" disabled selected>Seleccione la empresa o institución</option>
+            <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
+          </select>
+          Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD" #fecha_fin_nuevo_curso
+            (blur)="crearObjetoEducacion('fecha_fin', fecha_fin_nuevo_curso.value)">
+        </p>
+      </div>
+      <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearEducacion('curso')">Submit</button>
+    </li>
+
+  </ul>
+
+</div>
