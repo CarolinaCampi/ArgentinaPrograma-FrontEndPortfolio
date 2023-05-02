@@ -41,12 +41,12 @@ export class SkillsComponent implements OnInit {
   }
 
   inicializarHTML(index: number, id: number) {
-    let col2 = document.createElement("div");
-    col2.classList.add("col-2", "border", "m-1");
+    let col1 = document.createElement("div");
+    col1.classList.add("col-1", "border", "m-2");
 
     let canvas = document.createElement("canvas");
     canvas.id = "chart-" + index;
-    canvas.classList.add("d-inline", "p-0");
+    canvas.classList.add("d-inline");
 
     if (this.autenticacionServicio.isLoggedIn()) {
       // let button_lapiz = document.createElement("button");
@@ -56,18 +56,18 @@ export class SkillsComponent implements OnInit {
       // lapiz.classList.add("bi", "bi-pencil");
       
       let button_tachito = document.createElement("button");
-      button_tachito.classList.add("btn", "d-inline");
+      button_tachito.classList.add("btn", "d-block", "mx-auto");
 
       let tachito = document.createElement("i");
-      tachito.classList.add("bi", "bi-trash");
+      tachito.classList.add("bi", "bi-trash", "mx-auto");
 
       //button_lapiz.appendChild(lapiz);
       
       button_tachito.appendChild(tachito);
       
-      col2.appendChild(canvas);
-      //col2.appendChild(button_lapiz);
-      col2.appendChild(button_tachito);
+      col1.appendChild(canvas);
+      // col1.appendChild(button_lapiz);
+      col1.appendChild(button_tachito);
 
       let self = this;
       button_tachito.addEventListener("click", function () {
@@ -75,10 +75,10 @@ export class SkillsComponent implements OnInit {
       });
 
     } else {
-      col2.appendChild(canvas);
+      col1.appendChild(canvas);
     }
 
-    document.getElementById("fila-hard-skills")!.appendChild(col2);
+    document.getElementById("fila-hard-skills")!.appendChild(col1);
 
 
   }
@@ -101,15 +101,16 @@ export class SkillsComponent implements OnInit {
       },
       options: {
         responsive: true,
-        aspectRatio: 2.5,
+        maintainAspectRatio: true,
+        // aspectRatio: 1,
         plugins: {
           title: {
             display: true,
             text: titulo,
             position: 'bottom',
             color: 'black',
-            padding: 5,
-            fullSize: true,
+            // padding: 5,
+            // fullSize: true,
             font: { family: 'system-ui', size: 16 }
           },
 
