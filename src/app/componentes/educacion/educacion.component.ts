@@ -80,6 +80,8 @@ export class EducacionComponent implements OnInit {
     document.getElementById(id)!.classList.remove('d-none');
     document.getElementById(id)!.classList.add('d-inline');
   }
+
+  // Educacion methods
     
   // Edition methods 
 
@@ -125,8 +127,8 @@ export class EducacionComponent implements OnInit {
   // Create the educacion object that will be sent to the DB later
   crearObjetoEducacion(key:string, value:string){
     this.objetoEducacion[key] = value;
-    console.log(this.objetoEducacion);
   }
+
   // Post the new educacion object created
   crearEducacion(entity:string){
         this.datosPortfolio.postearDatos(entity, this.objetoEducacion).subscribe(data =>{
@@ -144,4 +146,49 @@ export class EducacionComponent implements OnInit {
     window.location.reload();
   }
 
+  // EmpresaInstitucion methods
+    
+  // Edition methods 
+
+  editDataEmpInst(dataToUpdate:any, key:string, value: string, id:string){
+    //updates UI for the rest of the keys
+    dataToUpdate[key] = value; 
+    //Hides the edition fields
+    document.getElementById(id)!.classList.remove('d-inline');
+    document.getElementById(id)!.classList.add('d-none');
+    // update the object that will be sent to the DB
+    this.updateEmpInst(dataToUpdate);
+  }
+
+  updateEmpInst(dataToUpdate:any){
+    this.datosPortfolio.modificarDatos("empresa_institucion", dataToUpdate).subscribe((data: any) => {
+      console.log(data);
+    });
+  }
+
+  // Creation methods
+
+  objetoEmpInst: any = {};
+
+  // Create the empresaInstitucion object that will be sent to the DB later
+  crearObjetoEmpInst(key:string, value:string){
+    this.objetoEmpInst[key] = value;
+  }
+
+  // Post the new empresaInstitucion object created
+  crearEmpInst(){
+        this.datosPortfolio.postearDatos('empresa_institucion', this.objetoEmpInst).subscribe(data =>{
+      console.log(data);
+    });
+    window.location.reload();
+  }
+
+  // Delete methods
+
+  borrarEmpInst (id:number){
+    this.datosPortfolio.borrarDatos("empresa_institucion", id).subscribe(data => {
+      console.log(data);
+    });
+    window.location.reload();
+  }
 }

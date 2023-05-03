@@ -145,6 +145,8 @@
       <i class="bi bi-plus-circle bi-dark"></i>
     </button></h3>
 
+  <!--LISTA DE CURSOS-->
+
   <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let curso of cursoList">
       <div class="data-container row align-items-center">
@@ -242,4 +244,103 @@
 
   </ul>
 
+</div>
+
+<!--EMPRESA E INSTITUCIÓN-->
+
+<div id="seccion_emp_inst_exp" class="card mat-card" *ngIf="autenticacionServicio.isLoggedIn()">
+  <h2>Empresas e instituciones
+    <button class="btn btn-edit btn-lg d-inline mx-2" (click)="mostrarById('nueva_emp_inst')">
+      <i class="bi bi-plus-circle bi-dark"></i>
+    </button>
+  </h2>
+
+  <!--LISTA DE EMPRESAS E INSTITUCIONES ACTUALMENTE EN LA BD-->
+
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item" *ngFor="let empInst of empInstList">
+      <div class="data-container row align-items-center">
+        <div class="logo-image-container col-1">
+          <img [src]="empInst.url_logo" class="logo-image img-fluid" [alt]="empInst.alt_text_logo" />
+        </div>
+
+
+        <div class="list-info col-9">
+          <h5 class="d-inline">{{empInst.nombre}}
+            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+              (click)="mostrarById('nombre_empInst_' + empInst.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
+          </h5>
+          <div [id]="'nombre_empInst_' + empInst.id" class="d-none">
+            <p class="d-inline">Nombre: <input type="text" class="mx-2" #nuevo_nombre_empInst
+                (keyup.enter)="editDataEmpInst(empInst, 'nombre', nuevo_nombre_empInst.value, 'nombre_empInst_' + empInst.id)">
+            </p>
+          </div>
+
+          <div>
+            <h6 class="d-inline">URL logo
+              <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarById('edit_url_logo_empInst_' + empInst.id)">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </h6>
+            <div [id]="'edit_url_logo_empInst_' + empInst.id" class="d-none">
+              <p class="d-inline mx-2">Nueva URL logo: <input type="text" #edit_url_logo_empInst
+                  (keyup.enter)="editDataEmpInst(empInst, 'url_logo', edit_url_logo_empInst.value, 'edit_url_logo_empInst_' + empInst.id)">
+              </p>
+            </div>
+          </div>
+
+          <div>
+            <h6 class="d-inline">Alt text logo: {{empInst.alt_text_logo}}
+              <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarById('edit_alt_text_logo_empInst_' + empInst.id)">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </h6>
+            <div [id]="'edit_alt_text_logo_empInst_' + empInst.id" class="d-none">
+              <p class="d-inline mx-2">Nuevo alt text logo: <input type="text" #edit_alt_text_logo_empInst
+                  (keyup.enter)="editDataEmpInst(empInst, 'alt_text_logo', edit_alt_text_logo_empInst.value, 'edit_alt_text_logo_empInst_' + empInst.id)">
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-1">
+        </div>
+
+        <div class="col-1">
+          <button class="btn" *ngIf="autenticacionServicio.isLoggedIn()" (click)="borrarEmpInst(empInst.id)">
+            <i class="bi bi-trash m-3"></i>
+          </button>
+        </div>
+
+      </div>
+    </li>
+
+
+    <!--NUEVA EMPRESA O INSTITUCIÓN-->
+
+    <li id="nueva_emp_inst" class="d-none">
+      <h4>Nueva empresa o institución</h4>
+      <div>
+        <p class="d-inline">Nombre: <input type="text" class="m-2" #nombre_nueva_emp_inst
+            (blur)="crearObjetoEmpInst('nombre', nombre_nueva_emp_inst.value)">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">URL logo: <input type="text" class="m-2" #url_logo_nueva_emp_inst
+            (blur)="crearObjetoEmpInst('url_logo', url_logo_nueva_emp_inst.value)">
+        </p>
+      </div>
+      <div>
+        <p class="d-inline">Alt text logo: <input type="text" class="m-2" #alt_text_logo_nueva_emp_inst
+            (blur)="crearObjetoEmpInst('alt_text_logo', alt_text_logo_nueva_emp_inst.value)">
+        </p>
+      </div>
+
+      <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearEmpInst()">Submit</button>
+    </li>
+  </ul>
 </div>

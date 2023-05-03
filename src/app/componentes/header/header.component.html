@@ -33,7 +33,7 @@
 
     <div class="col-3">    
        <div class="d-inline" *ngFor="let redSocial of redSocialList">
-        <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social"
+        <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social m-2"
             alt={{redSocial.alt_text_logo}}></a>
           <button class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
             (click)="mostrarById('edit_red_social_' + redSocial.id)">

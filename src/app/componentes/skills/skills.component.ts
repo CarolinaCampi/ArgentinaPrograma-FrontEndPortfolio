@@ -111,7 +111,7 @@ export class SkillsComponent implements OnInit {
             color: 'black',
             // padding: 5,
             // fullSize: true,
-            font: { family: 'system-ui', size: 16 }
+            font: { family: 'helvetica', size: 16 }
           },
 
         }
