@@ -120,14 +120,15 @@
         </p>
       </div>
       <div>
-        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
-            #fecha_fin_nueva_experiencia
-            (blur)="crearObjetoExperiencia('fecha_fin', fecha_fin_nueva_experiencia.value)">
+        <p class="d-inline">Es empleo actual? <input type="checkbox" class="m-2" #empleo_actual_nueva_experiencia
+            (change)="crearObjetoExperiencia('es_trabajo_actual', empleo_actual_nueva_experiencia.checked + '')">
         </p>
       </div>
       <div>
-        <p class="d-inline">Es empleo actual? <input type="checkbox" class="m-2" #empleo_actual_nueva_experiencia
-            (change)="crearObjetoExperiencia('es_trabajo_actual', empleo_actual_nueva_experiencia.checked + '')">
+        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+            #fecha_fin_nueva_experiencia
+            (blur)="crearObjetoExperiencia('fecha_fin', fecha_fin_nueva_experiencia.value)">
+            
         </p>
       </div>
       <div>

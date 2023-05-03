@@ -14,6 +14,7 @@ import { PortfolioComponent } from './componentes/portfolio/portfolio.component'
 import { ReactiveFormsModule } from '@angular/forms';
 import { InterceptorService } from './servicios/interceptor.service';
 import { PortfolioService } from './servicios/portfolio.service';
+import { PageNotFoundComponent } from './componentes/page-not-found/page-not-found.component';
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import { PortfolioService } from './servicios/portfolio.service';
     SkillsComponent,
     ProyectosComponent,
     IniciarSesionComponent,
-    PortfolioComponent
+    PortfolioComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
