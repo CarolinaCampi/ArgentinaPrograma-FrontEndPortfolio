@@ -29,17 +29,25 @@
 
         <div id="info-data" class="align-items-center">
 
-            <h1 id="nombre_persona" class="d-inline">{{miPortfolio.nombre}} {{miPortfolio.apellido}}</h1>
-            <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_nombre_completo_persona')">
+            <h1 id="nombre_persona" class="d-inline">{{miPortfolio.nombre}}
+                <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarById('edit_nombre_persona')">
                 <i class="bi bi-pencil"></i>
-            </button>
-            <div id="edit_nombre_completo_persona" class="invisible d-inline">
+            </button>  
+                {{miPortfolio.apellido}}
+            <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarById('edit_apellido_persona')">
+                <i class="bi bi-pencil"></i>
+            </button></h1>
+            
+            <div id="edit_nombre_persona" class="invisible d-inline">
                 <p class="d-inline">Nombre: <input id="edit_nombre_persona" type="text" class="mx-2" #nuevo_nombre
-                        (keyup.enter)="editMiPortfolio('nombre', nuevo_nombre.value, 'edit_nombre_completo_persona')">
+                        (keyup.enter)="editMiPortfolio('nombre', nuevo_nombre.value, 'edit_nombre_persona')">
                 </p>
+            </div>
+            <div id="edit_apellido_persona" class="invisible d-inline">
                 <p class="d-inline">Apellido: <input id="edit_apellido_persona" type="text" class="mx-2" #nuevo_apellido
-                        (keyup.enter)="editMiPortfolio('apellido', nuevo_apellido.value, 'edit_nombre_completo_persona')">
+                        (keyup.enter)="editMiPortfolio('apellido', nuevo_apellido.value, 'edit_apellido_persona')">
                 </p>
             </div>
 
