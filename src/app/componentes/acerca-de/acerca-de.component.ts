@@ -38,5 +38,8 @@ export class AcercaDeComponent implements OnInit {
     });
   }
   
+  scrollToDiv(id:string){
+    document.getElementById(id)!.scrollIntoView();
+  }
 
 }
