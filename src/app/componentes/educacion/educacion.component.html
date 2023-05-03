@@ -157,13 +157,13 @@
 
 
         <div class="list-info col-9">
-          <div>
-            <h5 class="d-inline">{{curso.titulo}}
+          <div class="mb-2">
+            <h4 class="d-inline">{{curso.titulo}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                 (click)="mostrarById('titulo_curso_' + curso.id)">
                 <i class="bi bi-pencil"></i>
               </button>
-            </h5>
+            </h4>
             <div [id]="'titulo_curso_' + curso.id" class="d-none">
               <p class="d-inline">Título: <input type="text" class="mx-2" #nuevo_titulo_curso
                   (keyup.enter)="editData('curso', curso, rawDataCurso, 'titulo', nuevo_titulo_curso.value, 'titulo_curso_' + curso.id)">
