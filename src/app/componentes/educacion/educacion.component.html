@@ -57,12 +57,12 @@
             </button>
           </h6>
           <div [id]="'fecha_inicio_' + educacionFormal.id" class="d-none">
-            <p class="d-inline">Fecha inicio: <input type="text" placeholder="YYYY-MM-DD" #edit_fecha_inicio
+            <p class="d-inline">Fecha inicio: <input type="date" #edit_fecha_inicio
                 (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal,  'fecha_inicio', edit_fecha_inicio.value, 'fecha_inicio_' + educacionFormal.id)">
             </p>
           </div>
           <div [id]="'fecha_fin_' + educacionFormal.id" class="d-none">
-            <p class="d-inline mx-2">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #edit_fecha_fin
+            <p class="d-inline mx-2">Fecha fin: <input type="date" #edit_fecha_fin
                 (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'fecha_fin', edit_fecha_fin.value, 'fecha_fin_' + educacionFormal.id)">
             </p>
           </div>
@@ -118,13 +118,13 @@
         </p>
       </div>
       <div>
-        <p class="d-inline">Fecha de inicio: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+        <p class="d-inline">Fecha de inicio: <input type="date" class="m-2"
             #fecha_inicio_nueva_educacion
             (blur)="crearObjetoEducacion('fecha_inicio', fecha_inicio_nueva_educacion.value)">
         </p>
       </div>
       <div>
-        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+        <p class="d-inline">Fecha de fin: <input type="date" class="m-2"
             #fecha_fin_nueva_educacion (blur)="crearObjetoEducacion('fecha_fin', fecha_fin_nueva_educacion.value)">
         </p>
       </div>
@@ -198,7 +198,7 @@
               </button>
             </h6>
             <div [id]="'fecha_fin_curso_' + curso.id" class="d-none">
-              <p class="d-inline mx-2">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #edit_fecha_fin_curso
+              <p class="d-inline mx-2">Fecha fin: <input type="date" #edit_fecha_fin_curso
                   (keyup.enter)="editData('educacion_formal', curso, rawDataCurso, 'fecha_fin', edit_fecha_fin_curso.value, 'fecha_fin_curso_' + curso.id)">
               </p>
             </div>
@@ -237,7 +237,7 @@
         </p>
       </div>
       <div>
-        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD" #fecha_fin_nuevo_curso
+        <p class="d-inline">Fecha de fin: <input type="date" class="m-2" #fecha_fin_nuevo_curso
             (blur)="crearObjetoEducacion('fecha_fin', fecha_fin_nuevo_curso.value)">
         </p>
       </div>
@@ -288,7 +288,7 @@
               </button>
             </h6>
             <div [id]="'edit_url_logo_empInst_' + empInst.id" class="d-none">
-              <p class="d-inline mx-2">Nueva URL logo: <input type="text" #edit_url_logo_empInst
+              <p class="d-inline mx-2">Nueva URL logo: <input type="url" #edit_url_logo_empInst
                   (keyup.enter)="editDataEmpInst(empInst, 'url_logo', edit_url_logo_empInst.value, 'edit_url_logo_empInst_' + empInst.id)">
               </p>
             </div>
@@ -332,7 +332,7 @@
         </p>
       </div>
       <div>
-        <p class="d-inline">URL logo: <input type="text" class="m-2" #url_logo_nueva_emp_inst
+        <p class="d-inline">URL logo: <input type="url" class="m-2" #url_logo_nueva_emp_inst
             (blur)="crearObjetoEmpInst('url_logo', url_logo_nueva_emp_inst.value)">
         </p>
       </div>

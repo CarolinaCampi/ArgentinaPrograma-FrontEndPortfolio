@@ -19,10 +19,10 @@
 
     <div class="col-3">
       <div [id]="'edit_red_social_' + redSocial.id" class="d-none mb-1" *ngFor="let redSocial of redSocialList">
-        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="text" #nueva_url_red_social
+        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="url" #nueva_url_red_social
             (keyup.enter)="editData('red_social', redSocial,'url_red_social', nueva_url_red_social.value, 'edit_red_social_' + redSocial.id)">
         </p>
-        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nueva_url_logo_red_social
+        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="url" #nueva_url_logo_red_social
             (keyup.enter)="editData('red_social', redSocial ,'url_logo_red_social', nueva_url_logo_red_social.value, 'edit_red_social_' + redSocial.id)">
         </p>
         <p>Alt text logo: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nuevo_alt_text_logo
@@ -66,7 +66,7 @@
   <div class="row align-items-center">
     <div class="col-3">
       <div id="edit_url_logo_pagina" class="d-none">
-        <p class="d-inline">URL logo página: <input type="text" class="mx-2" #nueva_url_logo_pagina
+        <p class="d-inline">URL logo página: <input type="url" class="mx-2" #nueva_url_logo_pagina
             (keyup.enter)="editData('header', header ,'url_logo_pagina', nueva_url_logo_pagina.value, 'edit_url_logo_pagina')">
         </p>
       </div>
@@ -91,13 +91,13 @@
           <div class="row mb-1">
             <label for="url_nueva_red_social" class="col-sm-5 col-form-label">URL red social:</label>
             <div class="col-sm-7">
-              <input type="text" id="url_nueva_red_social" #url_nueva_red_social (blur)="crearObjetoRedSocial('url_red_social', url_nueva_red_social.value)">
+              <input type="url" id="url_nueva_red_social" #url_nueva_red_social (blur)="crearObjetoRedSocial('url_red_social', url_nueva_red_social.value)">
             </div>
           </div>
           <div class="row mb-1">
             <label for="url_logo_nueva_red" class="col-sm-5 col-form-label">URL logo red social:</label>
             <div class="col-sm-7">
-              <input type="text" id="url_logo_nueva_red" #url_logo_nueva_red (blur)="crearObjetoRedSocial('url_logo_red_social', url_logo_nueva_red.value)">
+              <input type="url" id="url_logo_nueva_red" #url_logo_nueva_red (blur)="crearObjetoRedSocial('url_logo_red_social', url_logo_nueva_red.value)">
             </div>
           </div>
           <div class="row mb-1">

@@ -29,7 +29,7 @@
           </button>
           </h6>
           <div [id]="'edit_fecha_fin_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">Fecha fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD" #nuevo_fecha_fin_proyecto
+            <p class="d-inline">Fecha fin: <input type="date" class="m-2" #nuevo_fecha_fin_proyecto
                 (keyup.enter)="editData('proyecto', proyecto, rawDataProyecto, 'fecha_fin', nuevo_fecha_fin_proyecto.value, 'edit_fecha_fin_proyecto_' + proyecto.id)">
             </p>
           </div>
@@ -54,7 +54,7 @@
           </button>
           <br>
           <div [id]="'edit_url_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">URL GitHub: <input type="text" class="m-2" #nuevo_url_proyecto
+            <p class="d-inline">URL GitHub: <input type="url" class="m-2" #nuevo_url_proyecto
                 (keyup.enter)="editData('proyecto', proyecto, rawDataProyecto, 'url_proyecto', nuevo_url_proyecto.value, 'edit_url_proyecto_' + proyecto.id)">
             </p>
           </div>
@@ -79,7 +79,7 @@
       </p>
     </div>
     <div>
-      <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD" #fecha_fin_nuevo_proyecto
+      <p class="d-inline">Fecha de fin: <input type="date" class="m-2" #fecha_fin_nuevo_proyecto
           (blur)="crearObjetoProyecto('fecha_fin', fecha_fin_nuevo_proyecto.value)">
       </p>
     </div>
@@ -89,7 +89,7 @@
       </p>
     </div>
     <div>
-      <p class="d-inline">Link GitHub: <input type="text" class="m-2" #url_nuevo_proyecto
+      <p class="d-inline">URL GitHub: <input type="url" class="m-2" #url_nuevo_proyecto
           (blur)="crearObjetoProyecto('url_proyecto', url_nuevo_proyecto.value)">
       </p>
     </div>

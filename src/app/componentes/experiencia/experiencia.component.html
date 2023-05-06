@@ -8,7 +8,7 @@
     </button>
   </h2>
 
-<!--LISTA DE EXPERIENCIAS-->
+  <!--LISTA DE EXPERIENCIAS CON OPCION PARA EDITS Y BORRAR-->
 
   <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let experiencia of experienciaList">
@@ -40,7 +40,8 @@
           </h5>
           <div [id]="'empresa_' + experiencia.id" class="d-none">
             <p class="d-inline">Empresa:
-              <select required #empresa (change)="editData('experiencia', experiencia, 'empresa_institucion_id', empresa.value, 'empresa_' + experiencia.id)">
+              <select required #empresa
+                (change)="editData('experiencia', experiencia, 'empresa_institucion_id', empresa.value, 'empresa_' + experiencia.id)">
                 <option value="" disabled selected>Seleccione la empresa</option>
                 <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
               </select>
@@ -48,25 +49,35 @@
             </p>
           </div>
 
-          <h6>{{experiencia.fecha_inicio}}
-            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('fecha_inicio_'  + experiencia.id)">
-              <i class="bi bi-pencil"></i>
-            </button>
-            - {{experiencia.fecha_fin}}
-            <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('fecha_fin_' + experiencia.id)">
-              <i class="bi bi-pencil"></i>
-            </button>
-          </h6>
+          <div>
+            <h6 class="d-inline">{{experiencia.fecha_inicio}}
+              <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarById('fecha_inicio_'  + experiencia.id)">
+                <i class="bi bi-pencil"></i>
+              </button>
+              - {{experiencia.fecha_fin}}
+              <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="mostrarById('fecha_fin_empleo_actual_' + experiencia.id)">
+                <i class="bi bi-pencil"></i>
+              </button>
+            </h6>
+          </div>
+
           <div [id]="'fecha_inicio_' + experiencia.id" class="d-none">
-            <p class="d-inline">Fecha inicio: <input type="text" placeholder="YYYY-MM-DD" #nueva_fecha_inicio
+            <p class="d-inline">Fecha inicio: <input type="date" #nueva_fecha_inicio
                 (keyup.enter)="editData('experiencia', experiencia, 'fecha_inicio', nueva_fecha_inicio.value, 'fecha_inicio_' + experiencia.id)">
             </p>
           </div>
-          <div [id]="'fecha_fin_' + experiencia.id" class="d-none">
-            <p class="d-inline mx-2">Fecha fin: <input type="text" placeholder="YYYY-MM-DD" #nueva_fecha_fin
-                (keyup.enter)="editData('experiencia', experiencia, 'fecha_fin', nueva_fecha_fin.value, 'fecha_fin_' + experiencia.id)">
+
+          <div [id]="'fecha_fin_empleo_actual_' + experiencia.id" class="d-none">
+            <fieldset [id]="'fecha_fin_' + experiencia.id" class="d-inline">
+              <p class="d-inline mx-2">Fecha fin: <input type="date" placeholder="YYYY-MM-DD" #nueva_fecha_fin
+                  (keyup.enter)="editFechaFin(experiencia, nueva_fecha_fin.value, 'fecha_fin_empleo_actual_' + experiencia.id)">
+              </p>
+            </fieldset>
+            <p [id]="'es_empleo_actual_' + experiencia.id" class="d-inline">Es empleo actual? <input type="checkbox"
+                class="m-2" #empleo_actual
+                (change)="onCheckboxTrabajoActualChange($event, experiencia, 'fecha_fin_empleo_actual_' + experiencia.id)">
             </p>
           </div>
 
@@ -95,7 +106,7 @@
       </div>
     </li>
 
-<!--NUEVA EXPERIENCIA-->
+    <!--NUEVA EXPERIENCIA-->
 
     <li id="nueva_experiencia" class="d-none">
       <h4>Nueva experiencia</h4>
@@ -114,21 +125,21 @@
         </p>
       </div>
       <div>
-        <p class="d-inline">Fecha de inicio: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+        <p class="d-inline">Fecha de inicio: <input type="date" class="m-2" placeholder="YYYY-MM-DD"
             #fecha_inicio_nueva_experiencia
             (blur)="crearObjetoExperiencia('fecha_inicio', fecha_inicio_nueva_experiencia.value)">
         </p>
       </div>
       <div>
         <p class="d-inline">Es empleo actual? <input type="checkbox" class="m-2" #empleo_actual_nueva_experiencia
-            (change)="crearObjetoExperiencia('es_trabajo_actual', empleo_actual_nueva_experiencia.checked + '')">
+            (change)="agregarEmpleoActualObjetoExperiencia($event)">
         </p>
       </div>
-      <div>
-        <p class="d-inline">Fecha de fin: <input type="text" class="m-2" placeholder="YYYY-MM-DD"
+      <div id="fecha_fin_nueva_experiencia">
+        <p class="d-inline">Fecha de fin: <input type="date" class="m-2" placeholder="YYYY-MM-DD"
             #fecha_fin_nueva_experiencia
-            (blur)="crearObjetoExperiencia('fecha_fin', fecha_fin_nueva_experiencia.value)">
-            
+            (blur)="agregarFechaFinObjetoExperiencia(fecha_fin_nueva_experiencia.value)">
+
         </p>
       </div>
       <div>

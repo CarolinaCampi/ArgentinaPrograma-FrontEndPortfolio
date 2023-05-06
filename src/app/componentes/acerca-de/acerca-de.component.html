@@ -3,7 +3,7 @@
         <img [src]="miPortfolio.url_banner">
         <div class="position-absolute bottom-0 end-0">
             <div class="input-group p-3">
-                <input type="text" class="form-control invisible d-inline" id="edit_url_banner_persona" placeholder="URL banner" #nueva_url_banner
+                <input type="url" class="form-control invisible d-inline" id="edit_url_banner_persona" placeholder="URL banner" #nueva_url_banner
                 (keyup.enter)="editMiPortfolio('url_banner', nueva_url_banner.value, 'edit_url_banner_persona')">
                 <div class="input-group-text" *ngIf="autenticacionServicio.isLoggedIn()" (click)="mostrarById('edit_url_banner_persona')"><i class="bi bi-pencil"></i></div>
             </div>
@@ -21,7 +21,7 @@
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_url_foto_persona" class="invisible d-inline">
-                <p class="d-inline">URL foto de perfil: <input type="text" maxlength="1000" class="mx-2" #nueva_url_foto
+                <p class="d-inline">URL foto de perfil: <input type="url" maxlength="1000" class="mx-2" #nueva_url_foto
                         (keyup.enter)="editMiPortfolio('url_foto', nueva_url_foto.value, 'edit_url_foto_persona')">
                 </p>
             </div>
