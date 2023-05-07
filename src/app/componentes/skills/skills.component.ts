@@ -49,24 +49,15 @@ export class SkillsComponent implements OnInit {
     canvas.classList.add("d-inline");
 
     if (this.autenticacionServicio.isLoggedIn()) {
-      // let button_lapiz = document.createElement("button");
-      // button_lapiz.classList.add("btn", "d-inline");
 
-      // let lapiz = document.createElement("i");
-      // lapiz.classList.add("bi", "bi-pencil");
-      
       let button_tachito = document.createElement("button");
       button_tachito.classList.add("btn", "d-block", "mx-auto");
 
       let tachito = document.createElement("i");
       tachito.classList.add("bi", "bi-trash", "mx-auto");
 
-      //button_lapiz.appendChild(lapiz);
-      
       button_tachito.appendChild(tachito);
-      
       col1.appendChild(canvas);
-      // col1.appendChild(button_lapiz);
       col1.appendChild(button_tachito);
 
       let self = this;
@@ -77,10 +68,7 @@ export class SkillsComponent implements OnInit {
     } else {
       col1.appendChild(canvas);
     }
-
     document.getElementById("fila-hard-skills")!.appendChild(col1);
-
-
   }
 
   createChart(index: number, titulo: string, porcentaje: number) {
@@ -140,8 +128,10 @@ export class SkillsComponent implements OnInit {
   crearSkill(entity: string) {
     this.datosPortfolio.postearDatos(entity, this.objetoSkill).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Delete methods
@@ -149,8 +139,14 @@ export class SkillsComponent implements OnInit {
   borrarSkill(entity: string, id: number) {
     this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
+  // Scroll to a certain div by id, for navigation
+  scrollToDiv(id: string) {
+    document.getElementById(id)!.scrollIntoView();
+  }
 }

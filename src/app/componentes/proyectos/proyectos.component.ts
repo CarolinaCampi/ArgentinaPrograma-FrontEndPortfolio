@@ -39,16 +39,23 @@ export class ProyectosComponent implements OnInit{
     return formattedDate;// output format: "novembre de 2023"
   }
 
+  cortarFecha(fecha: any): string {
+    if (!fecha) {
+      return "";
+    }
+
+    return fecha.split("T")[0];
+  }
+
   // Changes the display class of an element with a specific id
-  mostrarById(id:string){
-    console.log(id);
-    document.getElementById(id)!.classList.remove('d-none');
-    document.getElementById(id)!.classList.add('d-inline');
+  showById(idToShow:string){
+    document.getElementById(idToShow)!.classList.remove('d-none');
+    document.getElementById(idToShow)!.classList.add('d-inline');
   }
     
   // Edition methods 
 
-  editData(entity: string, dataToUpdate:any, rawData:any, key:string, value: string, id:string){
+  editProyecto(dataToUpdate:any, key:string, value: string, id:string){
     if (key.includes("fecha")){ //actualiza la UI para fechas
       dataToUpdate[key] = this.convertirFechaAMesAno(value)
     } else { //updates UI for the rest of the keys
@@ -57,18 +64,17 @@ export class ProyectosComponent implements OnInit{
     document.getElementById(id)!.classList.remove('d-inline');
     document.getElementById(id)!.classList.add('d-none');
     // update the object that will be sent to the DB
-    for (let i = 0; i < rawData.length; i++){
-      if (rawData[i].id == dataToUpdate.id){
-        rawData[i][key] = value;
-        this.updateEntity(entity, rawData[i]);
+    for (let i = 0; i < this.rawDataProyecto.length; i++){
+      if (this.rawDataProyecto[i].id == dataToUpdate.id){
+        this.rawDataProyecto[i][key] = value;
+        this.updateEntity(this.rawDataProyecto[i]);
         break;
       }
     }
-    console.log('Este es el archivo raw data: ' + JSON.stringify(rawData));
   }
 
-  updateEntity(entity: string, dataToUpdate:any){
-    this.datosPortfolio.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
+  updateEntity(dataToUpdate:any){
+    this.datosPortfolio.modificarDatos('proyecto', dataToUpdate).subscribe((data: any) => {
       console.log(data);
     });
   }
@@ -86,8 +92,9 @@ export class ProyectosComponent implements OnInit{
   crearProyecto(){
         this.datosPortfolio.postearDatos("proyecto", this.objetoProyecto).subscribe(data =>{
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
   }
 
   // Delete methods
@@ -95,8 +102,14 @@ export class ProyectosComponent implements OnInit{
   borrarProyecto(id:number){
     this.datosPortfolio.borrarDatos('proyecto', id).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
   }
 
+  // Scroll to a certain div by id, for navigation
+  scrollToDiv(id:string){
+    document.getElementById(id)!.scrollIntoView();
+  }
+  
 }

@@ -20,9 +20,9 @@ export class AcercaDeComponent implements OnInit {
     });
   }
 
-  mostrarById(id:string){
-    document.getElementById(id)!.classList.remove('invisible');
-    document.getElementById(id)!.classList.add('visible');
+  showById(idToShow:string){
+    document.getElementById(idToShow)!.classList.remove('invisible');
+    document.getElementById(idToShow)!.classList.add('visible');
   }
 
   editMiPortfolio(key:string, value: string, id:string){

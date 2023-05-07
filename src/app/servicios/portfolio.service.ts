@@ -7,7 +7,8 @@ import { Observable } from 'rxjs';
 })
 export class PortfolioService {
 
-  url:string="http://localhost:8080/";
+  // url:string="http://localhost:8080/";
+  url:string = "https://argentinaprograma-backendportfolio.onrender.com/";
 
   constructor(private http:HttpClient) {  }
     

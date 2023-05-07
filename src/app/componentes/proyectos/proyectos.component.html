@@ -1,61 +1,64 @@
 <div id="proyectosDiv" class="card mat-card">
   <h2 class="mb-2">Proyectos
     <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-      (click)="mostrarById('nuevo_proyecto')">
+      (click)="showById('nuevo_proyecto'); scrollToDiv('nuevo_proyecto')">
       <i class="bi bi-plus-circle bi-dark"></i>
     </button>
   </h2>
 
-  <div class="row">
+  <!--LISTA DE PROYECTOS-->
+  <div class="row align-items-center">
     <div class="col-sm-4" *ngFor="let proyecto of proyectosList">
       <div class="card text-center my-2">
         <div class="card-body">
           <h5 class="card-title mb-3">{{proyecto.titulo}}
             <button class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarById('edit_titulo_proyecto_' + proyecto.id)">
-            <i class="bi bi-pencil"></i>
-          </button>
+              (click)="showById('edit_titulo_proyecto_' + proyecto.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
           </h5>
           <div [id]="'edit_titulo_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">Título: <input type="text" class="mx-2" #nuevo_titulo_proyecto
-                (keyup.enter)="editData('proyecto', proyecto, rawDataProyecto, 'titulo', nuevo_titulo_proyecto.value, 'edit_titulo_proyecto_' + proyecto.id)">
+            <p class="d-inline">Título: <input type="text" class="mx-2" [value]="proyecto.titulo" size="25"  #nuevo_titulo_proyecto
+                (keyup.enter)="editProyecto(proyecto, 'titulo', nuevo_titulo_proyecto.value, 'edit_titulo_proyecto_' + proyecto.id)">
             </p>
           </div>
 
           <h6>Finalización: {{proyecto.fecha_fin}}
             <button class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarById('edit_fecha_fin_proyecto_' + proyecto.id)">
-            <i class="bi bi-pencil"></i>
-          </button>
+              (click)="showById('edit_fecha_fin_proyecto_' + proyecto.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
           </h6>
           <div [id]="'edit_fecha_fin_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">Fecha fin: <input type="date" class="m-2" #nuevo_fecha_fin_proyecto
-                (keyup.enter)="editData('proyecto', proyecto, rawDataProyecto, 'fecha_fin', nuevo_fecha_fin_proyecto.value, 'edit_fecha_fin_proyecto_' + proyecto.id)">
+            <p class="d-inline">Fecha fin: <input type="date" class="m-2" [value]="cortarFecha(rawDataProyecto[proyectosList.indexOf(proyecto)].fecha_fin)" #nuevo_fecha_fin_proyecto
+                (keyup.enter)="editProyecto(proyecto, 'fecha_fin', nuevo_fecha_fin_proyecto.value, 'edit_fecha_fin_proyecto_' + proyecto.id)">
             </p>
           </div>
-          <br>
+          <!-- <br> -->
 
           <p class="card-text">{{proyecto.descripcion}}
             <button class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarById('edit_descripcion_proyecto_' + proyecto.id)">
-            <i class="bi bi-pencil"></i>
-          </button>
+              (click)="showById('edit_descripcion_proyecto_' + proyecto.id)">
+              <i class="bi bi-pencil"></i>
+            </button>
           </p>
-          <div [id]="'edit_descripcion_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">Descripción: <input type="text" class="m-2" #nuevo_descripcion_proyecto
-                (keyup.enter)="editData('proyecto', proyecto, rawDataProyecto, 'descripcion', nuevo_descripcion_proyecto.value, 'edit_descripcion_proyecto_' + proyecto.id)">
-            </p>
+          <div [id]="'edit_descripcion_proyecto_' + proyecto.id" class="d-none align-middle">
+            <p class="d-inline text-center">Descripción: </p><textarea type="text" class="d-inline align-middle m-2" rows="2" cols="50" [value]="proyecto.descripcion"  #nuevo_descripcion_proyecto
+                (keyup.enter)="editProyecto(proyecto, 'descripcion', nuevo_descripcion_proyecto.value, 'edit_descripcion_proyecto_' + proyecto.id)"></textarea>
+            
           </div>
+
           <br>
+
           <a [href]="proyecto.url_proyecto" class="btn btn-outline-success">GitHub</a>
           <button class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarById('edit_url_proyecto_' + proyecto.id)">
+            (click)="showById('edit_url_proyecto_' + proyecto.id)">
             <i class="bi bi-pencil"></i>
           </button>
           <br>
           <div [id]="'edit_url_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">URL GitHub: <input type="url" class="m-2" #nuevo_url_proyecto
-                (keyup.enter)="editData('proyecto', proyecto, rawDataProyecto, 'url_proyecto', nuevo_url_proyecto.value, 'edit_url_proyecto_' + proyecto.id)">
+            <p class="d-inline">URL GitHub: <input type="url" class="m-2" size="30" [value]="proyecto.url_proyecto" #nuevo_url_proyecto
+                (keyup.enter)="editProyecto(proyecto, 'url_proyecto', nuevo_url_proyecto.value, 'edit_url_proyecto_' + proyecto.id)">
             </p>
           </div>
           <br>
@@ -65,35 +68,55 @@
         </div>
       </div>
     </div>
+
+    <!--NUEVO PROYECTO-->
+    <div class="col-sm-4">
+
+      <div id="nuevo_proyecto" class="d-none">
+        <div class="card text-center my-2">
+          <h5 class="card-header">Nuevo proyecto</h5>
+          <div class="card-body">
+            <h5 class="card-title d-inline mb-3">Título:
+              <p class="d-inline"><input type="text" class="d-inline m-2" #titulo_nuevo_proyecto
+                  (blur)="crearObjetoProyecto('titulo', titulo_nuevo_proyecto.value)"></p>
+            </h5>
+
+            <div>
+              <h6 class="d-inline">Fecha de fin:
+                <p class="d-inline"><input type="date" class="m-2 d-inline" #fecha_fin_nuevo_proyecto
+                    (blur)="crearObjetoProyecto('fecha_fin', fecha_fin_nuevo_proyecto.value)">
+                </p>
+              </h6>
+            </div>
+
+
+            <div class="card-text">
+              <div class="align-middle">
+                <p class="d-inline text-center">Descripción: </p><textarea type="text" class="d-inline align-middle m-2" rows="2" cols="50"  #descripcion_nuevo_proyecto
+                (blur)="crearObjetoProyecto('descripcion', descripcion_nuevo_proyecto.value)"></textarea>
+              </div>
+     
+              <br>
+
+              <p class="d-inline">URL GitHub: <input type="url" class="m-2" size="30" #url_nuevo_proyecto
+                  (blur)="crearObjetoProyecto('url_proyecto', url_nuevo_proyecto.value)">
+
+              </p>
+            </div>
+            <br>
+            <button class="btn btn-outline-primary mb-2" (click)="crearProyecto()">Submit</button>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
   </div>
 
-  <div>
 
-  </div>
 
-  <div id="nuevo_proyecto" class="d-none">
-    <h4 class="mt-3">Nuevo proyecto</h4>
-    <div>
-      <p class="d-inline">Título: <input type="text" class="m-2" #titulo_nuevo_proyecto
-          (blur)="crearObjetoProyecto('titulo', titulo_nuevo_proyecto.value)">
-      </p>
-    </div>
-    <div>
-      <p class="d-inline">Fecha de fin: <input type="date" class="m-2" #fecha_fin_nuevo_proyecto
-          (blur)="crearObjetoProyecto('fecha_fin', fecha_fin_nuevo_proyecto.value)">
-      </p>
-    </div>
-    <div>
-      <p class="d-inline">Descripción: <input type="text" class="m-2" #descripcion_nuevo_proyecto
-          (blur)="crearObjetoProyecto('descripcion', descripcion_nuevo_proyecto.value)">
-      </p>
-    </div>
-    <div>
-      <p class="d-inline">URL GitHub: <input type="url" class="m-2" #url_nuevo_proyecto
-          (blur)="crearObjetoProyecto('url_proyecto', url_nuevo_proyecto.value)">
-      </p>
-    </div>
-    <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearProyecto()">Submit</button>
-  </div>
+
 
 </div>

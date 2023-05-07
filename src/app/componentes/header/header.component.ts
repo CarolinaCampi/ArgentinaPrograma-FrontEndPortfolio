@@ -29,25 +29,43 @@ export class HeaderComponent implements OnInit {
 
   // Changes the display class of an element with a specific id
 
-  mostrarById(id:string){
-    document.getElementById(id)!.classList.remove('d-none');
-    document.getElementById(id)!.classList.add('d-inline');
+  showById(idToShow:string){
+    document.getElementById(idToShow)!.classList.remove('d-none');
+    document.getElementById(idToShow)!.classList.add('d-inline');
   }
 
   // Edition methods
 
-  editData(entity: string, dataToUpdate:any, key:string, value: string, id:string){
+  // edit Header
+  editHeader(dataToUpdate:any, key:string, value: string, idToHide:string){
     dataToUpdate[key] = value; //updates UI 
-    document.getElementById(id)!.classList.remove('d-inline');
-    document.getElementById(id)!.classList.add('d-none');
+    document.getElementById(idToHide)!.classList.remove('d-inline');
+    document.getElementById(idToHide)!.classList.add('d-none');
     //passes the object that will be sent to the DB
-    this.updateEntity(entity, dataToUpdate);
+    this.updateHeader(dataToUpdate);
   }
 
-  updateEntity(entity: string, dataToUpdate:any){
-    this.datosPortfolio.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
+  // update header in DB
+  updateHeader(dataToUpdate:any){
+    this.datosPortfolio.modificarDatos('header', dataToUpdate).subscribe((data: any) => {
       console.log(data);
     });
+  }
+
+  // edit Red Social
+  editRedSocial(dataToUpdate:any, key:string, value: string){
+    //updates UI
+    dataToUpdate[key] = value; 
+    console.log('Adentro de editRedSocial:' + JSON.stringify(dataToUpdate));
+  }
+
+  // update red social in DB and hide edit div
+  submitEditRedSocial(dataToUpdate:any, idToHide:string){
+    this.datosPortfolio.modificarDatos('red_social', dataToUpdate).subscribe((data: any) => {
+      console.log(data);
+    });
+    document.getElementById(idToHide)!.classList.remove('d-inline');
+    document.getElementById(idToHide)!.classList.add('d-none');
   }
 
   // Creation methods
@@ -63,8 +81,10 @@ export class HeaderComponent implements OnInit {
   crearRedSocial(){
       this.datosPortfolio.postearDatos('red_social', this.objetoRedSocial).subscribe(data =>{
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Delete methods
@@ -72,8 +92,10 @@ export class HeaderComponent implements OnInit {
   borrarRedSocial(id:number){
     this.datosPortfolio.borrarDatos('red_social', id).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Login and logout

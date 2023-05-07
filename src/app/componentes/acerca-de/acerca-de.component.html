@@ -3,9 +3,10 @@
         <img [src]="miPortfolio.url_banner">
         <div class="position-absolute bottom-0 end-0">
             <div class="input-group p-3">
-                <input type="url" class="form-control invisible d-inline" id="edit_url_banner_persona" placeholder="URL banner" #nueva_url_banner
+                <div id="label_url_banner" class="input-group-text invisible d-inline">URL banner</div>
+                <input type="url" class="form-control invisible d-inline" id="edit_url_banner_persona" [value]="miPortfolio.url_banner" size="50" #nueva_url_banner
                 (keyup.enter)="editMiPortfolio('url_banner', nueva_url_banner.value, 'edit_url_banner_persona')">
-                <div class="input-group-text" *ngIf="autenticacionServicio.isLoggedIn()" (click)="mostrarById('edit_url_banner_persona')"><i class="bi bi-pencil"></i></div>
+                <div class="input-group-text" *ngIf="autenticacionServicio.isLoggedIn()" (click)="showById('edit_url_banner_persona'); showById('label_url_banner')"><i class="bi bi-pencil"></i></div>
             </div>
         </div>
 
@@ -17,11 +18,11 @@
         <div id="info-img">
             <img class="profile-image img-fluid img-thumbnail d-inline" [src]="miPortfolio.url_foto">
             <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_url_foto_persona')">
+                (click)="showById('edit_url_foto_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_url_foto_persona" class="invisible d-inline">
-                <p class="d-inline">URL foto de perfil: <input type="url" maxlength="1000" class="mx-2" #nueva_url_foto
+                <p class="d-inline">URL foto de perfil: <input type="url" maxlength="1000" class="mx-2" [value]="miPortfolio.url_foto" size="50" #nueva_url_foto
                         (keyup.enter)="editMiPortfolio('url_foto', nueva_url_foto.value, 'edit_url_foto_persona')">
                 </p>
             </div>
@@ -31,22 +32,22 @@
 
             <h1 id="nombre_persona" class="d-inline">{{miPortfolio.nombre}}
                 <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_nombre_persona')">
+                (click)="showById('edit_nombre_persona')">
                 <i class="bi bi-pencil"></i>
             </button>  
                 {{miPortfolio.apellido}}
             <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_apellido_persona')">
+                (click)="showById('edit_apellido_persona')">
                 <i class="bi bi-pencil"></i>
             </button></h1>
             
             <div id="edit_nombre_persona" class="invisible d-inline">
-                <p class="d-inline">Nombre: <input id="edit_nombre_persona" type="text" class="mx-2" #nuevo_nombre
+                <p class="d-inline">Nombre: <input id="edit_nombre_persona" type="text" class="mx-2" [value]="miPortfolio.nombre" #nuevo_nombre
                         (keyup.enter)="editMiPortfolio('nombre', nuevo_nombre.value, 'edit_nombre_persona')">
                 </p>
             </div>
             <div id="edit_apellido_persona" class="invisible d-inline">
-                <p class="d-inline">Apellido: <input id="edit_apellido_persona" type="text" class="mx-2" #nuevo_apellido
+                <p class="d-inline">Apellido: <input id="edit_apellido_persona" type="text" class="mx-2" [value]="miPortfolio.apellido" #nuevo_apellido
                         (keyup.enter)="editMiPortfolio('apellido', nuevo_apellido.value, 'edit_apellido_persona')">
                 </p>
             </div>
@@ -54,11 +55,11 @@
             <div>
                 <h2 class="d-inline">{{miPortfolio.posicion}}</h2>
                 <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                    (click)="mostrarById('edit_posicion_persona')">
+                    (click)="showById('edit_posicion_persona')">
                     <i class="bi bi-pencil"></i>
                 </button>
                 <div id="edit_posicion_persona" class="invisible d-inline">
-                    <p class="d-inline">Posición: <input type="text" class="mx-2" #nueva_posicion
+                    <p class="d-inline">Posición: <input type="text" class="mx-2" [value]="miPortfolio.posicion" size="50" #nueva_posicion
                             (keyup.enter)="editMiPortfolio('posicion', nueva_posicion.value, 'edit_posicion_persona')">
                     </p>
 
@@ -68,11 +69,11 @@
             <div>
                 <h3 class="d-inline">{{miPortfolio.domicilio}}</h3>
                 <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                    (click)="mostrarById('edit_domicilio_persona')">
+                    (click)="showById('edit_domicilio_persona')">
                     <i class="bi bi-pencil"></i>
                 </button>
                 <div id="edit_domicilio_persona" class="invisible d-inline">
-                    <p class="d-inline">Ubicación: <input type="text" class="mx-2" #nuevo_domicilio
+                    <p class="d-inline">Ubicación: <input type="text" class="mx-2" [value]="miPortfolio.domicilio" size="50" #nuevo_domicilio
                             (keyup.enter)="editMiPortfolio('domicilio', nuevo_domicilio.value, 'edit_domicilio_persona')">
                     </p>
                 </div>
@@ -80,13 +81,13 @@
 
             <p class="d-inline">{{miPortfolio.sobre_mi}}
             <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_sobre_mi_persona')">
+                (click)="showById('edit_sobre_mi_persona')">
                 <i class="bi bi-pencil"></i>
             </button>
             <div id="edit_sobre_mi_persona" class="invisible d-inline">
                 <label for="nuevo_sobre_mi">Sobre mi:</label> 
-                <input id="nuevo_sobre_mi" type="text" class="mx-2 d-inline" #nuevo_sobre_mi
-                        (keyup.enter)="editMiPortfolio('sobre_mi', nuevo_sobre_mi.value, 'edit_sobre_mi_persona')">
+                <textarea id="nuevo_sobre_mi" type="text" class="mx-2 align-middle d-inline" [value]="miPortfolio.sobre_mi" rows="2" cols="100" #nuevo_sobre_mi
+                        (keyup.enter)="editMiPortfolio('sobre_mi', nuevo_sobre_mi.value, 'edit_sobre_mi_persona')"></textarea>
             </div>
     
         </div>

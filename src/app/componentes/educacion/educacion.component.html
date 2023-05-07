@@ -1,8 +1,10 @@
 <div id="educacionDiv" class="card mat-card">
   <h2>Educacion <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-      (click)="mostrarById('nueva_educacion')">
+      (click)="showById('nueva_educacion'); scrollToDiv('nueva_educacion')">
       <i class="bi bi-plus-circle bi-dark"></i>
     </button></h2>
+
+    <!--LISTA EDUCACIONES-->
 
   <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let educacionFormal of educacionFormalList">
@@ -15,12 +17,12 @@
         <div class="list-info col-9">
           <h4 class="d-inline">{{educacionFormal.titulo}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('titulo_' + educacionFormal.id)">
+              (click)="showById('titulo_' + educacionFormal.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h4>
           <div [id]="'titulo_' + educacionFormal.id" class="d-none">
-            <p class="d-inline">Título: <input type="text" class="mx-2" #edit_titulo
+            <p class="d-inline">Título: <input type="text" class="mx-2" [value]="educacionFormal.titulo" size="50" #edit_titulo
                 (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'titulo', edit_titulo.value, 'titulo_' + educacionFormal.id)">
             </p>
           </div>
@@ -28,18 +30,18 @@
 
           <h5>{{educacionFormal.empresa_institucion_nombre}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('empresa_' + educacionFormal.id)">
+              (click)="showById('edit_empresa_' + educacionFormal.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h5>
-          <div [id]="'empresa_' + educacionFormal.id" class="d-none">
+          <div [id]="'edit_empresa_' + educacionFormal.id" class="d-none">
             <p class="d-inline">Empresa o institución:
               <select required #edit_empresa
-                (change)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal,'empresa_institucion_id', edit_empresa.value, 'empresa_' + educacionFormal.id)">
+                (change)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal,'empresa_institucion_id', edit_empresa.value, 'edit_empresa_' + educacionFormal.id)">
                 <option value="" disabled selected>Seleccione la empresa o institución</option>
                 <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
               </select>
-              Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+              Para editar o agregar una empresa o institución, navegar a <a class="link-primary"(click)="scrollToDiv('seccion_emp_inst_exp')">Empresas e Instituciones</a>.
             </p>
           </div>
 
@@ -47,23 +49,23 @@
 
           <h6>{{educacionFormal.fecha_inicio}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('fecha_inicio_'  + educacionFormal.id)">
+              (click)="showById('fecha_inicio_edForm_'  + educacionFormal.id)">
               <i class="bi bi-pencil"></i>
             </button>
             - {{educacionFormal.fecha_fin}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('fecha_fin_' + educacionFormal.id)">
+              (click)="showById('fecha_fin_edForm_' + educacionFormal.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h6>
-          <div [id]="'fecha_inicio_' + educacionFormal.id" class="d-none">
-            <p class="d-inline">Fecha inicio: <input type="date" #edit_fecha_inicio
-                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal,  'fecha_inicio', edit_fecha_inicio.value, 'fecha_inicio_' + educacionFormal.id)">
+          <div [id]="'fecha_inicio_edForm_' + educacionFormal.id" class="d-none">
+            <p class="d-inline">Fecha inicio: <input type="date" [value]="cortarFecha(rawDataEducacionFormal[educacionFormalList.indexOf(educacionFormal)].fecha_inicio)" #edit_fecha_inicio
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'fecha_inicio', edit_fecha_inicio.value, 'fecha_inicio_edForm_' + educacionFormal.id)">
             </p>
           </div>
-          <div [id]="'fecha_fin_' + educacionFormal.id" class="d-none">
-            <p class="d-inline mx-2">Fecha fin: <input type="date" #edit_fecha_fin
-                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'fecha_fin', edit_fecha_fin.value, 'fecha_fin_' + educacionFormal.id)">
+          <div [id]="'fecha_fin_edForm_' + educacionFormal.id" class="d-none">
+            <p class="d-inline mx-2">Fecha fin: <input type="date" [value]="cortarFecha(rawDataEducacionFormal[educacionFormalList.indexOf(educacionFormal)].fecha_fin)" #edit_fecha_fin
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal, 'fecha_fin', edit_fecha_fin.value, 'fecha_fin_edForm_' + educacionFormal.id)">
             </p>
           </div>
 
@@ -72,13 +74,13 @@
           <p>
             {{educacionFormal.descripcion}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('descripcion_' + educacionFormal.id)">
+              (click)="showById('descripcion_edForm_' + educacionFormal.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </p>
-          <div [id]="'descripcion_' + educacionFormal.id" class="d-none">
-            <p class="d-inline">Descripción: <input type="text" class="mx-2" #edit_descripcion
-                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal ,'descripcion', edit_descripcion.value, 'descripcion_' + educacionFormal.id)">
+          <div [id]="'descripcion_edForm_' + educacionFormal.id" class="d-none">
+            <p class="d-inline">Descripción: <textarea type="text" class="mx-2 align-middle d-inline" [value]="educacionFormal.descripcion" rows="2" cols="100" #edit_descripcion
+                (keyup.enter)="editData('educacion_formal', educacionFormal, rawDataEducacionFormal ,'descripcion', edit_descripcion.value, 'descripcion_edForm_' + educacionFormal.id)"></textarea>
             </p>
           </div>
 
@@ -114,7 +116,7 @@
             <option value="" disabled selected>Seleccione la empresa</option>
             <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
           </select>
-          Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+          Para editar o agregar una empresa o institución, navegar a <a class="link-primary"(click)="scrollToDiv('seccion_emp_inst_exp')">Empresas e Instituciones</a>.
         </p>
       </div>
       <div>
@@ -141,7 +143,7 @@
   <!--CURSOS-->
 
   <h3 class="mt-3">Cursos <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-      (click)="mostrarById('nuevo_curso')">
+      (click)="showById('nuevo_curso'); scrollToDiv('nuevo_curso')">
       <i class="bi bi-plus-circle bi-dark"></i>
     </button></h3>
 
@@ -160,12 +162,12 @@
           <div class="mb-2">
             <h4 class="d-inline">{{curso.titulo}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('titulo_curso_' + curso.id)">
+                (click)="showById('titulo_curso_' + curso.id)">
                 <i class="bi bi-pencil"></i>
               </button>
             </h4>
             <div [id]="'titulo_curso_' + curso.id" class="d-none">
-              <p class="d-inline">Título: <input type="text" class="mx-2" #nuevo_titulo_curso
+              <p class="d-inline">Título: <input type="text" class="mx-2" [value]="curso.titulo" size="50" #nuevo_titulo_curso
                   (keyup.enter)="editData('curso', curso, rawDataCurso, 'titulo', nuevo_titulo_curso.value, 'titulo_curso_' + curso.id)">
               </p>
             </div>
@@ -174,7 +176,7 @@
           <div>
             <h6>{{curso.empresa_institucion_nombre}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('empresa_institucion_' + curso.id)">
+                (click)="showById('empresa_institucion_' + curso.id)">
                 <i class="bi bi-pencil"></i>
               </button>
             </h6>
@@ -185,7 +187,7 @@
                   <option value="" disabled selected>Seleccione la empresa o institución</option>
                   <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
                 </select>
-                Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+                Para editar o agregar una empresa o institución, navegar a <a class="link-primary"(click)="scrollToDiv('seccion_emp_inst_exp')">Empresas e Instituciones</a>.
               </p>
             </div>
           </div>
@@ -193,12 +195,12 @@
           <div>
             <h6 class="d-inline">Finalización: {{curso.fecha_fin}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('fecha_fin_curso_' + curso.id)">
+                (click)="showById('fecha_fin_curso_' + curso.id)">
                 <i class="bi bi-pencil"></i>
               </button>
             </h6>
             <div [id]="'fecha_fin_curso_' + curso.id" class="d-none">
-              <p class="d-inline mx-2">Fecha fin: <input type="date" #edit_fecha_fin_curso
+              <p class="d-inline mx-2">Fecha fin: <input type="date" [value]="cortarFecha(rawDataCurso[cursoList.indexOf(curso)].fecha_fin)" #edit_fecha_fin_curso
                   (keyup.enter)="editData('educacion_formal', curso, rawDataCurso, 'fecha_fin', edit_fecha_fin_curso.value, 'fecha_fin_curso_' + curso.id)">
               </p>
             </div>
@@ -233,7 +235,7 @@
             <option value="" disabled selected>Seleccione la empresa o institución</option>
             <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
           </select>
-          Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+          Para editar o agregar una empresa o institución, navegar a <a class="link-primary"(click)="scrollToDiv('seccion_emp_inst_exp')">Empresas e Instituciones</a>.
         </p>
       </div>
       <div>
@@ -252,7 +254,7 @@
 
 <div id="seccion_emp_inst_exp" class="card mat-card" *ngIf="autenticacionServicio.isLoggedIn()">
   <h2>Empresas e instituciones
-    <button class="btn btn-edit btn-lg d-inline mx-2" (click)="mostrarById('nueva_emp_inst')">
+    <button class="btn btn-edit btn-lg d-inline mx-2" (click)="showById('nueva_emp_inst'); scrollToDiv('nueva_emp_inst')">
       <i class="bi bi-plus-circle bi-dark"></i>
     </button>
   </h2>
@@ -270,12 +272,12 @@
         <div class="list-info col-9">
           <h5 class="d-inline">{{empInst.nombre}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('nombre_empInst_' + empInst.id)">
+              (click)="showById('nombre_empInst_' + empInst.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h5>
           <div [id]="'nombre_empInst_' + empInst.id" class="d-none">
-            <p class="d-inline">Nombre: <input type="text" class="mx-2" #nuevo_nombre_empInst
+            <p class="d-inline">Nombre: <input type="text" class="mx-2" [value]="empInst.nombre" size="40" #nuevo_nombre_empInst
                 (keyup.enter)="editDataEmpInst(empInst, 'nombre', nuevo_nombre_empInst.value, 'nombre_empInst_' + empInst.id)">
             </p>
           </div>
@@ -283,12 +285,12 @@
           <div>
             <h6 class="d-inline">URL logo
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_url_logo_empInst_' + empInst.id)">
+                (click)="showById('edit_url_logo_empInst_' + empInst.id)">
                 <i class="bi bi-pencil"></i>
               </button>
             </h6>
             <div [id]="'edit_url_logo_empInst_' + empInst.id" class="d-none">
-              <p class="d-inline mx-2">Nueva URL logo: <input type="url" #edit_url_logo_empInst
+              <p class="d-inline mx-2">Nueva URL logo: <input type="url" [value]="empInst.url_logo" size="70" #edit_url_logo_empInst
                   (keyup.enter)="editDataEmpInst(empInst, 'url_logo', edit_url_logo_empInst.value, 'edit_url_logo_empInst_' + empInst.id)">
               </p>
             </div>
@@ -297,12 +299,12 @@
           <div>
             <h6 class="d-inline">Alt text logo: {{empInst.alt_text_logo}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('edit_alt_text_logo_empInst_' + empInst.id)">
+                (click)="showById('edit_alt_text_logo_empInst_' + empInst.id)">
                 <i class="bi bi-pencil"></i>
               </button>
             </h6>
             <div [id]="'edit_alt_text_logo_empInst_' + empInst.id" class="d-none">
-              <p class="d-inline mx-2">Nuevo alt text logo: <input type="text" #edit_alt_text_logo_empInst
+              <p class="d-inline mx-2">Nuevo alt text logo: <input type="text" [value]="empInst.alt_text_logo" size="40" #edit_alt_text_logo_empInst
                   (keyup.enter)="editDataEmpInst(empInst, 'alt_text_logo', edit_alt_text_logo_empInst.value, 'edit_alt_text_logo_empInst_' + empInst.id)">
               </p>
             </div>

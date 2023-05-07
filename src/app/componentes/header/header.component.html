@@ -3,7 +3,7 @@
     <div class="col-3">
       <img [src]="header.url_logo_pagina" class="logo-pagina img-fluid m-2">
       <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-        (click)="mostrarById('edit_url_logo_pagina')">
+        (click)="showById('edit_url_logo_pagina')">
         <i class="bi bi-pencil"></i>
       </button>
     </div>
@@ -11,32 +11,35 @@
     <div class="col-2">
       <h3 class="d-inline">{{header.titulo_pagina}}</h3>
       <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-        (click)="mostrarById('edit_titulo_pagina')">
+        (click)="showById('edit_titulo_pagina')">
         <i class="bi bi-pencil"></i>
       </button>
 
     </div>
-
+    <!--EDIT REDES SOCIALES-->
     <div class="col-3">
       <div [id]="'edit_red_social_' + redSocial.id" class="d-none mb-1" *ngFor="let redSocial of redSocialList">
-        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="url" #nueva_url_red_social
-            (keyup.enter)="editData('red_social', redSocial,'url_red_social', nueva_url_red_social.value, 'edit_red_social_' + redSocial.id)">
+        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="text" [value]="redSocial.url_red_social" size="25" #edit_url_red_social
+            (blur)="editRedSocial(redSocial, 'url_red_social', edit_url_red_social.value)">
         </p>
-        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="url" #nueva_url_logo_red_social
-            (keyup.enter)="editData('red_social', redSocial ,'url_logo_red_social', nueva_url_logo_red_social.value, 'edit_red_social_' + redSocial.id)">
+        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" [value]="redSocial.url_logo_red_social" size="25" #edit_url_logo_red_social
+            (blur)="editRedSocial(redSocial, 'url_logo_red_social', edit_url_logo_red_social.value)">
         </p>
-        <p>Alt text logo: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" #nuevo_alt_text_logo
-            (keyup.enter)="editData('red_social', redSocial ,'alt_text_logo', nuevo_alt_text_logo.value, 'edit_red_social_' + redSocial.id)">
+        <p>Alt text logo: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" [value]="redSocial.alt_text_logo" #edit_alt_text_logo
+            (blur)="editRedSocial(redSocial, 'alt_text_logo', edit_alt_text_logo.value)">
         </p>
+
+        <button (click)="submitEditRedSocial(redSocial, 'edit_red_social_' + redSocial.id)" class="btn btn-outline-primary btn-sm">Submit</button>
+
       </div>
     </div>
-
+    <!--LISTA REDES SOCIALES-->
     <div class="col-3">    
        <div class="d-inline" *ngFor="let redSocial of redSocialList">
         <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social m-2"
             alt={{redSocial.alt_text_logo}}></a>
           <button class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarById('edit_red_social_' + redSocial.id)">
+            (click)="showById('edit_red_social_' + redSocial.id)">
             <i class="bi bi-pencil"></i>
           </button>
           <button class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
@@ -46,15 +49,15 @@
 
       </div>
 
-
+      
       <button class="btn d-inline" *ngIf="autenticacionServicio.isLoggedIn()"
-        (click)="mostrarById('nueva_red_social')">
+        (click)="showById('nueva_red_social')">
         <i class="bi bi-plus-circle bi-dark"></i>
       </button>
 
 
     </div>
-
+<!--LOGIN/LOGOUT-->
     <div class="col-1">
       <button class="btn btn-outline-info login align-self-center" type="button"
         *ngIf="!autenticacionServicio.isLoggedIn()" (click)="loginClick();">Login</button>
@@ -62,20 +65,21 @@
         *ngIf="autenticacionServicio.isLoggedIn()" (click)="logoutClick();">Logout</button>
     </div>
   </div>
-
+  
+<!--EDIT TITULO-->
   <div class="row align-items-center">
     <div class="col-3">
       <div id="edit_url_logo_pagina" class="d-none">
-        <p class="d-inline">URL logo página: <input type="url" class="mx-2" #nueva_url_logo_pagina
-            (keyup.enter)="editData('header', header ,'url_logo_pagina', nueva_url_logo_pagina.value, 'edit_url_logo_pagina')">
+        <p class="d-inline">URL logo página: <input type="url" class="mx-2" [value]="header.url_logo_pagina" size="25" #nueva_url_logo_pagina
+            (keyup.enter)="editHeader(header ,'url_logo_pagina', nueva_url_logo_pagina.value, 'edit_url_logo_pagina')">
         </p>
       </div>
     </div>
 
     <div class="col-2">
       <div id="edit_titulo_pagina" class="d-none">
-        <p class="d-inline">Título página: <input type="text" class="mx-2" #nuevo_titulo_pagina
-            (keyup.enter)="editData('header', header ,'titulo_pagina', nuevo_titulo_pagina.value, 'edit_titulo_pagina')">
+        <p class="d-inline">Título página: <input type="text" class="mx-2" [value]="header.titulo_pagina" size="15" #nuevo_titulo_pagina
+            (keyup.enter)="editHeader(header ,'titulo_pagina', nuevo_titulo_pagina.value, 'edit_titulo_pagina')">
         </p>
       </div>
     </div>
@@ -83,11 +87,11 @@
     <div class="col-3">
 
     </div>
-
+<!--NUEVA RED SOCIAL-->
     <div class="col-3">
       <div id="nueva_red_social" class="d-none">
         <h6>Nueva red social</h6>
-        <form>
+        <div>
           <div class="row mb-1">
             <label for="url_nueva_red_social" class="col-sm-5 col-form-label">URL red social:</label>
             <div class="col-sm-7">
@@ -107,7 +111,7 @@
             </div>
           </div>
           <button (click)="crearRedSocial()" class="btn btn-outline-primary btn-sm">Submit</button>
-        </form>
+        </div>
       </div>
 
 

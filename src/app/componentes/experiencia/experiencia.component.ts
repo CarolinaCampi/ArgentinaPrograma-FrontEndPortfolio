@@ -53,19 +53,23 @@ export class ExperienciaComponent implements OnInit {
     return formattedDate;// output format: "novembre de 2023"
   }
 
-  // Changes the display class of an element with a specific id
-  mostrarById(id: string) {
-    document.getElementById(id)!.classList.remove('d-none');
-    document.getElementById(id)!.classList.add('d-inline');
+  cortarFecha(fecha: any): string {
+    if (!fecha) {
+      return "";
+    }
+
+    return fecha.split("T")[0];
   }
 
+  // Edition methods 
+
   // Changes the display class of an element with a specific id
-  ocultarById(id: string) {
-    document.getElementById(id)!.classList.remove('d-inline');
-    document.getElementById(id)!.classList.add('d-none');
+  showById(idToShow: string) {
+    document.getElementById(idToShow)!.classList.remove('d-none');
+    document.getElementById(idToShow)!.classList.add('d-inline');
   }
 
-  // Changes the input to disabled or enabled depending on the event
+  // event listener for changes in Es trabajo actual edit
   onCheckboxTrabajoActualChange(event: Event, dataToUpdate: any, id: string) {
     const isChecked = (<HTMLInputElement>event.target).checked;
 
@@ -83,7 +87,7 @@ export class ExperienciaComponent implements OnInit {
         if (this.rawDataExperiencia[i].id == dataToUpdate.id) {
           this.rawDataExperiencia[i]['fecha_fin'] = null;
           this.rawDataExperiencia[i]['es_trabajo_actual'] = true;
-          this.updateEntity("experiencia", this.rawDataExperiencia[i]);
+          this.updateEntity(this.rawDataExperiencia[i]);
           break;
         }
       }
@@ -91,10 +95,7 @@ export class ExperienciaComponent implements OnInit {
     }
   }
 
-
-  // Edition methods 
-
-  editData(entity: string, dataToUpdate: any, key: string, value: any, id: string) {
+  editExperiencia(dataToUpdate: any, key: string, value: any, id: string) {
     if (key.includes("fecha")) { //update th UI for fechas
       dataToUpdate[key] = this.convertirFechaAMesAno(value);
     } else if (key == "empresa_institucion_id") { //update the UI for empresa
@@ -117,7 +118,7 @@ export class ExperienciaComponent implements OnInit {
     for (let i = 0; i < this.rawDataExperiencia.length; i++) {
       if (this.rawDataExperiencia[i].id == dataToUpdate.id) {
         this.rawDataExperiencia[i][key] = value;
-        this.updateEntity(entity, this.rawDataExperiencia[i]);
+        this.updateEntity(this.rawDataExperiencia[i]);
         break;
       }
     }
@@ -135,14 +136,14 @@ export class ExperienciaComponent implements OnInit {
       if (this.rawDataExperiencia[i].id == dataToUpdate.id) {
         this.rawDataExperiencia[i]['fecha_fin'] = value;
         this.rawDataExperiencia[i]['es_trabajo_actual'] = false;
-        this.updateEntity("experiencia", this.rawDataExperiencia[i]);
+        this.updateEntity(this.rawDataExperiencia[i]);
         break;
       }
     }
   }
 
-  updateEntity(entity: string, dataToUpdate: any) {
-    this.datosPortfolio.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
+  updateEntity(dataToUpdate: any) {
+    this.datosPortfolio.modificarDatos('experiencia', dataToUpdate).subscribe((data: any) => {
       console.log(data);
     });
   }
@@ -189,8 +190,10 @@ export class ExperienciaComponent implements OnInit {
   crearExperiencia() {
     this.datosPortfolio.postearDatos('experiencia', this.objetoExperiencia).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Delete methods
@@ -198,8 +201,15 @@ export class ExperienciaComponent implements OnInit {
   borrarExperiencia(id: number) {
     this.datosPortfolio.borrarDatos('experiencia', id).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
+  }
+
+  // Scroll to a certain div by id, for navigation
+  scrollToDiv(id:string){
+    document.getElementById(id)!.scrollIntoView();
   }
 
 }

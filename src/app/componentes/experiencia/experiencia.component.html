@@ -3,7 +3,7 @@
 <div id="experienciaDiv" class="card mat-card">
   <h2 class="d-inline">Experiencia
     <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-      (click)="mostrarById('nueva_experiencia')">
+      (click)="showById('nueva_experiencia'); scrollToDiv('nueva_experiencia')">
       <i class="bi bi-plus-circle bi-dark"></i>
     </button>
   </h2>
@@ -21,62 +21,62 @@
         <div class="list-info col-9">
           <h4 class="d-inline">{{experiencia.rol}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('rol_' + experiencia.id)">
+              (click)="showById('rol_' + experiencia.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h4>
           <div [id]="'rol_' + experiencia.id" class="d-none">
-            <p class="d-inline">Rol: <input type="text" class="mx-2" #nuevo_rol
-                (keyup.enter)="editData('experiencia', experiencia, 'rol', nuevo_rol.value, 'rol_' + experiencia.id)">
+            <p class="d-inline">Rol: <input type="text" class="mx-2" [value]="experiencia.rol" size="40" #nuevo_rol
+                (keyup.enter)="editExperiencia(experiencia, 'rol', nuevo_rol.value, 'rol_' + experiencia.id)">
             </p>
           </div>
 
 
           <h5>{{experiencia.empresa_institucion_nombre}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('empresa_' + experiencia.id)">
+              (click)="showById('empresa_' + experiencia.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </h5>
           <div [id]="'empresa_' + experiencia.id" class="d-none">
             <p class="d-inline">Empresa:
               <select required #empresa
-                (change)="editData('experiencia', experiencia, 'empresa_institucion_id', empresa.value, 'empresa_' + experiencia.id)">
+                (change)="editExperiencia(experiencia, 'empresa_institucion_id', empresa.value, 'empresa_' + experiencia.id)">
                 <option value="" disabled selected>Seleccione la empresa</option>
                 <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
               </select>
-              Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+              Para editar o agregar una empresa o institución, navegar a <a class="link-primary"(click)="scrollToDiv('seccion_emp_inst_exp')">Empresas e Instituciones</a>.
             </p>
           </div>
 
           <div>
             <h6 class="d-inline">{{experiencia.fecha_inicio}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('fecha_inicio_'  + experiencia.id)">
+                (click)="showById('fecha_inicio_'  + experiencia.id)">
                 <i class="bi bi-pencil"></i>
               </button>
               - {{experiencia.fecha_fin}}
               <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-                (click)="mostrarById('fecha_fin_empleo_actual_' + experiencia.id)">
+                (click)="showById('fecha_fin_empleo_actual_' + experiencia.id)">
                 <i class="bi bi-pencil"></i>
               </button>
             </h6>
           </div>
 
           <div [id]="'fecha_inicio_' + experiencia.id" class="d-none">
-            <p class="d-inline">Fecha inicio: <input type="date" #nueva_fecha_inicio
-                (keyup.enter)="editData('experiencia', experiencia, 'fecha_inicio', nueva_fecha_inicio.value, 'fecha_inicio_' + experiencia.id)">
+            <p class="d-inline">Fecha inicio: <input type="date" [value]="cortarFecha(rawDataExperiencia[experienciaList.indexOf(experiencia)].fecha_inicio)" #nueva_fecha_inicio
+                (keyup.enter)="editExperiencia(experiencia, 'fecha_inicio', nueva_fecha_inicio.value, 'fecha_inicio_' + experiencia.id)">
             </p>
           </div>
 
           <div [id]="'fecha_fin_empleo_actual_' + experiencia.id" class="d-none">
             <fieldset [id]="'fecha_fin_' + experiencia.id" class="d-inline">
-              <p class="d-inline mx-2">Fecha fin: <input type="date" placeholder="YYYY-MM-DD" #nueva_fecha_fin
+              <p class="d-inline mx-2">Fecha fin: <input type="date" [value]="cortarFecha(rawDataExperiencia[experienciaList.indexOf(experiencia)].fecha_fin)" #nueva_fecha_fin
                   (keyup.enter)="editFechaFin(experiencia, nueva_fecha_fin.value, 'fecha_fin_empleo_actual_' + experiencia.id)">
               </p>
             </fieldset>
-            <p [id]="'es_empleo_actual_' + experiencia.id" class="d-inline">Es empleo actual? <input type="checkbox"
-                class="m-2" #empleo_actual
+            <p [id]="'edit_es_empleo_actual_' + experiencia.id" class="d-inline">Es empleo actual? <input type="checkbox"
+                class="m-2" [checked]="experiencia.es_trabajo_actual" #empleo_actual
                 (change)="onCheckboxTrabajoActualChange($event, experiencia, 'fecha_fin_empleo_actual_' + experiencia.id)">
             </p>
           </div>
@@ -84,13 +84,13 @@
           <p>
             {{experiencia.descripcion}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-              (click)="mostrarById('descripcion_' + experiencia.id)">
+              (click)="showById('descripcion_' + experiencia.id)">
               <i class="bi bi-pencil"></i>
             </button>
           </p>
           <div [id]="'descripcion_' + experiencia.id" class="d-none">
-            <p class="d-inline">Descripción: <input type="text" class="mx-2" #nueva_descripcion
-                (keyup.enter)="editData('experiencia', experiencia, 'descripcion', nueva_descripcion.value, 'descripcion_' + experiencia.id)">
+            <p class="d-inline">Descripción: <textarea type="text" class="mx-2 align-middle d-inline" [value]="experiencia.descripcion" rows="2" cols="100" #nueva_descripcion
+                (keyup.enter)="editExperiencia(experiencia, 'descripcion', nueva_descripcion.value, 'descripcion_' + experiencia.id)"></textarea>
             </p>
           </div>
         </div>
@@ -121,7 +121,7 @@
             <option value="" disabled selected>Seleccione la empresa</option>
             <option *ngFor="let empresa of empInstList" [value]="empresa.id">{{empresa.nombre}}</option>
           </select>
-          Para editar o agregar una empresa o institución, navegar al sector correspondiente más abajo.
+          Para editar o agregar una empresa o institución, navegar a <a class="link-primary"(click)="scrollToDiv('seccion_emp_inst_exp')">Empresas e Instituciones</a>.
         </p>
       </div>
       <div>

@@ -74,11 +74,19 @@ export class EducacionComponent implements OnInit {
     return formattedDate;// output format: "novembre de 2023"
   }
 
+  cortarFecha(fecha: any): string {
+    if (!fecha) {
+      return "";
+    }
+
+    return fecha.split("T")[0];
+  }
+
   // Changes the display class of an element with a specific id
-  mostrarById(id:string){
-    console.log(id);
-    document.getElementById(id)!.classList.remove('d-none');
-    document.getElementById(id)!.classList.add('d-inline');
+  showById(idToShow:string){
+    console.log(idToShow);
+    document.getElementById(idToShow)!.classList.remove('d-none');
+    document.getElementById(idToShow)!.classList.add('d-inline');
   }
 
   // Educacion methods
@@ -133,8 +141,10 @@ export class EducacionComponent implements OnInit {
   crearEducacion(entity:string){
         this.datosPortfolio.postearDatos(entity, this.objetoEducacion).subscribe(data =>{
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Delete methods
@@ -142,8 +152,10 @@ export class EducacionComponent implements OnInit {
   borrarEducacion(entity:string, id:number){
     this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // EmpresaInstitucion methods
@@ -179,8 +191,10 @@ export class EducacionComponent implements OnInit {
   crearEmpInst(){
         this.datosPortfolio.postearDatos('empresa_institucion', this.objetoEmpInst).subscribe(data =>{
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
 
   // Delete methods
@@ -188,7 +202,15 @@ export class EducacionComponent implements OnInit {
   borrarEmpInst (id:number){
     this.datosPortfolio.borrarDatos("empresa_institucion", id).subscribe(data => {
       console.log(data);
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
     });
-    window.location.reload();
+    // window.location.reload();
   }
+
+    // Scroll to a certain div by id, for navigation
+    scrollToDiv(id:string){
+      document.getElementById(id)!.scrollIntoView();
+    }
+
 }
