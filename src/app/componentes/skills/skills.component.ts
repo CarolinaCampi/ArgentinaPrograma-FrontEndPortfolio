@@ -19,8 +19,6 @@ export class SkillsComponent implements OnInit {
   ngOnInit(): void {
 
     this.datosPortfolio.obtenerDatos("hard_skill").subscribe(data => {
-      console.log(data);
-
       for (let i = 0; i < data.length; i++) {
         this.inicializarHTML(i, data[i].id);
       }
@@ -35,7 +33,6 @@ export class SkillsComponent implements OnInit {
     });
 
     this.datosPortfolio.obtenerDatos("soft_skill").subscribe(data => {
-      console.log(data);
       this.softSkillsList = data;
     });
   }
@@ -110,7 +107,6 @@ export class SkillsComponent implements OnInit {
 
   // Changes the display class of an element with a specific id
   mostrarById(id: string) {
-    console.log(id);
     document.getElementById(id)!.classList.remove('d-none');
     document.getElementById(id)!.classList.add('d-inline');
   }
@@ -122,12 +118,10 @@ export class SkillsComponent implements OnInit {
   // Create the skill object that will be sent to the DB later
   crearObjetoSkill(key: string, value: string) {
     this.objetoSkill[key] = value;
-    console.log(this.objetoSkill);
   }
   // Post the new skill object created
   crearSkill(entity: string) {
     this.datosPortfolio.postearDatos(entity, this.objetoSkill).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -138,7 +132,6 @@ export class SkillsComponent implements OnInit {
 
   borrarSkill(entity: string, id: number) {
     this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });

@@ -105,7 +105,6 @@ export class ExperienciaComponent implements OnInit {
           dataToUpdate['empresa_institucion_nombre'] = this.empInstList[j].nombre;
           dataToUpdate['empresa_institucion_url_logo'] = this.empInstList[j].url_logo;
           dataToUpdate['empresa_institucion_alt_text_logo'] = this.empInstList[j].alt_text_logo;
-          console.log(dataToUpdate);
         }
       }
     } else { //updates UI 
@@ -144,7 +143,6 @@ export class ExperienciaComponent implements OnInit {
 
   updateEntity(dataToUpdate: any) {
     this.datosPortfolio.modificarDatos('experiencia', dataToUpdate).subscribe((data: any) => {
-      console.log(data);
     });
   }
 
@@ -155,7 +153,6 @@ export class ExperienciaComponent implements OnInit {
   // Create the experiencia object that will be sent to the DB later
   crearObjetoExperiencia(key: string, value: string) {
     this.objetoExperiencia[key] = value;
-    console.log(this.objetoExperiencia);
   }
 
   // Add es trabajo actual to experiencia object
@@ -189,7 +186,6 @@ export class ExperienciaComponent implements OnInit {
   // Post the new experiencia object created
   crearExperiencia() {
     this.datosPortfolio.postearDatos('experiencia', this.objetoExperiencia).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -200,7 +196,6 @@ export class ExperienciaComponent implements OnInit {
 
   borrarExperiencia(id: number) {
     this.datosPortfolio.borrarDatos('experiencia', id).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });

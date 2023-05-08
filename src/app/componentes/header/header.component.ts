@@ -17,12 +17,10 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos("header").subscribe(data => {
-      console.log(data);
       this.header = data[0];
     });
 
     this.datosPortfolio.obtenerDatos("red_social").subscribe(data => {
-      console.log(data);
       this.redSocialList = data;
     });
   }
@@ -48,7 +46,6 @@ export class HeaderComponent implements OnInit {
   // update header in DB
   updateHeader(dataToUpdate:any){
     this.datosPortfolio.modificarDatos('header', dataToUpdate).subscribe((data: any) => {
-      console.log(data);
     });
   }
 
@@ -56,13 +53,11 @@ export class HeaderComponent implements OnInit {
   editRedSocial(dataToUpdate:any, key:string, value: string){
     //updates UI
     dataToUpdate[key] = value; 
-    console.log('Adentro de editRedSocial:' + JSON.stringify(dataToUpdate));
   }
 
   // update red social in DB and hide edit div
   submitEditRedSocial(dataToUpdate:any, idToHide:string){
     this.datosPortfolio.modificarDatos('red_social', dataToUpdate).subscribe((data: any) => {
-      console.log(data);
     });
     document.getElementById(idToHide)!.classList.remove('d-inline');
     document.getElementById(idToHide)!.classList.add('d-none');
@@ -75,12 +70,10 @@ export class HeaderComponent implements OnInit {
   // Create the experiencia object that will be sent to the DB later
   crearObjetoRedSocial(key:string, value:string){
     this.objetoRedSocial[key] = value;
-    console.log(this.objetoRedSocial);
   }
   // Post the new experiencia object created
   crearRedSocial(){
       this.datosPortfolio.postearDatos('red_social', this.objetoRedSocial).subscribe(data =>{
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -91,7 +84,6 @@ export class HeaderComponent implements OnInit {
 
   borrarRedSocial(id:number){
     this.datosPortfolio.borrarDatos('red_social', id).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });

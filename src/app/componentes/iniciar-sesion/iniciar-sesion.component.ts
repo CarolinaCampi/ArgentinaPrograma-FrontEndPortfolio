@@ -37,7 +37,6 @@ export class IniciarSesionComponent {
   onEnviar(event:Event){
     event.preventDefault;
     this.autenticacionService.iniciarSesion(this.form.value).subscribe(data=>{
-      console.log("Data: "+ JSON.stringify(data));
       this.ruta.navigate(['/portfolio']);
     })
   }

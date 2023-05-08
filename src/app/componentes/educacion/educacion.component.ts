@@ -84,7 +84,6 @@ export class EducacionComponent implements OnInit {
 
   // Changes the display class of an element with a specific id
   showById(idToShow:string){
-    console.log(idToShow);
     document.getElementById(idToShow)!.classList.remove('d-none');
     document.getElementById(idToShow)!.classList.add('d-inline');
   }
@@ -103,7 +102,6 @@ export class EducacionComponent implements OnInit {
             dataToUpdate['empresa_institucion_nombre'] = this.empInstList[j].nombre;
             dataToUpdate['empresa_institucion_url_logo'] = this.empInstList[j].url_logo;
             dataToUpdate['empresa_institucion_alt_text_logo'] = this.empInstList[j].alt_text_logo;
-            console.log(dataToUpdate);
           }
         }
       } else { //updates UI for the rest of the keys
@@ -119,12 +117,10 @@ export class EducacionComponent implements OnInit {
         break;
       }
     }
-    console.log('Este es el archivo raw data: ' + JSON.stringify(rawData));
   }
 
   updateEntity(entity: string, dataToUpdate:any){
     this.datosPortfolio.modificarDatos(entity, dataToUpdate).subscribe((data: any) => {
-      console.log(data);
     });
   }
 
@@ -140,7 +136,6 @@ export class EducacionComponent implements OnInit {
   // Post the new educacion object created
   crearEducacion(entity:string){
         this.datosPortfolio.postearDatos(entity, this.objetoEducacion).subscribe(data =>{
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -151,7 +146,6 @@ export class EducacionComponent implements OnInit {
 
   borrarEducacion(entity:string, id:number){
     this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -174,7 +168,6 @@ export class EducacionComponent implements OnInit {
 
   updateEmpInst(dataToUpdate:any){
     this.datosPortfolio.modificarDatos("empresa_institucion", dataToUpdate).subscribe((data: any) => {
-      console.log(data);
     });
   }
 
@@ -190,7 +183,6 @@ export class EducacionComponent implements OnInit {
   // Post the new empresaInstitucion object created
   crearEmpInst(){
         this.datosPortfolio.postearDatos('empresa_institucion', this.objetoEmpInst).subscribe(data =>{
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -201,7 +193,6 @@ export class EducacionComponent implements OnInit {
 
   borrarEmpInst (id:number){
     this.datosPortfolio.borrarDatos("empresa_institucion", id).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });

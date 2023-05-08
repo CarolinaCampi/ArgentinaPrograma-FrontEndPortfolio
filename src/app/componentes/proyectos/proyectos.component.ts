@@ -75,7 +75,6 @@ export class ProyectosComponent implements OnInit{
 
   updateEntity(dataToUpdate:any){
     this.datosPortfolio.modificarDatos('proyecto', dataToUpdate).subscribe((data: any) => {
-      console.log(data);
     });
   }
 
@@ -86,12 +85,10 @@ export class ProyectosComponent implements OnInit{
   // Create the Proyecto object that will be sent to the DB later
   crearObjetoProyecto(key:string, value:string){
     this.objetoProyecto[key] = value;
-    console.log(this.objetoProyecto);
   }
   // Post the new Proyecto object created
   crearProyecto(){
         this.datosPortfolio.postearDatos("proyecto", this.objetoProyecto).subscribe(data =>{
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
@@ -101,7 +98,6 @@ export class ProyectosComponent implements OnInit{
 
   borrarProyecto(id:number){
     this.datosPortfolio.borrarDatos('proyecto', id).subscribe(data => {
-      console.log(data);
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });

@@ -15,7 +15,6 @@ export class AcercaDeComponent implements OnInit {
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos("persona").subscribe(data => {
-      console.log(data);
       this.miPortfolio = data[0];
     });
   }
@@ -34,7 +33,6 @@ export class AcercaDeComponent implements OnInit {
 
   updatePersona(){
     this.datosPortfolio.modificarDatos("persona", this.miPortfolio).subscribe(data => {
-      console.log(data);
     });
   }
   
