@@ -19,6 +19,8 @@ export class SkillsComponent implements OnInit {
   ngOnInit(): void {
 
     this.datosPortfolio.obtenerDatos("hard_skill").subscribe(data => {
+      document.getElementById("spinnerLoadingHardSkill")?.classList.add("d-none");
+      document.getElementById("spinnerLoadingSoftSkill")?.classList.add("d-none");
       for (let i = 0; i < data.length; i++) {
         this.inicializarHTML(i, data[i].id);
       }
@@ -39,7 +41,7 @@ export class SkillsComponent implements OnInit {
 
   inicializarHTML(index: number, id: number) {
     let col1 = document.createElement("div");
-    col1.classList.add("col-1", "border", "m-2");
+    col1.classList.add("col-1", "border", "my-3", "mx-4");
 
     let canvas = document.createElement("canvas");
     canvas.id = "chart-" + index;
@@ -49,17 +51,26 @@ export class SkillsComponent implements OnInit {
 
       let button_tachito = document.createElement("button");
       button_tachito.classList.add("btn", "d-block", "mx-auto");
+      button_tachito.setAttribute("id", "deleteHardSkill" + id);
 
       let tachito = document.createElement("i");
       tachito.classList.add("bi", "bi-trash", "mx-auto");
+      tachito.setAttribute("id", 'trashHardSkill' + id);
+
+      let spinner = document.createElement("span");
+      spinner.classList.add("spinner-border", "spinner-border-sm", "d-none");
+      spinner.setAttribute("id", "spinnerDeleteHardSkill" + id);
+      spinner.setAttribute("role", "status");
+      spinner.setAttribute("aria-hidden", "true");
 
       button_tachito.appendChild(tachito);
+      button_tachito.appendChild(spinner);
       col1.appendChild(canvas);
       col1.appendChild(button_tachito);
 
       let self = this;
       button_tachito.addEventListener("click", function () {
-        self.borrarSkill('hard_skill', id);
+        self.borrarHardSkill('hard_skill', id);
       });
 
     } else {
@@ -69,7 +80,6 @@ export class SkillsComponent implements OnInit {
   }
 
   createChart(index: number, titulo: string, porcentaje: number) {
-
     return new Chart("chart-" + index, {
       type: 'doughnut', //this denotes the type of chart
 
@@ -87,28 +97,23 @@ export class SkillsComponent implements OnInit {
       options: {
         responsive: true,
         maintainAspectRatio: true,
-        // aspectRatio: 1,
         plugins: {
           title: {
             display: true,
             text: titulo,
             position: 'bottom',
             color: 'black',
-            // padding: 5,
-            // fullSize: true,
             font: { family: 'helvetica', size: 16 }
           },
-
         }
       },
-
     });
   }
 
   // Changes the display class of an element with a specific id
-  mostrarById(id: string) {
-    document.getElementById(id)!.classList.remove('d-none');
-    document.getElementById(id)!.classList.add('d-inline');
+  showById(idToShow: string) {
+    document.getElementById(idToShow)!.classList.remove('d-none');
+    document.getElementById(idToShow)!.classList.add('d-inline');
   }
 
   // Creation methods
@@ -119,26 +124,49 @@ export class SkillsComponent implements OnInit {
   crearObjetoSkill(key: string, value: string) {
     this.objetoSkill[key] = value;
   }
-  // Post the new skill object created
-  crearSkill(entity: string) {
+  // Post the new hard skill object created
+  crearHardSkill(entity: string) {
+    document.getElementById("spinnerNewHardSkill")!.classList.remove('d-none');
+    document.getElementById("submitNewHardSkill")?.setAttribute("disabled", "true");
     this.datosPortfolio.postearDatos(entity, this.objetoSkill).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
+  }
+
+  // Post the new soft skill object created
+  crearSoftSkill(entity: string) {
+    document.getElementById("spinnerNewSoftSkill")!.classList.remove('d-none');
+    document.getElementById("submitNewSoftSkill")?.setAttribute("disabled", "true");
+    this.datosPortfolio.postearDatos(entity, this.objetoSkill).subscribe(data => {
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
+    });
   }
 
   // Delete methods
 
-  borrarSkill(entity: string, id: number) {
+  borrarHardSkill(entity: string, id: number) {
+    document.getElementById('trashHardSkill' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteHardSkill' + id)?.classList.remove('d-none');
+    document.getElementById("deleteHardSkill" + id)?.setAttribute("disabled", "true");
     this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
   }
 
-  // Scroll to a certain div by id, for navigation
+  borrarSoftSkill(entity: string, id: number) {
+    document.getElementById('trashSoftSkill' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteSoftSkill' + id)?.classList.remove('d-none');
+    document.getElementById("deleteSoftSkill" + id)?.setAttribute("disabled", "true");
+    this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
+    });
+  }
+
+  // Scroll to a certain element determined by its id
   scrollToDiv(id: string) {
     document.getElementById(id)!.scrollIntoView();
   }

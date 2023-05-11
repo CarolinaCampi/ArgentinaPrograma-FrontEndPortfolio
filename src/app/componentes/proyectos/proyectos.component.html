@@ -1,12 +1,18 @@
 <div id="proyectosDiv" class="card mat-card">
-  <h2 class="mb-2">Proyectos
-    <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-      (click)="showById('nuevo_proyecto'); scrollToDiv('nuevo_proyecto')">
-      <i class="bi bi-plus-circle bi-dark"></i>
-    </button>
-  </h2>
+  <div>
+    <h2 class="mb-2 d-inline">Proyectos
+      <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+        (click)="showById('nuevo_proyecto'); scrollToDiv('nuevo_proyecto')">
+        <i class="bi bi-plus-circle bi-dark"></i>
+      </button>
+    </h2>
+    <div id="spinnerLoadingProyecto" class="spinner-border text-primary" role="status">
+    </div>
+  </div>
 
-  <!--LISTA DE PROYECTOS-->
+  <!--LISTA DE PROYECTOS CON BORRAR Y EDIT-->
+  <!--The list is made by iterating through the dictionaries in the proyectosList array-->
+
   <div class="row align-items-center">
     <div class="col-sm-4" *ngFor="let proyecto of proyectosList">
       <div class="card text-center my-2">
@@ -18,7 +24,8 @@
             </button>
           </h5>
           <div [id]="'edit_titulo_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">Título: <input type="text" class="mx-2" [value]="proyecto.titulo" size="25"  #nuevo_titulo_proyecto
+            <p class="d-inline">Título: <input type="text" class="mx-2" [value]="proyecto.titulo" size="25"
+                #nuevo_titulo_proyecto
                 (keyup.enter)="editProyecto(proyecto, 'titulo', nuevo_titulo_proyecto.value, 'edit_titulo_proyecto_' + proyecto.id)">
             </p>
           </div>
@@ -30,11 +37,12 @@
             </button>
           </h6>
           <div [id]="'edit_fecha_fin_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">Fecha fin: <input type="date" class="m-2" [value]="cortarFecha(rawDataProyecto[proyectosList.indexOf(proyecto)].fecha_fin)" #nuevo_fecha_fin_proyecto
+            <p class="d-inline">Fecha fin: <input type="date" class="m-2"
+                [value]="cortarFecha(rawDataProyecto[proyectosList.indexOf(proyecto)].fecha_fin)"
+                #nuevo_fecha_fin_proyecto
                 (keyup.enter)="editProyecto(proyecto, 'fecha_fin', nuevo_fecha_fin_proyecto.value, 'edit_fecha_fin_proyecto_' + proyecto.id)">
             </p>
           </div>
-          <!-- <br> -->
 
           <p class="card-text">{{proyecto.descripcion}}
             <button class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()"
@@ -43,9 +51,9 @@
             </button>
           </p>
           <div [id]="'edit_descripcion_proyecto_' + proyecto.id" class="d-none align-middle">
-            <p class="d-inline text-center">Descripción: </p><textarea type="text" class="d-inline align-middle m-2" rows="2" cols="50" [value]="proyecto.descripcion"  #nuevo_descripcion_proyecto
-                (keyup.enter)="editProyecto(proyecto, 'descripcion', nuevo_descripcion_proyecto.value, 'edit_descripcion_proyecto_' + proyecto.id)"></textarea>
-            
+            <p class="d-inline text-center">Descripción: </p><textarea type="text" class="d-inline align-middle m-2"
+              rows="2" cols="50" [value]="proyecto.descripcion" #nuevo_descripcion_proyecto
+              (keyup.enter)="editProyecto(proyecto, 'descripcion', nuevo_descripcion_proyecto.value, 'edit_descripcion_proyecto_' + proyecto.id)"></textarea>
           </div>
 
           <br>
@@ -57,13 +65,17 @@
           </button>
           <br>
           <div [id]="'edit_url_proyecto_' + proyecto.id" class="d-none">
-            <p class="d-inline">URL GitHub: <input type="url" class="m-2" size="30" [value]="proyecto.url_proyecto" #nuevo_url_proyecto
+            <p class="d-inline">URL GitHub: <input type="url" class="m-2" size="30" [value]="proyecto.url_proyecto"
+                #nuevo_url_proyecto
                 (keyup.enter)="editProyecto(proyecto, 'url_proyecto', nuevo_url_proyecto.value, 'edit_url_proyecto_' + proyecto.id)">
             </p>
           </div>
           <br>
-          <button class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()" (click)="borrarProyecto(proyecto.id)">
-            <i class="bi bi-trash"></i>
+          <button [id]="'deleteProyecto' + proyecto.id" class="btn p-1" *ngIf="autenticacionServicio.isLoggedIn()"
+            (click)="borrarProyecto(proyecto.id)">
+            <i [id]="'trashProyecto' + proyecto.id" class="bi bi-trash"></i>
+            <span [id]="'spinnerDeleteProyecto' + proyecto.id" class="spinner-border spinner-border-sm d-none"
+              role="status" aria-hidden="true"></span>
           </button>
         </div>
       </div>
@@ -89,29 +101,28 @@
               </h6>
             </div>
 
-
             <div class="card-text">
               <div class="align-middle">
-                <p class="d-inline text-center">Descripción: </p><textarea type="text" class="d-inline align-middle m-2" rows="2" cols="50"  #descripcion_nuevo_proyecto
-                (blur)="crearObjetoProyecto('descripcion', descripcion_nuevo_proyecto.value)"></textarea>
+                <p class="d-inline text-center">Descripción: </p><textarea type="text" class="d-inline align-middle m-2"
+                  rows="2" cols="50" #descripcion_nuevo_proyecto
+                  (blur)="crearObjetoProyecto('descripcion', descripcion_nuevo_proyecto.value)"></textarea>
               </div>
-     
+
               <br>
 
               <p class="d-inline">URL GitHub: <input type="url" class="m-2" size="30" #url_nuevo_proyecto
                   (blur)="crearObjetoProyecto('url_proyecto', url_nuevo_proyecto.value)">
-
               </p>
             </div>
             <br>
-            <button class="btn btn-outline-primary mb-2" (click)="crearProyecto()">Submit</button>
+            <button id="submitNewProyecto" class="btn btn-outline-primary mb-2" (click)="crearProyecto()">Submit <span
+                id="spinnerNewProyecto" class="spinner-border spinner-border-sm d-none" role="status"
+                aria-hidden="true"></span></button>
           </div>
         </div>
 
-
       </div>
     </div>
-
 
   </div>
 

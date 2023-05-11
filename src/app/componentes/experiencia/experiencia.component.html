@@ -1,14 +1,18 @@
 <!--EXPERIENCIA-->
 
 <div id="experienciaDiv" class="card mat-card">
+  <div>
   <h2 class="d-inline">Experiencia
     <button class="btn btn-edit btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
       (click)="showById('nueva_experiencia'); scrollToDiv('nueva_experiencia')">
       <i class="bi bi-plus-circle bi-dark"></i>
     </button>
   </h2>
-
+  <div id="spinnerLoadingExperiencia" class="spinner-border text-primary" role="status">
+  </div>
+</div>
   <!--LISTA DE EXPERIENCIAS CON OPCION PARA EDITS Y BORRAR-->
+  <!--The list is made by iterating through the dictionaries in the experienciaList array-->
 
   <ul class="list-group list-group-flush">
     <li class="list-group-item" *ngFor="let experiencia of experienciaList">
@@ -30,7 +34,6 @@
                 (keyup.enter)="editExperiencia(experiencia, 'rol', nuevo_rol.value, 'rol_' + experiencia.id)">
             </p>
           </div>
-
 
           <h5>{{experiencia.empresa_institucion_nombre}}
             <button class="btn btn-edit d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
@@ -99,8 +102,10 @@
         </div>
 
         <div class="col-1">
-          <button class="btn" *ngIf="autenticacionServicio.isLoggedIn()" (click)="borrarExperiencia(experiencia.id)">
-            <i class="bi bi-trash m-3"></i>
+          <button [id]="'deleteExperiencia' + experiencia.id" class="btn" *ngIf="autenticacionServicio.isLoggedIn()" (click)="borrarExperiencia(experiencia.id)">
+            <i [id]="'trashExperiencia' + experiencia.id" class="bi bi-trash m-3"></i>
+            <span [id]="'spinnerDeleteExperiencia' + experiencia.id" class="spinner-border spinner-border-sm d-none"
+                    role="status" aria-hidden="true"></span>
           </button>
         </div>
       </div>
@@ -111,7 +116,7 @@
     <li id="nueva_experiencia" class="d-none">
       <h4>Nueva experiencia</h4>
       <div>
-        <p class="d-inline">Rol: <input type="text" class="m-2" #rol_nueva_experiencia
+        <p class="d-inline">Rol: <input type="text" required="true" class="m-2" #rol_nueva_experiencia
             (blur)="crearObjetoExperiencia('rol', rol_nueva_experiencia.value)">
         </p>
       </div>
@@ -147,7 +152,8 @@
             (blur)="crearObjetoExperiencia('descripcion', descripcion_nueva_experiencia.value)">
         </p>
       </div>
-      <button class="btn btn-outline-primary btn-sm" (click)="crearExperiencia()">Submit</button>
+      <button id="submitNewExperiencia" class="btn btn-outline-primary btn-sm" (click)="crearExperiencia()">Submit <span id="spinnerNewExperiencia" class="spinner-border spinner-border-sm d-none"
+        role="status" aria-hidden="true"></span></button>
     </li>
 
   </ul>

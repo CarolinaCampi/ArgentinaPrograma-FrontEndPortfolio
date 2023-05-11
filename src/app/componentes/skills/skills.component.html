@@ -1,66 +1,95 @@
-
+<!-- HARD SKILLS -->
 <div id="skillsDiv" class="card mat-card">
-    <h2 class="mb-2">Hard Skills
-        <button class="btn btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="mostrarById('nuevo_hard_skill'); scrollToDiv('nuevo_hard_skill')">
-            <i class="bi bi-plus-circle"></i>
-        </button>
-    </h2>
+    <div>
+        <h2 class="mb-2 d-inline">Hard Skills
+            <button class="btn btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="showById('nuevo_hard_skill'); scrollToDiv('nuevo_hard_skill')">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </h2>
+        <div id="spinnerLoadingHardSkill" class="spinner-border text-primary" role="status">
+        </div>
 
+        <!-- LISTA DE HARD SKILLS CON OPCIÓN PARA BORRAR -->
+        <div id="fila-hard-skills" class="row justify-content-center">
 
-    <div id="fila-hard-skills" class="row justify-content-center">
-
+        </div>
     </div>
 
-
+    <!-- NUEVO HARD SKILL -->
     <div id="nuevo_hard_skill" class="d-none">
-        <h4>Nuevo hard skill</h4>
-        <div>
-            <p class="d-inline">Hard skill: <input type="text" class="m-2" #nuevo_hard_skill
-                    (blur)="crearObjetoSkill('skill', nuevo_hard_skill.value)">
-            </p>
-        </div>
-        <div class="form-floating">
-            <p class="d-inline">Nivel: <input id="rangeNivel" type="range" min="1" max="100" class="m-2" placeholder="1 - 100"
-                    #nivel_nuevo_hard_skill (blur)="crearObjetoSkill('nivel', nivel_nuevo_hard_skill.value);" (input)="labelRangeNivel.innerText=nivel_nuevo_hard_skill.value">
-            <label #labelRangeNivel for="rangeNivel">{{nivel_nuevo_hard_skill.value}}</label></p>
-            
-        </div>
-        <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearSkill('hard_skill')">Submit</button>
+        <div class="card text-left m-2 col-3">
+            <h4 class="card-header">Nuevo hard skill</h4>
+            <div class="card-body">
+                <p class="d-inline">Hard skill: <input type="text" class="m-2" #nuevo_hard_skill
+                        (blur)="crearObjetoSkill('skill', nuevo_hard_skill.value)">
+                </p>
 
+                <div class="form-floating">
+                    <p class="d-inline">Nivel: <input id="rangeNivel" type="range" min="1" max="100" class="m-2"
+                            placeholder="1 - 100" #nivel_nuevo_hard_skill
+                            (blur)="crearObjetoSkill('nivel', nivel_nuevo_hard_skill.value);"
+                            (input)="labelRangeNivel.innerText=nivel_nuevo_hard_skill.value">
+                        <label #labelRangeNivel for="rangeNivel">{{nivel_nuevo_hard_skill.value}}</label>
+                    </p>
+                </div>
+
+                <br>
+
+                <button id="submitNewHardSkill" class="btn btn-outline-primary btn-sm mb-2"
+                    (click)="crearHardSkill('hard_skill')">Submit
+                    <span id="spinnerNewHardSkill" class="spinner-border spinner-border-sm d-none" role="status"
+                        aria-hidden="true"></span>
+                </button>
+            </div>
+        </div>
     </div>
 
-    <h2 class="my-4">Soft Skills
-        <button class="btn btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()" (click)="mostrarById('nuevo_soft_skill'); scrollToDiv('nuevo_soft_skill')">
-            <i class="bi bi-plus-circle"></i>
-        </button>
-    </h2>
+    <!--SOFT SKILLS-->
+    <div>
+        <h2 class="my-4 d-inline">Soft Skills
+            <button class="btn btn-lg d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
+                (click)="showById('nuevo_soft_skill'); scrollToDiv('nuevo_soft_skill')">
+                <i class="bi bi-plus-circle"></i>
+            </button>
+        </h2>
+        <div id="spinnerLoadingSoftSkill" class="spinner-border text-primary" role="status">
+        </div>
+    </div>
 
+    <!--LISTA DE SOFT SKILLS CON OPCIÓN PARA BORRAR-->
+    <!--The list is made by iterating through the dictionaries in the redSocialList array-->
     <div class="align-items-center d-flex">
         <div *ngFor="let softSkill of softSkillsList">
             <button type="button" class="btn btn-outline-secondary m-2">
                 {{softSkill.skill}}
             </button>
-            <button type="button" class="btn me-3" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="borrarSkill('soft_skill', softSkill.id)">
-                <i class="bi bi-trash"></i>
+            <button [id]="'deleteSoftSkill' + softSkill.id" type="button" class="btn me-3"
+                *ngIf="autenticacionServicio.isLoggedIn()" (click)="borrarSoftSkill('soft_skill', softSkill.id)">
+                <i [id]="'trashSoftSkill' + softSkill.id" class="bi bi-trash"></i>
+                <span [id]="'spinnerDeleteSoftSkill' + softSkill.id" class="spinner-border spinner-border-sm d-none"
+                    role="status" aria-hidden="true"></span>
             </button>
         </div>
     </div>
 
 
-
+    <!--NUEVO SOFT SKILL-->
 
     <div id="nuevo_soft_skill" class="d-none mt-3">
-        <h4>Nuevo soft skill</h4>
-        <div>
-            <p class="d-inline">Soft skill: <input type="text" class="m-2" #nuevo_soft_skill
-                    (blur)="crearObjetoSkill('skill', nuevo_soft_skill.value)">
-            </p>
-            <button class="btn btn-outline-primary btn-sm mb-2" (click)="crearSkill('soft_skill')">Submit</button>
+        <div class="card text-left my-2 col-3">
+            <h4 class="card-header">Nuevo soft skill</h4>
+            <div class="card-body">
+                <p class="d-inline">Soft skill: <input type="text" class="m-2" #nuevo_soft_skill
+                        (blur)="crearObjetoSkill('skill', nuevo_soft_skill.value)">
+                </p>
+                <button id="submitNewSoftSkill" class="btn btn-outline-primary btn-sm mb-2 align-middle"
+                    (click)="crearSoftSkill('soft_skill')">Submit
+                    <span id="spinnerNewSoftSkill" class="spinner-border spinner-border-sm d-none" role="status"
+                        aria-hidden="true"></span>
+                </button>
+            </div>
         </div>
-
-
     </div>
 
 </div>

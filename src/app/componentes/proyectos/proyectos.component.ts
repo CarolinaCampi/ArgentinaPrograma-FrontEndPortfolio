@@ -16,6 +16,7 @@ export class ProyectosComponent implements OnInit{
 
   ngOnInit(): void {
     this.datosPortfolio.obtenerDatos("proyecto").subscribe(data => {
+      document.getElementById("spinnerLoadingProyecto")?.classList.add("d-none"); 
       this.rawDataProyecto = JSON.parse(JSON.stringify(data));
       
       for (let proyecto of data) {
@@ -24,10 +25,9 @@ export class ProyectosComponent implements OnInit{
       }
       this.proyectosList = data;
     });
-
-
   }
 
+  // change dates from YYYY-MM-DD to strings of the type "month of 2023"
   convertirFechaAMesAno(fecha: string): string {
     if (!fecha){
       return "presente";
@@ -39,11 +39,11 @@ export class ProyectosComponent implements OnInit{
     return formattedDate;// output format: "novembre de 2023"
   }
 
+  // Remove the characters after and including the T
   cortarFecha(fecha: any): string {
     if (!fecha) {
       return "";
     }
-
     return fecha.split("T")[0];
   }
 
@@ -56,6 +56,7 @@ export class ProyectosComponent implements OnInit{
   // Edition methods 
 
   editProyecto(dataToUpdate:any, key:string, value: string, id:string){
+    console.log(value);
     if (key.includes("fecha")){ //actualiza la UI para fechas
       dataToUpdate[key] = this.convertirFechaAMesAno(value)
     } else { //updates UI for the rest of the keys
@@ -73,6 +74,7 @@ export class ProyectosComponent implements OnInit{
     }
   }
 
+  // send the updated object to the DB
   updateEntity(dataToUpdate:any){
     this.datosPortfolio.modificarDatos('proyecto', dataToUpdate).subscribe((data: any) => {
     });
@@ -88,6 +90,8 @@ export class ProyectosComponent implements OnInit{
   }
   // Post the new Proyecto object created
   crearProyecto(){
+    document.getElementById("spinnerNewProyecto")!.classList.remove('d-none');
+    document.getElementById("submitNewProyecto")?.setAttribute("disabled", "true");
         this.datosPortfolio.postearDatos("proyecto", this.objetoProyecto).subscribe(data =>{
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
@@ -97,13 +101,16 @@ export class ProyectosComponent implements OnInit{
   // Delete methods
 
   borrarProyecto(id:number){
+    document.getElementById('trashProyecto' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteProyecto' + id)?.classList.remove('d-none');
+    document.getElementById("deleteProyecto" + id)?.setAttribute("disabled", "true");
     this.datosPortfolio.borrarDatos('proyecto', id).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
   }
 
-  // Scroll to a certain div by id, for navigation
+  // Scroll to a certain element determined by its id
   scrollToDiv(id:string){
     document.getElementById(id)!.scrollIntoView();
   }

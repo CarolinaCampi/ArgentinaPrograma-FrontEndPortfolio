@@ -1,6 +1,10 @@
+<!-- HEADER COMPONENT -->
+
 <div class="card mat-card">
   <div class="row align-items-center">
     <div class="col-3">
+      <div id="spinnerLoadingHeader" class="spinner-border text-primary" role="status">
+      </div>
       <img [src]="header.url_logo_pagina" class="logo-pagina img-fluid m-2">
       <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
         (click)="showById('edit_url_logo_pagina')">
@@ -14,50 +18,56 @@
         (click)="showById('edit_titulo_pagina')">
         <i class="bi bi-pencil"></i>
       </button>
-
     </div>
+
     <!--EDIT REDES SOCIALES-->
     <div class="col-3">
       <div [id]="'edit_red_social_' + redSocial.id" class="d-none mb-1" *ngFor="let redSocial of redSocialList">
-        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="text" [value]="redSocial.url_red_social" size="25" #edit_url_red_social
+        <p>URL red social: {{redSocialList.indexOf(redSocial) + 1}}: <input type="text"
+            [value]="redSocial.url_red_social" size="25" #edit_url_red_social
             (blur)="editRedSocial(redSocial, 'url_red_social', edit_url_red_social.value)">
         </p>
-        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" [value]="redSocial.url_logo_red_social" size="25" #edit_url_logo_red_social
+        <p>URL logo red social: {{redSocialList.indexOf(redSocial)+1}}: <input type="text"
+            [value]="redSocial.url_logo_red_social" size="25" #edit_url_logo_red_social
             (blur)="editRedSocial(redSocial, 'url_logo_red_social', edit_url_logo_red_social.value)">
         </p>
-        <p>Alt text logo: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" [value]="redSocial.alt_text_logo" #edit_alt_text_logo
-            (blur)="editRedSocial(redSocial, 'alt_text_logo', edit_alt_text_logo.value)">
+        <p>Alt text logo: {{redSocialList.indexOf(redSocial)+1}}: <input type="text" [value]="redSocial.alt_text_logo"
+            #edit_alt_text_logo (blur)="editRedSocial(redSocial, 'alt_text_logo', edit_alt_text_logo.value)">
         </p>
 
-        <button (click)="submitEditRedSocial(redSocial, 'edit_red_social_' + redSocial.id)" class="btn btn-outline-primary btn-sm">Submit</button>
-
+        <button (click)="submitEditRedSocial(redSocial,  'edit_red_social_' + redSocial.id)"
+          class="btn btn-outline-primary btn-sm">Submit</button>
       </div>
     </div>
-    <!--LISTA REDES SOCIALES-->
-    <div class="col-3">    
-       <div class="d-inline" *ngFor="let redSocial of redSocialList">
+
+    <!--LISTA REDES SOCIALES CON OPCION PARA BORRAR-->
+    <!--The list is made by iterating through the dictionaries in the redSocialList array-->
+    <div class="col-3">
+      <div id="spinnerLoadingRedSocial" class="spinner-border text-primary" role="status"></div>
+      <div class="d-inline" *ngFor="let redSocial of redSocialList">
         <a [href]="redSocial.url_red_social"><img [src]="redSocial.url_logo_red_social" class="red-social m-2"
             alt={{redSocial.alt_text_logo}}></a>
-          <button class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="showById('edit_red_social_' + redSocial.id)">
-            <i class="bi bi-pencil"></i>
-          </button>
-          <button class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
-            (click)="borrarRedSocial(redSocial.id)">
-            <i class="bi bi-trash"></i>
-          </button>
+        <button class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
+          (click)="showById('edit_red_social_' + redSocial.id)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button [id]="'deleteRedSocial' + redSocial.id" class="btn d-inline p-1" *ngIf="autenticacionServicio.isLoggedIn()"
+          (click)="borrarRedSocial(redSocial.id)">
+          <i [id]="'trashRedSocial' + redSocial.id" class="bi bi-trash"></i>
+          <span [id]="'spinnerDeleteRedSocial' + redSocial.id" class="spinner-border spinner-border-sm d-none"
+          role="status" aria-hidden="true"></span>
+        </button>
 
       </div>
 
-      
-      <button class="btn d-inline" *ngIf="autenticacionServicio.isLoggedIn()"
-        (click)="showById('nueva_red_social')">
+
+      <button class="btn d-inline" *ngIf="autenticacionServicio.isLoggedIn()" (click)="showById('nueva_red_social')">
         <i class="bi bi-plus-circle bi-dark"></i>
       </button>
 
 
     </div>
-<!--LOGIN/LOGOUT-->
+    <!--LOGIN/LOGOUT-->
     <div class="col-1">
       <button class="btn btn-outline-info login align-self-center" type="button"
         *ngIf="!autenticacionServicio.isLoggedIn()" (click)="loginClick();">Login</button>
@@ -65,12 +75,13 @@
         *ngIf="autenticacionServicio.isLoggedIn()" (click)="logoutClick();">Logout</button>
     </div>
   </div>
-  
-<!--EDIT TITULO-->
+
+  <!--EDIT TITULO-->
   <div class="row align-items-center">
     <div class="col-3">
       <div id="edit_url_logo_pagina" class="d-none">
-        <p class="d-inline">URL logo página: <input type="url" class="mx-2" [value]="header.url_logo_pagina" size="25" #nueva_url_logo_pagina
+        <p class="d-inline">URL logo página: <input type="url" class="mx-2" [value]="header.url_logo_pagina" size="25"
+            #nueva_url_logo_pagina
             (keyup.enter)="editHeader(header ,'url_logo_pagina', nueva_url_logo_pagina.value, 'edit_url_logo_pagina')">
         </p>
       </div>
@@ -78,16 +89,17 @@
 
     <div class="col-2">
       <div id="edit_titulo_pagina" class="d-none">
-        <p class="d-inline">Título página: <input type="text" class="mx-2" [value]="header.titulo_pagina" size="15" #nuevo_titulo_pagina
+        <p class="d-inline">Título página: <input type="text" class="mx-2" [value]="header.titulo_pagina" size="15"
+            #nuevo_titulo_pagina
             (keyup.enter)="editHeader(header ,'titulo_pagina', nuevo_titulo_pagina.value, 'edit_titulo_pagina')">
         </p>
       </div>
     </div>
 
     <div class="col-3">
-
     </div>
-<!--NUEVA RED SOCIAL-->
+
+    <!--NUEVA RED SOCIAL-->
     <div class="col-3">
       <div id="nueva_red_social" class="d-none">
         <h6>Nueva red social</h6>
@@ -95,27 +107,28 @@
           <div class="row mb-1">
             <label for="url_nueva_red_social" class="col-sm-5 col-form-label">URL red social:</label>
             <div class="col-sm-7">
-              <input type="url" id="url_nueva_red_social" #url_nueva_red_social (blur)="crearObjetoRedSocial('url_red_social', url_nueva_red_social.value)">
+              <input type="url" id="url_nueva_red_social" #url_nueva_red_social
+                (blur)="crearObjetoRedSocial('url_red_social', url_nueva_red_social.value)">
             </div>
           </div>
           <div class="row mb-1">
             <label for="url_logo_nueva_red" class="col-sm-5 col-form-label">URL logo red social:</label>
             <div class="col-sm-7">
-              <input type="url" id="url_logo_nueva_red" #url_logo_nueva_red (blur)="crearObjetoRedSocial('url_logo_red_social', url_logo_nueva_red.value)">
+              <input type="url" id="url_logo_nueva_red" #url_logo_nueva_red
+                (blur)="crearObjetoRedSocial('url_logo_red_social', url_logo_nueva_red.value)">
             </div>
           </div>
           <div class="row mb-1">
             <label for="alt_text_logo_nueva_red" class="col-sm-5 col-form-label">Alt text logo red social:</label>
             <div class="col-sm-7">
-              <input type="text" id="alt_text_logo_nueva_red" #alt_text_nueva_red (blur)="crearObjetoRedSocial('alt_text_logo', alt_text_nueva_red.value)">
+              <input type="text" id="alt_text_logo_nueva_red" #alt_text_nueva_red
+                (blur)="crearObjetoRedSocial('alt_text_logo', alt_text_nueva_red.value)">
             </div>
           </div>
-          <button (click)="crearRedSocial()" class="btn btn-outline-primary btn-sm">Submit</button>
+          <button id="submitNewRedSocial" (click)="crearRedSocial()" class="btn btn-outline-primary btn-sm">Submit <span id="spinnerNewRedSocial" class="spinner-border spinner-border-sm d-none"
+            role="status" aria-hidden="true"></span></button>
         </div>
       </div>
-
-
     </div>
-
   </div>
 </div>

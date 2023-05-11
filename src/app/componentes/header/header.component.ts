@@ -16,11 +16,14 @@ export class HeaderComponent implements OnInit {
   constructor(private datosPortfolio:PortfolioService, private ruta:Router, public autenticacionServicio:AutenticacionService){  }
 
   ngOnInit(): void {
+    
     this.datosPortfolio.obtenerDatos("header").subscribe(data => {
+      document.getElementById("spinnerLoadingHeader")?.classList.add("d-none");
       this.header = data[0];
     });
 
     this.datosPortfolio.obtenerDatos("red_social").subscribe(data => {
+      document.getElementById("spinnerLoadingRedSocial")?.classList.add("d-none");
       this.redSocialList = data;
     });
   }
@@ -51,7 +54,7 @@ export class HeaderComponent implements OnInit {
 
   // edit Red Social
   editRedSocial(dataToUpdate:any, key:string, value: string){
-    //updates UI
+    //updates UI and changes the object that will be sent to the DB
     dataToUpdate[key] = value; 
   }
 
@@ -71,23 +74,27 @@ export class HeaderComponent implements OnInit {
   crearObjetoRedSocial(key:string, value:string){
     this.objetoRedSocial[key] = value;
   }
+
   // Post the new experiencia object created
   crearRedSocial(){
+    document.getElementById("spinnerNewRedSocial")!.classList.remove('d-none');
+    document.getElementById("submitNewRedSocial")?.setAttribute("disabled", "true");
       this.datosPortfolio.postearDatos('red_social', this.objetoRedSocial).subscribe(data =>{
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
   }
 
   // Delete methods
 
   borrarRedSocial(id:number){
+    document.getElementById('trashRedSocial' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteRedSocial' + id)?.classList.remove('d-none');
+    document.getElementById("deleteRedSocial" + id)?.setAttribute("disabled", "true");
     this.datosPortfolio.borrarDatos('red_social', id).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
   }
 
   // Login and logout

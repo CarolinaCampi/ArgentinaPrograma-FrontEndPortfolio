@@ -1,3 +1,5 @@
+<!-- INICIAR SESION COMPONENT -->
+
 <div class="iniciar-sesion mat-card">
   <h1 class="m-5">Iniciar Sesión</h1>
 
@@ -32,7 +34,16 @@
       </p>
     </div>
 
-    <button type="submit" class="btn btn-primary">Enviar</button>
+    <div>
+      <button id="submitIniciarSesion" type="submit" class="btn btn-primary d-inline">Enviar <span
+          id="spinnerIniciarSesion" class="spinner-border spinner-border-sm d-none" role="status"
+          aria-hidden="true"></span></button>
+      <div id="authErrorMessage" class="d-inline ms-3 d-none">
+        <small id="passwordHelp" class="text-danger">
+          Error de autenticación: El usuario o contraseña son incorrectos.
+        </small>
+      </div>
+    </div>
   </form>
 
 </div>

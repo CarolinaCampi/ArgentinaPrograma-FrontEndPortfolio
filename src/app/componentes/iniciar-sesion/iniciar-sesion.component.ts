@@ -35,10 +35,19 @@ export class IniciarSesionComponent {
   }
 
   onEnviar(event:Event){
+    document.getElementById("spinnerIniciarSesion")!.classList.remove('d-none');
+    document.getElementById("submitIniciarSesion")?.setAttribute("disabled", "true");
     event.preventDefault;
-    this.autenticacionService.iniciarSesion(this.form.value).subscribe(data=>{
-      this.ruta.navigate(['/portfolio']);
-    })
+    this.autenticacionService.iniciarSesion(this.form.value).subscribe(data => {
+      if (data == "") {
+        // Hubo un error de autenticacion
+        document.getElementById("authErrorMessage")!.classList.remove("d-none");
+        document.getElementById("spinnerIniciarSesion")!.classList.add('d-none');
+        document.getElementById("submitIniciarSesion")?.removeAttribute("disabled");
+      } else {
+        this.ruta.navigate(['/portfolio']);
+      }      
+    });
   }
 
 }

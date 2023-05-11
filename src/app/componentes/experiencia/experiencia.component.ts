@@ -18,8 +18,9 @@ export class ExperienciaComponent implements OnInit {
   ngOnInit(): void {
 
     this.datosPortfolio.obtenerDatos("experiencia").subscribe(data => {
+      
       this.rawDataExperiencia = JSON.parse(JSON.stringify(data));
-
+       
       for (let experiencia of data) {
         experiencia.fecha_inicio = this.convertirFechaAMesAno(experiencia.fecha_inicio);
         experiencia.fecha_fin = this.convertirFechaAMesAno(experiencia.fecha_fin);
@@ -35,13 +36,13 @@ export class ExperienciaComponent implements OnInit {
             }
           }
         }
+        document.getElementById("spinnerLoadingExperiencia")?.classList.add("d-none");
         this.experienciaList = data;
       });
-
     });
-
   }
 
+  // change dates from YYYY-MM-DD to strings of the type "month of 2023"
   convertirFechaAMesAno(fecha: any): string {
     if (!fecha) {
       return "presente";
@@ -53,11 +54,11 @@ export class ExperienciaComponent implements OnInit {
     return formattedDate;// output format: "novembre de 2023"
   }
 
+  // Remove the characters after and including the T
   cortarFecha(fecha: any): string {
     if (!fecha) {
       return "";
     }
-
     return fecha.split("T")[0];
   }
 
@@ -91,7 +92,6 @@ export class ExperienciaComponent implements OnInit {
           break;
         }
       }
-
     }
   }
 
@@ -107,7 +107,7 @@ export class ExperienciaComponent implements OnInit {
           dataToUpdate['empresa_institucion_alt_text_logo'] = this.empInstList[j].alt_text_logo;
         }
       }
-    } else { //updates UI 
+    } else { //updates UI for the other keys
       dataToUpdate[key] = value;
     }
     document.getElementById(id)!.classList.remove('d-inline');
@@ -124,7 +124,7 @@ export class ExperienciaComponent implements OnInit {
   }
 
   editFechaFin(dataToUpdate: any, value: string, id: string) {
-    // update the UI
+    // update the UI for fecha fin and es trabajo actual
     dataToUpdate['fecha_fin'] = this.convertirFechaAMesAno(value);
     dataToUpdate['es_trabajo_actual'] = false;
     document.getElementById(id)!.classList.remove('d-inline');
@@ -185,6 +185,8 @@ export class ExperienciaComponent implements OnInit {
 
   // Post the new experiencia object created
   crearExperiencia() {
+    document.getElementById("spinnerNewExperiencia")!.classList.remove('d-none');
+    document.getElementById("submitNewExperiencia")?.setAttribute("disabled", "true");
     this.datosPortfolio.postearDatos('experiencia', this.objetoExperiencia).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
@@ -195,6 +197,9 @@ export class ExperienciaComponent implements OnInit {
   // Delete methods
 
   borrarExperiencia(id: number) {
+    document.getElementById('trashExperiencia' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteExperiencia' + id)?.classList.remove('d-none');
+    document.getElementById("deleteExperiencia" + id)?.setAttribute("disabled", "true");
     this.datosPortfolio.borrarDatos('experiencia', id).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
@@ -202,7 +207,7 @@ export class ExperienciaComponent implements OnInit {
     // window.location.reload();
   }
 
-  // Scroll to a certain div by id, for navigation
+  // Scroll to a certain element determined by its id
   scrollToDiv(id:string){
     document.getElementById(id)!.scrollIntoView();
   }

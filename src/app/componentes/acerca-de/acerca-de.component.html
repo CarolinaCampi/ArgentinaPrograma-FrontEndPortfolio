@@ -1,4 +1,8 @@
+<!--ACERCA DE COMPONENT-->
+
 <div class="card mat-card" id="first card">
+
+    <!--Banner/cover picture-->
     <div id="profile-background" class="position-relative">
         <img [src]="miPortfolio.url_banner">
         <div class="position-absolute bottom-0 end-0">
@@ -9,12 +13,12 @@
                 <div class="input-group-text" *ngIf="autenticacionServicio.isLoggedIn()" (click)="showById('edit_url_banner_persona'); showById('label_url_banner')"><i class="bi bi-pencil"></i></div>
             </div>
         </div>
-
-
     </div>
 
+    <!--Profile picture and persona's information-->
     <div id="info" style="padding: 16px">
-
+        <div id="spinnerLoadingAcercaDe" class="spinner-border text-primary" role="status">
+        </div>
         <div id="info-img">
             <img class="profile-image img-fluid img-thumbnail d-inline" [src]="miPortfolio.url_foto">
             <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
@@ -66,7 +70,7 @@
                 </div>
             </div>
 
-            <div>
+            <div class="mb-3">
                 <h3 class="d-inline">{{miPortfolio.domicilio}}</h3>
                 <button class="btn d-inline mx-2" *ngIf="autenticacionServicio.isLoggedIn()"
                     (click)="showById('edit_domicilio_persona')">
@@ -92,6 +96,7 @@
     
         </div>
 
+        <!--Navigation buttons-->
         <div id="info-actions">
             <button class="btn btn-outline-primary btn-actions" type="button" (click)="scrollToDiv('experienciaDiv')">Experiencia</button>
             <button class="btn btn-outline-primary btn-actions" type="button" (click)="scrollToDiv('educacionDiv')">Educacion</button>

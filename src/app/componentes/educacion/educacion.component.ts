@@ -28,6 +28,7 @@ export class EducacionComponent implements OnInit {
       }
       this.datosPortfolio.obtenerDatos("empresa_institucion").subscribe(dataEmpInst => {
         this.empInstList = dataEmpInst;
+        document.getElementById("spinnerLoadingEmpInst")?.classList.add("d-none");
         for (let i = 0; i < data.length; i++) {
           for (let j = 0; j < dataEmpInst.length; j++) {
             if (data[i].empresa_institucion_id == dataEmpInst[j].id) {
@@ -37,6 +38,7 @@ export class EducacionComponent implements OnInit {
             }
           }
         }
+        document.getElementById("spinnerLoadingEducacionFormal")?.classList.add("d-none");
         this.educacionFormalList = data;
       });
 
@@ -59,6 +61,7 @@ export class EducacionComponent implements OnInit {
             }
           }
         }
+        document.getElementById("spinnerLoadingCurso")?.classList.add("d-none");
         this.cursoList = data;
       });
 
@@ -66,6 +69,7 @@ export class EducacionComponent implements OnInit {
 
   }
 
+  // change dates from YYYY-MM-DD to strings of the type "month of 2023"
   convertirFechaAMesAno(fecha:string): string {
     const date = new Date(fecha); // create a new Date object with fecha
     const options: any = { year: 'numeric', month: 'long' }; // options for formatting the date
@@ -74,11 +78,11 @@ export class EducacionComponent implements OnInit {
     return formattedDate;// output format: "novembre de 2023"
   }
 
+  // Remove the characters after and including the T
   cortarFecha(fecha: any): string {
     if (!fecha) {
       return "";
     }
-
     return fecha.split("T")[0];
   }
 
@@ -134,22 +138,44 @@ export class EducacionComponent implements OnInit {
   }
 
   // Post the new educacion object created
-  crearEducacion(entity:string){
-        this.datosPortfolio.postearDatos(entity, this.objetoEducacion).subscribe(data =>{
+  crearEducacionFormal(){
+    document.getElementById("spinnerNewEducacionFormal")!.classList.remove('d-none');
+    document.getElementById("submitNewEducacionFormal")?.setAttribute("disabled", "true");
+        this.datosPortfolio.postearDatos('educacion_formal', this.objetoEducacion).subscribe(data =>{
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
   }
+
+  crearCurso(){
+    document.getElementById("spinnerNewCurso")!.classList.remove('d-none');
+    document.getElementById("submitNewCurso")?.setAttribute("disabled", "true");
+    this.datosPortfolio.postearDatos('curso', this.objetoEducacion).subscribe(data =>{
+  // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+  window.location.reload();
+});
+}
 
   // Delete methods
 
-  borrarEducacion(entity:string, id:number){
-    this.datosPortfolio.borrarDatos(entity, id).subscribe(data => {
+  borrarEducacionFormal(id:number){
+    document.getElementById('trashEducacionFOrmal' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteEducacionFOrmal' + id)?.classList.remove('d-none');
+    document.getElementById("deleteEducacionFOrmal" + id)?.setAttribute("disabled", "true");
+    this.datosPortfolio.borrarDatos('educacion_formal', id).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
+  }
+
+  borrarCurso(id:number){
+    document.getElementById('trashCurso' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteCurso' + id)?.classList.remove('d-none');
+    document.getElementById("deleteCurso" + id)?.setAttribute("disabled", "true");
+    this.datosPortfolio.borrarDatos('curso', id).subscribe(data => {
+      // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
+      window.location.reload();
+    });
   }
 
   // EmpresaInstitucion methods
@@ -182,6 +208,8 @@ export class EducacionComponent implements OnInit {
 
   // Post the new empresaInstitucion object created
   crearEmpInst(){
+    document.getElementById("spinnerNewEmpInst")!.classList.remove('d-none');
+    document.getElementById("submitNewEmpInst")?.setAttribute("disabled", "true");
         this.datosPortfolio.postearDatos('empresa_institucion', this.objetoEmpInst).subscribe(data =>{
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
@@ -192,14 +220,16 @@ export class EducacionComponent implements OnInit {
   // Delete methods
 
   borrarEmpInst (id:number){
+    document.getElementById('trashEmpInst' + id)?.classList.add('d-none');
+    document.getElementById('spinnerDeleteEmpInst' + id)?.classList.remove('d-none');
+    document.getElementById("deleteEmpInst" + id)?.setAttribute("disabled", "true");
     this.datosPortfolio.borrarDatos("empresa_institucion", id).subscribe(data => {
       // reload inside of the subscribe so that the request is not killed by the reload before the change is made in the DB
       window.location.reload();
     });
-    // window.location.reload();
   }
 
-    // Scroll to a certain div by id, for navigation
+    // Scroll to a certain element determined by its id
     scrollToDiv(id:string){
       document.getElementById(id)!.scrollIntoView();
     }

@@ -1,8 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { IniciarSesionComponent } from '../componentes/iniciar-sesion/iniciar-sesion.component';
+import { BehaviorSubject, Observable, of } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +17,16 @@ export class AutenticacionService {
    }
 
    iniciarSesion (credenciales:any): Observable<any>{
-    return this.http.post(this.url, credenciales).pipe(map(data=>{
-      sessionStorage.setItem('currentUser', JSON.stringify(data));
-      this.currentUserSubject.next(data);
-      return data;
-    }))
+    return this.http.post(this.url, credenciales).pipe(
+      map(data => {
+        sessionStorage.setItem('currentUser', JSON.stringify(data));
+        this.currentUserSubject.next(data);
+        return data;
+      }),
+    catchError(err => {
+        return of("");
+      })
+    )
    }
 
    get UsuarioAutenticado(){
